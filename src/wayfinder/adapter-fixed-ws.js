@@ -4,7 +4,7 @@
  * No fallback prices - uses actual market data via WebSocket
  */
 
-const HyperliquidWebSocketPriceFeed = require('./hyperliquid-ws');
+const HyperliquidWebSocketPriceFeed = require('../price-feeds/hyperliquid-ws');
 
 class WayfinderAdapterFixed {
     constructor(config = {}) {

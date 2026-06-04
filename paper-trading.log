@@ -260,3 +260,30 @@
 2026-06-04T19:19:59.273Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
 2026-06-04T19:20:09.294Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
 2026-06-04T19:20:19.875Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:22:31.933Z [32minfo[39m: Strategy initialized with parameters:
+2026-06-04T19:22:31.973Z [32minfo[39m: [HL WS] Connecting to Hyperliquid WebSocket...
+2026-06-04T19:22:32.231Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T19:22:32.244Z [32minfo[39m: [ML] Found ML models directory
+2026-06-04T19:22:32.289Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:22:32.302Z [32minfo[39m: [HL WS] Queued subscription for BTC
+2026-06-04T19:22:32.496Z [32minfo[39m: [HL WS] Connected successfully
+2026-06-04T19:22:32.508Z [32minfo[39m: [HL WS] Subscribed to BTC
+2026-06-04T19:22:32.518Z [32minfo[39m: [ADAPTER] Hyperliquid WebSocket connected
+2026-06-04T19:22:32.543Z [32minfo[39m: [HL WS] Subscription confirmed:
+2026-06-04T19:22:41.128Z [32minfo[39m: [HL WS] Subscribed to ETH
+2026-06-04T19:22:47.778Z [32minfo[39m: Paper trading started. Interval: 60000ms
+2026-06-04T19:23:47.786Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:23:47.786Z [32minfo[39m: [HL WS] Subscribed to BTC
+2026-06-04T19:23:54.739Z [32minfo[39m: [HL WS] Subscribed to ETH
+2026-06-04T19:24:40.111Z [32minfo[39m: Strategy initialized with parameters:
+2026-06-04T19:24:40.114Z [32minfo[39m: [HL WS] Connecting to Hyperliquid WebSocket...
+2026-06-04T19:24:40.131Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T19:24:40.132Z [32minfo[39m: [ML] Found ML models directory
+2026-06-04T19:24:40.134Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:24:40.135Z [32minfo[39m: [HL WS] Queued subscription for BTC
+2026-06-04T19:24:40.157Z [32minfo[39m: [HL WS] Connected successfully
+2026-06-04T19:24:40.159Z [32minfo[39m: [HL WS] Subscribed to BTC
+2026-06-04T19:24:40.159Z [32minfo[39m: [ADAPTER] Hyperliquid WebSocket connected
+2026-06-04T19:24:40.167Z [32minfo[39m: [HL WS] Subscription confirmed:
+2026-06-04T19:24:41.602Z [32minfo[39m: [HL WS] Subscribed to ETH
+2026-06-04T19:24:42.082Z [32minfo[39m: Paper trading started. Interval: 60000ms
