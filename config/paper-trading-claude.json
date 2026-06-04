@@ -1,0 +1,56 @@
+{
+  "paperTrading": {
+    "enabled": true,
+    "initialCapital": 1000,
+    "mode": "dry_run",
+    "description": "Paper trading with Claude-recommended Moderate configuration"
+  },
+  "trading": {
+    "symbols": ["BTC-PERP", "ETH-PERP"],
+    "timeframe": "15m",
+    "checkInterval": 60000,
+    "maxPositions": 3,
+    "maxLeverage": 3,
+    "maxPositionSize": 0.08
+  },
+  "strategy": {
+    "name": "BBRSI",
+    "type": "native",
+    "indicators": {
+      "rsi": { "period": 14, "overbought": 75, "oversold": 25 },
+      "bollinger": { "period": 20, "stdDev": 2 },
+      "adx": { "period": 14, "threshold": 25 }
+    }
+  },
+  "riskManagement": {
+    "enabled": true,
+    "stopLoss": 0.02,
+    "takeProfit": 0.03,
+    "maxDrawdown": 0.15,
+    "dailyLossLimit": 50,
+    "maxPositionSize": 0.08,
+    "profitTarget": 1.5
+  },
+  "mlOptimization": {
+    "enabled": true,
+    "description": "ML-enhanced parameter optimization",
+    "models": {
+      "primary": "xgboost",
+      "fallback": "randomforest"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "files": {
+      "main": "paper-trading.log",
+      "trades": "trades.log"
+    }
+  },
+  "claude": {
+    "analysisDate": "2026-06-04",
+    "recommendedConfig": "Moderate",
+    "expectedMonthlyReturn": "8-12%",
+    "expectedMaxDrawdown": "12-15%",
+    "expectedSharpe": "1.5-1.7"
+  }
+}

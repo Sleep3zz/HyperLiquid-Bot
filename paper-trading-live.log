@@ -1,0 +1,28 @@
+2026-06-04T18:38:39.524Z [32minfo[39m: Strategy initialized with parameters:
+
+╔════════════════════════════════════════════════════════════╗
+║     HYPERLIQUID ALGO BOT - PAPER TRADING                   ║
+║     Initial Capital: $1,000                                ║
+║     Strategy: BBRSI with Native ML                         ║
+╚════════════════════════════════════════════════════════════╝
+
+2026-06-04T18:38:39.536Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T18:38:39.536Z [32minfo[39m: [ML] Found ML models directory
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:38:39.543Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04 18:39:01.894 | ERROR    | wayfinder_paths.adapters.hyperliquid_adapter.adapter:get_all_mid_prices:482 - Failed to fetch mid prices: list index out of range
+2026-06-04 18:39:23.844 | ERROR    | wayfinder_paths.adapters.hyperliquid_adapter.adapter:get_meta_and_asset_ctxs:212 - Failed to fetch meta_and_asset_ctxs: list index out of range
+2026-06-04T18:39:25.815Z [31merror[39m: Error evaluating position
+2026-06-04T18:39:25.821Z [31merror[39m: [STRATEGY] Error evaluating BTC-PERP:
+2026-06-04 18:39:45.737 | ERROR    | wayfinder_paths.adapters.hyperliquid_adapter.adapter:get_all_mid_prices:482 - Failed to fetch mid prices: list index out of range
