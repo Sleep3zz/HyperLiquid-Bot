@@ -17,3 +17,14 @@
 2026-06-04T18:43:18.355Z [31merror[39m: [STRATEGY] Error evaluating BTC-PERP:
 2026-06-04T18:44:04.288Z [31merror[39m: Error evaluating position
 2026-06-04T18:44:04.288Z [31merror[39m: [STRATEGY] Error evaluating ETH-PERP:
+2026-06-04T18:45:30.329Z [32minfo[39m: Strategy initialized with parameters:
+2026-06-04T18:45:30.347Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T18:45:30.354Z [32minfo[39m: [ML] Found ML models directory
+2026-06-04T18:45:30.366Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:45:40.385Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:45:40.391Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:45:50.402Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:46:05.146Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:46:05.146Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:46:15.164Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:46:19.547Z [32minfo[39m: Paper trading started. Interval: 60000ms
