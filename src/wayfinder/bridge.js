@@ -77,12 +77,12 @@ class WayfinderBridge {
         const cmd = cmdParts.join(' ');
         
         if (this.dryRun) {
-            this.logger.log('[DRY RUN]', cmd);
+            this.logger.info(`[DRY RUN] ${cmd}`);
             return { status: 'dry_run', command: cmd };
         }
         
         try {
-            this.logger.log('Executing trade:', { coin, isBuy, size, usdAmount, leverage });
+            this.logger.info(`Executing trade: ${JSON.stringify({ coin, isBuy, size, usdAmount, leverage })}`);
             const result = execSync(cmd, { 
                 encoding: 'utf8', 
                 cwd: this.sdkPath,
@@ -159,12 +159,12 @@ class WayfinderBridge {
         ].join(' ');
         
         if (this.dryRun) {
-            this.logger.log('[DRY RUN]', cmd);
+            this.logger.info(`[DRY RUN] ${cmd}`);
             return { status: 'dry_run', command: cmd };
         }
         
         try {
-            this.logger.log('Placing trigger order:', { coin, tpsl, triggerPrice, size });
+            this.logger.info(`Placing trigger order: ${JSON.stringify({ coin, tpsl, triggerPrice, size })}`);
             const result = execSync(cmd, { 
                 encoding: 'utf8', 
                 cwd: this.sdkPath,

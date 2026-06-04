@@ -13,7 +13,7 @@
   "dependencies": {
     "@dydxprotocol/v4-client-js": "^1.15.1",
     "config": "^3.3.9",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.6.1",
     "ethers": "^6.9.0",
     "hyperliquid": "^1.5.6",
     "lodash": "^4.17.23",
@@ -24,7 +24,7 @@
     "trading-signals": "^6.0.1",
     "tulind": "^0.8.20",
     "typescript": "^5.3.3",
-    "winston": "^3.17.0",
+    "winston": "^3.19.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

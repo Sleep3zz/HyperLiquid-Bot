@@ -45,9 +45,9 @@ class DeltaLabClient {
             
             return parsed;
         } catch (error) {
-            this.logger.error(`Delta Lab query failed for ${uri}:`, error.message);
-            // Return null instead of throwing to allow graceful degradation
-            return null;
+            this.logger.error(`Delta Lab query failed for ${uri}: ${error.message}`);
+            // Return empty array/object instead of throwing to allow graceful degradation
+            return [];
         }
     }
 
@@ -77,15 +77,22 @@ class DeltaLabClient {
         return this._getCached(cacheKey, () => {
             const data = this._executeResource('wayfinder://hyperliquid/markets');
             
-            // Handle null/undefined response
+            // Handle null/undefined/empty response
             if (!data) {
+                this.logger.warn('No funding rate data received from SDK');
+                return [];
+            }
+            
+            // Handle error response (SDK may return error object)
+            if (data.error || data.status === 'error') {
+                this.logger.error('SDK returned error:', data.error || data.message || 'Unknown error');
                 return [];
             }
             
             // Handle array response
             if (Array.isArray(data)) {
                 if (symbol) {
-                    const market = data.find(m => m.coin === symbol || m.symbol === symbol);
+                    const market = data.find(m => m && (m.coin === symbol || m.symbol === symbol));
                     return market || null;
                 }
                 // Sort by funding rate (highest first)
@@ -93,8 +100,12 @@ class DeltaLabClient {
             }
             
             // Handle single object response
-            if (symbol && (data.coin === symbol || data.symbol === symbol)) {
-                return data;
+            if (typeof data === 'object') {
+                if (symbol && (data.coin === symbol || data.symbol === symbol)) {
+                    return data;
+                }
+                // If data is an object but not array, wrap in array
+                return [data];
             }
             
             return [];
@@ -110,21 +121,27 @@ class DeltaLabClient {
     async getTopFundingOpportunities(count = 10, direction = 'highest') {
         const rates = await this.getFundingRates();
         
+        // Ensure we have an array
+        if (!Array.isArray(rates)) {
+            this.logger.error('getFundingRates did not return an array');
+            return [];
+        }
+        
         if (direction === 'highest') {
             // Highest positive rates (best for shorting)
             return rates
-                .filter(r => r.funding_rate > 0)
+                .filter(r => r && r.funding_rate > 0)
                 .slice(0, count);
         } else if (direction === 'lowest') {
             // Most negative rates (best for longing)
             return rates
-                .filter(r => r.funding_rate < 0)
+                .filter(r => r && r.funding_rate < 0)
                 .sort((a, b) => a.funding_rate - b.funding_rate)
                 .slice(0, count);
         } else if (direction === 'extreme') {
             // Highest absolute rates
             return rates
-                .sort((a, b) => Math.abs(b.funding_rate) - Math.abs(a.funding_rate))
+                .sort((a, b) => Math.abs(b.funding_rate || 0) - Math.abs(a.funding_rate || 0))
                 .slice(0, count);
         }
         
@@ -156,9 +173,10 @@ class DeltaLabClient {
         
         const data = this._executeResource(uri);
         
-        // Apply additional filters
-        let results = data;
+        // Ensure we have an array to work with
+        let results = Array.isArray(data) ? data : [];
         
+        // Apply additional filters
         if (minFundingRate !== null) {
             results = results.filter(m => m.funding_rate >= minFundingRate);
         }
@@ -267,6 +285,12 @@ class DeltaLabClient {
         
         return this._getCached(cacheKey, () => {
             const data = this._executeResource(`wayfinder://hyperliquid/prices/${symbol}`);
+            
+            if (!data || !data.price) {
+                this.logger.error(`No price data available for ${symbol}`);
+                return 0;
+            }
+            
             return parseFloat(data.price);
         });
     }
