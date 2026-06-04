@@ -44,3 +44,633 @@ Trades:         0
 📊 Paper Trading Active
    Press Ctrl+C to stop
 
+2026-06-04T18:47:19.550Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:47:29.560Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:47:29.560Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:47:39.581Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:47:53.968Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:47:53.968Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:48:03.986Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:48:19.561Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:48:29.574Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:48:29.574Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:48:39.593Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:48:53.533Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:48:53.533Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:49:03.546Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:49:19.574Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:49:29.585Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:49:29.585Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:49:39.596Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:49:54.025Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:49:54.025Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:50:04.037Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:50:19.585Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:50:29.599Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:50:29.599Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:50:39.610Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:50:53.990Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:50:53.990Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:51:04.011Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:51:19.595Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:51:29.606Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:51:29.606Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:51:39.625Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:51:54.044Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:51:54.044Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:52:04.057Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:52:19.606Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:52:29.619Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:52:29.619Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:52:39.636Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:52:54.184Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:52:54.184Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:53:04.196Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:53:19.617Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:53:29.629Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:53:29.629Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:53:39.650Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:53:54.043Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:53:54.043Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:54:04.055Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:54:19.628Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:54:29.642Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:54:29.642Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:54:39.652Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:54:54.592Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:54:54.592Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:55:04.602Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:55:19.643Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:55:29.653Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:55:29.653Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:55:39.671Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:55:54.629Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:55:54.629Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:56:04.640Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:56:19.652Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:56:29.664Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:56:29.664Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:56:39.685Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:56:54.582Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:56:54.582Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:57:04.596Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:57:19.666Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:57:29.679Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:57:29.679Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:57:39.691Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:57:54.524Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:57:54.524Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:58:04.536Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:58:19.676Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:58:29.687Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:58:29.687Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:58:39.698Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:58:54.625Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:58:54.625Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T18:59:04.638Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T18:59:19.686Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:59:29.699Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:59:29.699Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T18:59:39.711Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:59:55.436Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T18:59:55.436Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:00:05.459Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:00:19.699Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:00:29.713Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:00:29.713Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:00:39.724Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:00:55.792Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:00:55.792Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:01:05.804Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:01:19.713Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:01:29.728Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:01:29.728Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:01:39.740Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:01:55.913Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:01:55.913Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:02:05.937Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:02:19.722Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:02:29.735Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:02:29.735Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:02:39.748Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:02:55.581Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:02:55.581Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:03:05.603Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:03:19.730Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:03:29.746Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:03:29.746Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:03:39.766Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:03:55.631Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:03:55.631Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:04:05.642Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:04:19.739Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:04:29.757Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:04:29.757Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:04:39.767Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:04:56.155Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:04:56.155Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:05:06.166Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:05:19.746Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:05:29.761Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:05:29.761Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:05:39.771Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:05:56.252Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:05:56.252Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:06:06.267Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:06:19.752Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:06:29.763Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:06:29.763Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:06:39.787Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:06:56.238Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:06:56.238Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:07:06.250Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:07:19.760Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:07:29.773Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:07:29.773Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:07:39.786Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:07:56.358Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:07:56.358Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:08:06.371Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:08:19.767Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:08:29.781Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:08:29.781Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:08:39.791Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:08:56.311Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:08:56.311Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:09:06.334Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:09:19.775Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:09:29.790Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:09:29.790Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:09:39.801Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:09:57.039Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:09:57.039Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:10:07.052Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:10:19.787Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:10:29.801Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:10:29.801Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:10:39.812Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:10:57.369Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:10:57.369Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:11:07.388Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:11:19.795Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:11:29.806Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:11:29.807Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:11:39.820Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:11:57.516Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:11:57.516Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:12:07.544Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:12:19.809Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:12:29.822Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:12:29.822Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:12:39.838Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:12:57.230Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:12:57.230Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:13:07.246Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:13:19.822Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:13:29.836Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:13:29.836Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:13:39.846Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:13:57.155Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:13:57.155Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:14:07.165Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:14:19.827Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:14:29.840Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:14:29.840Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:14:39.866Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:14:57.758Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:14:57.758Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:15:07.769Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:15:19.832Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:15:29.846Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:15:29.846Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:15:39.860Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:15:57.882Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:15:57.882Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:16:07.913Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:16:19.842Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:16:29.856Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:16:29.856Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:16:39.892Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:16:57.804Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:16:57.806Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:17:07.833Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:17:19.853Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:17:29.868Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:17:29.868Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:17:39.881Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:17:58.283Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:17:58.285Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:18:08.302Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:18:19.859Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:18:29.875Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:18:29.875Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:18:39.901Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:18:58.344Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:18:58.344Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:19:08.373Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:19:19.861Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:19:29.877Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:19:29.877Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
+2026-06-04T19:19:39.897Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:19:59.272Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:19:59.273Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for ETH: $3500
+2026-06-04T19:20:09.294Z [33mwarn[39m: [ADAPTER FIX] Wayfinder funding fetch failed for ETH: spawnSync /bin/sh ETIMEDOUT
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:20:19.875Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:20:29.897Z [33mwarn[39m: [ADAPTER FIX] Wayfinder price fetch failed for BTC: spawnSync /bin/sh ETIMEDOUT
+2026-06-04T19:20:29.897Z [33mwarn[39m: [ADAPTER FIX] Using fallback price for BTC: $65000
