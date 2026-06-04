@@ -1,0 +1,178 @@
+╔════════════════════════════════════════════════╗
+║  SEQUENTIAL 90-DAY BACKTEST - TOP 10 COINS     ║
+╚════════════════════════════════════════════════╝
+
+Coins: BTC-PERP, ETH-PERP, SOL-PERP, HYPE-PERP, ARB-PERP, OP-PERP, LINK-PERP, AVAX-PERP, NEAR-PERP, UNI-PERP
+Configurations: Conservative, Moderate, Aggressive, High-Risk
+Total combinations: 40
+Estimated time: ~2 hours
+
+Running sequentially to avoid system overload...
+
+
+📊 BTC-PERP (1/40)
+────────────────────────────────────────────────────────────
+
+[BTC-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[BTC-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[BTC-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[BTC-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 ETH-PERP (6/40)
+────────────────────────────────────────────────────────────
+
+[ETH-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[ETH-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[ETH-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[ETH-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 SOL-PERP (11/40)
+────────────────────────────────────────────────────────────
+
+[SOL-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[SOL-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[SOL-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[SOL-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 HYPE-PERP (16/40)
+────────────────────────────────────────────────────────────
+
+[HYPE-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[HYPE-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[HYPE-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[HYPE-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 ARB-PERP (21/40)
+────────────────────────────────────────────────────────────
+
+[ARB-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[ARB-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[ARB-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[ARB-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 OP-PERP (26/40)
+────────────────────────────────────────────────────────────
+
+[OP-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[OP-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[OP-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[OP-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 LINK-PERP (31/40)
+────────────────────────────────────────────────────────────
+
+[LINK-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[LINK-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[LINK-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[LINK-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 AVAX-PERP (36/40)
+────────────────────────────────────────────────────────────
+
+[AVAX-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[AVAX-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[AVAX-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[AVAX-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 NEAR-PERP (41/40)
+────────────────────────────────────────────────────────────
+
+[NEAR-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[NEAR-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[NEAR-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[NEAR-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 UNI-PERP (46/40)
+────────────────────────────────────────────────────────────
+
+[UNI-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[UNI-PERP] Testing Moderate (lev:3x, pos:8%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[UNI-PERP] Testing Aggressive (lev:5x, pos:12%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[UNI-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+
+╔════════════════════════════════════════════════╗
+║           BACKTEST REPORT                      ║
+╚════════════════════════════════════════════════╝
+
+🏆 TOP 10 BY TOTAL P&L:
+
+⚖️  TOP 10 BY SHARPE RATIO:
+
+📊 CONFIGURATION SUMMARY:
+  Conservative | Avg PnL: $     NaN | Avg Sharpe: NaN
+  Moderate     | Avg PnL: $     NaN | Avg Sharpe: NaN
+  Aggressive   | Avg PnL: $     NaN | Avg Sharpe: NaN
+  High-Risk    | Avg PnL: $     NaN | Avg Sharpe: NaN
+
+📄 Full report saved: /home/clawdbot/.openclaw/workspace/HyperLiquidAlgoBot/backtest-results/backtest-report-1780564732641.json
