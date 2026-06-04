@@ -1,0 +1,89 @@
+{
+    "wayfinder": {
+        "enabled": true,
+        "sdkPath": "",
+        "walletLabel": "main",
+        "dryRun": false
+    },
+    "trading": {
+        "market": "BTC-PERP",
+        "timeframe": "15m",
+        "leverage": 5,
+        "positionSize": 0.1,
+        "profitTarget": 1.5,
+        "leverageMode": "isolated",
+        "useWayfinder": true
+    },
+    "indicators": {
+        "rsi": {
+            "period": 14,
+            "overbought": 75,
+            "oversold": 25
+        },
+        "bollinger": {
+            "period": 20,
+            "stdDev": 2
+        },
+        "adx": {
+            "period": 14,
+            "threshold": 25
+        }
+    },
+    "enhanced": {
+        "enabled": true,
+        "useFundingFilter": true,
+        "fundingLongThreshold": 0.0001,
+        "fundingShortThreshold": 0.0001,
+        "fundingLookbackDays": 7,
+        "useVolatilityFilter": false,
+        "maxVolatility": 0.05,
+        "useRegimeDetection": false
+    },
+    "ml": {
+        "enabled": true,
+        "modelType": "xgboost",
+        "datasetSize": 1000,
+        "targetMetric": "totalProfitLoss",
+        "featureImportanceMethod": "shap",
+        "retrainInterval": 86400,
+        "parameterRanges": {
+            "rsiPeriod": { "min": 5, "max": 30, "step": 1, "type": "int" },
+            "rsiOverbought": { "min": 65, "max": 85, "step": 1, "type": "int" },
+            "rsiOversold": { "min": 15, "max": 35, "step": 1, "type": "int" },
+            "bbPeriod": { "min": 10, "max": 50, "step": 2, "type": "int" },
+            "bbStdDev": { "min": 1.5, "max": 3.5, "step": 0.1, "type": "float" },
+            "adxPeriod": { "min": 7, "max": 30, "step": 1, "type": "int" },
+            "adxThreshold": { "min": 15, "max": 35, "step": 1, "type": "int" },
+            "leverage": { "min": 1, "max": 10, "step": 1, "type": "int" },
+            "positionSize": { "min": 0.05, "max": 0.5, "step": 0.05, "type": "float" },
+            "profitTarget": { "min": 1.1, "max": 3.0, "step": 0.1, "type": "float" }
+        },
+        "technicalIndicators": [
+            "rsi",
+            "bollinger_bands",
+            "adx",
+            "macd",
+            "ema",
+            "atr",
+            "obv",
+            "vwap",
+            "price_change"
+        ]
+    },
+    "risk": {
+        "maxLeverage": 10,
+        "maxPositionSize": 0.5,
+        "maxDailyLoss": 0.05,
+        "useStopLoss": true,
+        "stopLossPct": 2.0,
+        "useTakeProfit": true,
+        "takeProfitPct": 3.0,
+        "maxConcurrentPositions": 3
+    },
+    "backtest": {
+        "initialCapital": 1000,
+        "tradingFee": 0.001,
+        "slippage": 0.001,
+        "dataSource": "hyperliquid"
+    }
+}
