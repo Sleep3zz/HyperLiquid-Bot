@@ -1,0 +1,19 @@
+2026-06-04T18:38:39.524Z [32minfo[39m: Strategy initialized with parameters:
+2026-06-04T18:38:39.536Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T18:38:39.536Z [32minfo[39m: [ML] Found ML models directory
+2026-06-04T18:38:39.543Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:39:25.815Z [31merror[39m: Error evaluating position
+2026-06-04T18:39:25.821Z [31merror[39m: [STRATEGY] Error evaluating BTC-PERP:
+2026-06-04T18:40:09.950Z [31merror[39m: Error evaluating position
+2026-06-04T18:40:09.951Z [31merror[39m: [STRATEGY] Error evaluating ETH-PERP:
+2026-06-04T18:40:09.951Z [32minfo[39m: Paper trading started. Interval: 60000ms
+2026-06-04T18:41:10.003Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:41:52.146Z [31merror[39m: Error evaluating position
+2026-06-04T18:41:52.148Z [31merror[39m: [STRATEGY] Error evaluating BTC-PERP:
+2026-06-04T18:42:35.562Z [31merror[39m: Error evaluating position
+2026-06-04T18:42:35.564Z [31merror[39m: [STRATEGY] Error evaluating ETH-PERP:
+2026-06-04T18:42:35.569Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T18:43:18.355Z [31merror[39m: Error evaluating position
+2026-06-04T18:43:18.355Z [31merror[39m: [STRATEGY] Error evaluating BTC-PERP:
+2026-06-04T18:44:04.288Z [31merror[39m: Error evaluating position
+2026-06-04T18:44:04.288Z [31merror[39m: [STRATEGY] Error evaluating ETH-PERP:

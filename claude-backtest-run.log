@@ -23,3 +23,9 @@ Running sequentially to avoid system overload...
   ✗ Error: spawnSync /bin/sh ETIMEDOUT
 
 [BTC-PERP] Testing High-Risk (lev:10x, pos:20%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+📊 ETH-PERP (6/40)
+────────────────────────────────────────────────────────────
+
+[ETH-PERP] Testing Conservative (lev:2x, pos:5%)...

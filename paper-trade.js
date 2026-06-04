@@ -13,6 +13,7 @@ const PaperTradingEngine = require('./src/paper-trading/engine');
 const BBRSIStrategy = require('./src/strategy/BBRSIStrategy');
 const RiskManager = require('./src/backtesting/RiskManager');
 const MLOptimizer = require('./src/backtesting/ml_optimizer');
+const WayfinderAdapterFix = require('./src/wayfinder/adapter-fix');
 const winston = require('winston');
 
 // Setup logging
@@ -55,6 +56,9 @@ class PaperTradingRunner {
             logger: this.logger
         });
 
+        // Initialize Wayfinder adapter with error handling
+        this.adapter = new WayfinderAdapterFix({ logger: this.logger });
+
         // Configuration
         this.symbols = config.symbols || ['BTC-PERP', 'ETH-PERP'];
         this.timeframe = config.timeframe || '15m';
@@ -92,16 +96,14 @@ class PaperTradingRunner {
     }
 
     /**
-     * Fetch market data (native implementation)
+     * Fetch market data (native implementation with adapter fix)
      */
     async fetchMarketData(symbol) {
         try {
-            // Use wayfinder to get price
-            const wayfinder = require('./src/wayfinder/wayfinder-cmds');
-            const commander = new wayfinder();
-            
-            const price = await commander.getPrice(symbol.replace('-PERP', ''));
-            const fundingRate = await commander.getFundingRate(symbol.replace('-PERP', ''));
+            // Use adapter fix to handle Wayfinder SDK errors
+            const baseSymbol = symbol.replace('-PERP', '');
+            const price = await this.adapter.getPrice(baseSymbol);
+            const fundingRate = await this.adapter.getFundingRate(baseSymbol);
 
             return {
                 symbol,
