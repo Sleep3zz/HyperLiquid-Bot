@@ -13,7 +13,7 @@ const PaperTradingEngine = require('./src/paper-trading/engine');
 const BBRSIStrategy = require('./src/strategy/BBRSIStrategy');
 const RiskManager = require('./src/backtesting/RiskManager');
 const MLOptimizer = require('./src/backtesting/ml_optimizer');
-const WayfinderAdapterFixed = require('./src/wayfinder/adapter-fixed-ws');
+const WayfinderAdapterFinal = require('./src/wayfinder/adapter-final');
 const winston = require('winston');
 
 // Setup logging
@@ -56,8 +56,8 @@ class PaperTradingRunner {
             logger: this.logger
         });
 
-        // Initialize WebSocket-based price feed (NO FALLBACKS - real prices only)
-        this.adapter = new WayfinderAdapterFixed({ logger: this.logger });
+        // Initialize REST API-based price feed (NO FALLBACKS - real prices only)
+        this.adapter = new WayfinderAdapterFinal({ logger: this.logger });
 
         // Configuration
         this.symbols = config.symbols || ['BTC-PERP', 'ETH-PERP'];
