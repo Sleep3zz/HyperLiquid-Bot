@@ -30,10 +30,24 @@ class DeltaLabClient {
                 cwd: this.sdkPath,
                 timeout: 30000 
             });
-            return JSON.parse(result);
+            
+            // Handle empty results
+            if (!result || result.trim() === '') {
+                return null;
+            }
+            
+            const parsed = JSON.parse(result);
+            
+            // Handle wrapped responses from wayfinder_paths
+            if (parsed && parsed.data !== undefined) {
+                return parsed.data;
+            }
+            
+            return parsed;
         } catch (error) {
             this.logger.error(`Delta Lab query failed for ${uri}:`, error.message);
-            throw error;
+            // Return null instead of throwing to allow graceful degradation
+            return null;
         }
     }
 
@@ -63,13 +77,27 @@ class DeltaLabClient {
         return this._getCached(cacheKey, () => {
             const data = this._executeResource('wayfinder://hyperliquid/markets');
             
-            if (symbol) {
-                const market = data.find(m => m.coin === symbol || m.symbol === symbol);
-                return market || null;
+            // Handle null/undefined response
+            if (!data) {
+                return [];
             }
             
-            // Sort by funding rate (highest first)
-            return data.sort((a, b) => (b.funding_rate || 0) - (a.funding_rate || 0));
+            // Handle array response
+            if (Array.isArray(data)) {
+                if (symbol) {
+                    const market = data.find(m => m.coin === symbol || m.symbol === symbol);
+                    return market || null;
+                }
+                // Sort by funding rate (highest first)
+                return data.sort((a, b) => (b.funding_rate || 0) - (a.funding_rate || 0));
+            }
+            
+            // Handle single object response
+            if (symbol && (data.coin === symbol || data.symbol === symbol)) {
+                return data;
+            }
+            
+            return [];
         });
     }
 
