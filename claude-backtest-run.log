@@ -1,0 +1,19 @@
+╔════════════════════════════════════════════════╗
+║  SEQUENTIAL 90-DAY BACKTEST - TOP 10 COINS     ║
+╚════════════════════════════════════════════════╝
+
+Coins: BTC-PERP, ETH-PERP, SOL-PERP, HYPE-PERP, ARB-PERP, OP-PERP, LINK-PERP, AVAX-PERP, NEAR-PERP, UNI-PERP
+Configurations: Conservative, Moderate, Aggressive, High-Risk
+Total combinations: 40
+Estimated time: ~2 hours
+
+Running sequentially to avoid system overload...
+
+
+📊 BTC-PERP (1/40)
+────────────────────────────────────────────────────────────
+
+[BTC-PERP] Testing Conservative (lev:2x, pos:5%)...
+  ✗ Error: spawnSync /bin/sh ETIMEDOUT
+
+[BTC-PERP] Testing Moderate (lev:3x, pos:8%)...
