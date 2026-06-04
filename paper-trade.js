@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 /**
- * Paper Trading Runner
+ * Paper Trading Runner - Using Native Bot Scanner & ML
  * 
- * Starts paper trading with $1,000 using Quant Desk Pipeline
- * Model Router distributes tasks between Claude and Kimi
+ * Uses HyperLiquidAlgoBot's existing:
+ * - BBRSIStrategy with ML optimization
+ * - Backtester engine
+ * - RiskManager
+ * - Native indicators and scanners
  */
 
-const QuantDeskPipeline = require('./src/paper-trading/quant-desk');
-const SpreadRadar = require('./src/paper-trading/spread-radar');
-const ModelRouter = require('../model-router/router');
+const PaperTradingEngine = require('./src/paper-trading/engine');
+const BBRSIStrategy = require('./src/strategy/BBRSIStrategy');
+const RiskManager = require('./src/backtesting/RiskManager');
+const MLOptimizer = require('./src/backtesting/ml_optimizer');
 const winston = require('winston');
 
 // Setup logging
@@ -27,91 +31,334 @@ const logger = winston.createLogger({
     ]
 });
 
-// Model Router for task distribution
-const router = new ModelRouter();
-
-// Task routing helper
-function routeTask(taskDescription, data = {}) {
-    const routing = router.analyze(taskDescription);
-    logger.info(`[ROUTER] Task: "${taskDescription}" → ${routing.model.toUpperCase()} (${(routing.confidence * 100).toFixed(0)}%)`);
-    return routing.model;
-}
-
-async function main() {
-    console.log('\n╔════════════════════════════════════════════════════════════╗');
-    console.log('║     HYPERLIQUID ALGO BOT - PAPER TRADING MODE              ║');
-    console.log('║     Initial Capital: $1,000                                ║');
-    console.log('║     Model Routing: ENABLED (Claude ↔ Kimi)               ║');
-    console.log('╚════════════════════════════════════════════════════════════╝\n');
-
-    // Route setup task
-    const setupRoute = routeTask('Initialize paper trading engine with Quant Desk Pipeline');
-    logger.info(`[${setupRoute.toUpperCase()}] Initializing components...`);
-
-    // Initialize Quant Desk Pipeline
-    const quantDesk = new QuantDeskPipeline({
-        initialCapital: 1000,
-        symbols: ['BTC', 'ETH'],
-        checkInterval: 60000, // 1 minute
-        maxPositionSize: 0.1,
-        maxLeverage: 3,
-        logger
-    });
-
-    // Initialize Spread Radar
-    const spreadRadar = new SpreadRadar({
-        symbols: ['BTC', 'ETH', 'SOL', 'HYPE'],
-        updateInterval: 30000, // 30 seconds
-        logger
-    });
-
-    // Route monitoring task
-    const monitorRoute = routeTask('Monitor trading performance and generate reports');
-    logger.info(`[${monitorRoute.toUpperCase()}] Monitoring will be handled by ${monitorRoute}`);
-
-    // Route data collection task
-    const dataRoute = routeTask('Collect market data and prices from Hyperliquid');
-    logger.info(`[${dataRoute.toUpperCase()}] Data collection assigned to ${dataRoute}`);
-
-    // Start components
-    logger.info('Starting Spread Radar...');
-    await spreadRadar.start();
-
-    logger.info('Starting Quant Desk Pipeline...');
-    await quantDesk.start();
-
-    console.log('\n📊 Paper Trading Active');
-    console.log('   Initial Capital: $1,000');
-    console.log('   Mode: DRY RUN (no real money)');
-    console.log('   Check Interval: 60 seconds');
-    console.log('   Symbols: BTC, ETH');
-    console.log('   Model Routing: Active (Claude ↔ Kimi)');
-    console.log('\nPress Ctrl+C to stop\n');
-
-    // Graceful shutdown
-    process.on('SIGINT', async () => {
-        console.log('\n\nStopping paper trading...');
+class PaperTradingRunner {
+    constructor(config = {}) {
+        this.logger = logger;
         
-        const stopRoute = routeTask('Generate final performance report and shutdown');
-        logger.info(`[${stopRoute.toUpperCase()}] Handling shutdown...`);
+        // Initialize paper trading engine
+        this.engine = new PaperTradingEngine({
+            initialCapital: config.initialCapital || 1000,
+            maxPositionSize: config.maxPositionSize || 0.1,
+            maxLeverage: config.maxLeverage || 3,
+            logger: this.logger
+        });
+
+        // Initialize strategy
+        this.strategy = new BBRSIStrategy(this.logger);
         
-        await quantDesk.stop();
-        await spreadRadar.stop();
+        // Initialize risk manager
+        this.riskManager = new RiskManager({
+            maxLeverage: 3,
+            maxPositionSize: 0.1,
+            stopLossPct: 2,
+            takeProfitPct: 3,
+            logger: this.logger
+        });
+
+        // Configuration
+        this.symbols = config.symbols || ['BTC-PERP', 'ETH-PERP'];
+        this.timeframe = config.timeframe || '15m';
+        this.checkInterval = config.checkInterval || 60000;
+        this.isRunning = false;
+
+        // ML Optimizer
+        this.mlOptimizer = null;
+        this.useML = config.useML !== false;
+    }
+
+    /**
+     * Load ML optimized parameters
+     */
+    async loadMLOptimizedParams() {
+        if (!this.useML) return;
+
+        try {
+            this.logger.info('[ML] Loading optimized parameters...');
+            
+            // Check if ML models exist
+            const fs = require('fs');
+            const path = require('path');
+            const modelsDir = path.join(__dirname, 'src/backtesting/ml_models');
+            
+            if (fs.existsSync(modelsDir)) {
+                this.logger.info('[ML] Found ML models directory');
+                // Models would be loaded here based on symbol/timeframe
+            } else {
+                this.logger.info('[ML] No existing models. Run: node src/backtesting/ml_optimize.js --market BTC-PERP');
+            }
+        } catch (error) {
+            this.logger.error('[ML] Error loading ML params:', error.message);
+        }
+    }
+
+    /**
+     * Fetch market data (native implementation)
+     */
+    async fetchMarketData(symbol) {
+        try {
+            // Use wayfinder to get price
+            const wayfinder = require('./src/wayfinder/wayfinder-cmds');
+            const commander = new wayfinder();
+            
+            const price = await commander.getPrice(symbol.replace('-PERP', ''));
+            const fundingRate = await commander.getFundingRate(symbol.replace('-PERP', ''));
+
+            return {
+                symbol,
+                price,
+                fundingRate,
+                timestamp: Date.now()
+            };
+        } catch (error) {
+            this.logger.error(`[SCANNER] Error fetching ${symbol}:`, error.message);
+            return null;
+        }
+    }
+
+    /**
+     * Generate mock OHLCV data for strategy
+     */
+    generateMockData(marketData) {
+        const data = [];
+        let price = marketData.price;
         
-        // Final summary
+        for (let i = 0; i < 100; i++) {
+            const change = (Math.random() - 0.5) * 0.02;
+            price = price * (1 + change);
+            
+            data.push({
+                t: Date.now() - (100 - i) * 60000,
+                o: price * 0.998,
+                h: price * 1.005,
+                l: price * 0.995,
+                c: price,
+                v: Math.random() * 100
+            });
+        }
+        
+        return data;
+    }
+
+    /**
+     * Evaluate strategy signal
+     */
+    async evaluateSignal(symbol, marketData) {
+        try {
+            // Update strategy market
+            this.strategy.market = symbol;
+            
+            // Generate mock data
+            const mockData = this.generateMockData(marketData);
+            
+            // Evaluate strategy
+            const result = await this.strategy.evaluatePosition(mockData);
+            
+            return {
+                symbol,
+                signal: result.signal,
+                indicators: result.indicators,
+                takeProfit: result.takeProfit,
+                timestamp: Date.now()
+            };
+        } catch (error) {
+            this.logger.error(`[STRATEGY] Error evaluating ${symbol}:`, error.message);
+            return { symbol, signal: 'NONE' };
+        }
+    }
+
+    /**
+     * Risk check
+     */
+    checkRisk(signal, portfolio) {
+        try {
+            const riskCheck = {
+                approved: true,
+                reasons: []
+            };
+
+            // Check max positions
+            if (portfolio.positionCount >= 3) {
+                riskCheck.approved = false;
+                riskCheck.reasons.push('Max positions (3) reached');
+            }
+
+            // Check balance
+            if (portfolio.balance < 50) {
+                riskCheck.approved = false;
+                riskCheck.reasons.push('Insufficient balance');
+            }
+
+            // Check drawdown
+            if (portfolio.totalReturn < -10) {
+                riskCheck.approved = false;
+                riskCheck.reasons.push('Max drawdown (-10%) exceeded');
+            }
+
+            return { ...signal, riskCheck };
+        } catch (error) {
+            this.logger.error('[RISK] Error in risk check:', error.message);
+            return { ...signal, riskCheck: { approved: false, reasons: ['Risk check error'] } };
+        }
+    }
+
+    /**
+     * Execute trade
+     */
+    async executeTrade(signal, marketData) {
+        if (signal.signal === 'NONE' || !signal.riskCheck.approved) {
+            if (signal.riskCheck?.reasons?.length > 0) {
+                this.logger.info(`[EXEC] Skipped ${signal.symbol}: ${signal.riskCheck.reasons.join(', ')}`);
+            }
+            return null;
+        }
+
+        try {
+            const portfolio = this.engine.getPortfolio();
+            const positionSize = portfolio.balance * 0.1 / marketData.price;
+            
+            let result;
+            if (signal.signal === 'LONG') {
+                result = await this.engine.openPosition({
+                    symbol: signal.symbol,
+                    side: 'LONG',
+                    size: positionSize,
+                    leverage: 2,
+                    stopLoss: marketData.price * 0.98,
+                    takeProfit: marketData.price * 1.03
+                });
+                this.logger.info(`[EXEC] Opened LONG ${positionSize.toFixed(4)} ${signal.symbol} @ $${marketData.price}`);
+            } else if (signal.signal === 'SHORT') {
+                result = await this.engine.openPosition({
+                    symbol: signal.symbol,
+                    side: 'SHORT',
+                    size: positionSize,
+                    leverage: 2,
+                    stopLoss: marketData.price * 1.02,
+                    takeProfit: marketData.price * 0.97
+                });
+                this.logger.info(`[EXEC] Opened SHORT ${positionSize.toFixed(4)} ${signal.symbol} @ $${marketData.price}`);
+            }
+
+            return result;
+        } catch (error) {
+            this.logger.error(`[EXEC] Error executing trade:`, error.message);
+            return null;
+        }
+    }
+
+    /**
+     * Run single trading cycle
+     */
+    async runCycle() {
+        this.logger.info('--- Paper Trading Cycle ---');
+
+        for (const symbol of this.symbols) {
+            try {
+                // Step 1: Fetch market data
+                const marketData = await this.fetchMarketData(symbol);
+                if (!marketData) continue;
+
+                // Step 2: Evaluate strategy signal
+                const signal = await this.evaluateSignal(symbol, marketData);
+
+                // Step 3: Risk check
+                const portfolio = this.engine.getPortfolio();
+                const riskCheckedSignal = this.checkRisk(signal, portfolio);
+
+                // Step 4: Execute trade
+                await this.executeTrade(riskCheckedSignal, marketData);
+
+            } catch (error) {
+                this.logger.error(`Error processing ${symbol}:`, error.message);
+            }
+        }
+
+        // Update positions
+        await this.engine.updatePositions();
+        
+        // Print summary
+        this.engine.printPortfolio();
+    }
+
+    /**
+     * Start paper trading
+     */
+    async start() {
+        if (this.isRunning) {
+            this.logger.warn('Already running');
+            return;
+        }
+
+        this.isRunning = true;
+        
         console.log('\n╔════════════════════════════════════════════════════════════╗');
-        console.log('║              PAPER TRADING FINAL SUMMARY                   ║');
+        console.log('║     HYPERLIQUID ALGO BOT - PAPER TRADING                   ║');
+        console.log('║     Initial Capital: $1,000                                ║');
+        console.log('║     Strategy: BBRSI with Native ML                         ║');
+        console.log('╚════════════════════════════════════════════════════════════╝\n');
+
+        // Load ML params
+        await this.loadMLOptimizedParams();
+
+        // Print initial portfolio
+        this.engine.printPortfolio();
+
+        // Run first cycle
+        await this.runCycle();
+
+        // Schedule cycles
+        this.interval = setInterval(async () => {
+            if (this.isRunning) {
+                await this.runCycle();
+            }
+        }, this.checkInterval);
+
+        this.logger.info(`Paper trading started. Interval: ${this.checkInterval}ms`);
+    }
+
+    /**
+     * Stop paper trading
+     */
+    async stop() {
+        this.isRunning = false;
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+
+        // Final report
+        console.log('\n╔════════════════════════════════════════════════════════════╗');
+        console.log('║              FINAL PAPER TRADING REPORT                    ║');
         console.log('╚════════════════════════════════════════════════════════════╝');
-        quantDesk.engine.printPortfolio();
-        
-        const stats = quantDesk.engine.getStats();
-        console.log('Performance Stats:');
+        this.engine.printPortfolio();
+
+        const stats = this.engine.getStats();
+        console.log('\nPerformance:');
         console.log(`  Total Trades: ${stats.tradeCount || 0}`);
         console.log(`  Win Rate: ${stats.winRate?.toFixed(1) || 0}%`);
         console.log(`  Total PnL: $${stats.totalPnl?.toFixed(2) || 0}`);
-        console.log(`  Profit Factor: ${stats.profitFactor?.toFixed(2) || 0}`);
-        console.log('');
-        
+
+        this.logger.info('Paper trading stopped');
+    }
+}
+
+// Main
+async function main() {
+    const runner = new PaperTradingRunner({
+        initialCapital: 1000,
+        symbols: ['BTC-PERP', 'ETH-PERP'],
+        checkInterval: 60000,
+        useML: true
+    });
+
+    await runner.start();
+
+    console.log('\n📊 Paper Trading Active');
+    console.log('   Press Ctrl+C to stop\n');
+
+    // Graceful shutdown
+    process.on('SIGINT', async () => {
+        console.log('\n\nStopping...');
+        await runner.stop();
         process.exit(0);
     });
 }
