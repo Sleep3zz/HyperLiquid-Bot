@@ -287,3 +287,8 @@
 2026-06-04T19:24:40.167Z [32minfo[39m: [HL WS] Subscription confirmed:
 2026-06-04T19:24:41.602Z [32minfo[39m: [HL WS] Subscribed to ETH
 2026-06-04T19:24:42.082Z [32minfo[39m: Paper trading started. Interval: 60000ms
+2026-06-04T19:29:19.333Z [32minfo[39m: Strategy initialized with parameters:
+2026-06-04T19:29:19.335Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T19:29:19.335Z [32minfo[39m: [ML] Found ML models directory
+2026-06-04T19:29:19.337Z [32minfo[39m: --- Paper Trading Cycle ---
+2026-06-04T19:29:20.620Z [32minfo[39m: Paper trading started. Interval: 60000ms

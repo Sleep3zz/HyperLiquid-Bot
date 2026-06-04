@@ -1,0 +1,40 @@
+2026-06-04T19:29:19.333Z [32minfo[39m: Strategy initialized with parameters:
+
+╔════════════════════════════════════════════════════════════╗
+║     HYPERLIQUID ALGO BOT - PAPER TRADING                   ║
+║     Initial Capital: $1,000                                ║
+║     Strategy: BBRSI with Native ML                         ║
+╚════════════════════════════════════════════════════════════╝
+
+2026-06-04T19:29:19.335Z [32minfo[39m: [ML] Loading optimized parameters...
+2026-06-04T19:29:19.335Z [32minfo[39m: [ML] Found ML models directory
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:29:19.337Z [32minfo[39m: --- Paper Trading Cycle ---
+
+╔════════════════════════════════════════════════╗
+║        Paper Trading Portfolio ($1,000)        ║
+╚════════════════════════════════════════════════╝
+Balance:        $1000.00
+Margin Used:    $0.00
+Unrealized PnL: $0.00
+Total Value:    $1000.00
+Total Return:   0.00%
+Positions:      0
+Trades:         0
+
+2026-06-04T19:29:20.620Z [32minfo[39m: Paper trading started. Interval: 60000ms
+
+📊 Paper Trading Active
+   Press Ctrl+C to stop
+
