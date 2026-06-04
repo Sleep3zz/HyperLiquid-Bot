@@ -1,0 +1,169 @@
+{
+  "paperTrading": {
+    "enabled": true,
+    "initialCapital": 1000,
+    "mode": "dry_run",
+    "description": "Paper trading with $1,000 initial capital using ML-enhanced strategies"
+  },
+  
+  "modelRouting": {
+    "enabled": true,
+    "assignments": {
+      "marketAnalysis": "claude",
+      "signalGeneration": "claude",
+      "riskManagement": "claude",
+      "dataCollection": "kimi",
+      "tradeExecution": "kimi",
+      "performanceMonitoring": "claude",
+      "opportunityScanning": "kimi"
+    },
+    "routingRules": {
+      "claude": {
+        "tasks": [
+          "Strategy design and optimization",
+          "ML model configuration",
+          "Risk assessment and management",
+          "Performance analysis",
+          "Complex debugging",
+          "Trade review and analysis"
+        ],
+        "threshold": "high_complexity"
+      },
+      "kimi": {
+        "tasks": [
+          "Price data fetching",
+          "Order book scanning",
+          "Routine trade execution",
+          "Position updates",
+          "Opportunity monitoring",
+          "Data aggregation"
+        ],
+        "threshold": "high_frequency"
+      }
+    }
+  },
+
+  "quantDesk": {
+    "enabled": true,
+    "name": "Quant Desk Pipeline",
+    "description": "Systematic trading with ML enhancement",
+    
+    "trading": {
+      "symbols": ["BTC", "ETH"],
+      "timeframes": ["15m"],
+      "checkInterval": 60000,
+      "maxPositions": 3,
+      "maxLeverage": 3,
+      "maxPositionSize": 0.1
+    },
+    
+    "strategy": {
+      "name": "Enhanced BBRSI",
+      "indicators": {
+        "rsi": { "period": 14, "overbought": 70, "oversold": 30 },
+        "bollinger": { "period": 20, "stdDev": 2 },
+        "adx": { "period": 14, "threshold": 25 }
+      },
+      "filters": {
+        "useFundingFilter": true,
+        "fundingLongThreshold": 0.0001,
+        "fundingShortThreshold": 0.0001,
+        "useVolatilityFilter": true,
+        "maxVolatility": 0.03
+      }
+    },
+    
+    "risk": {
+      "stopLoss": 0.02,
+      "takeProfit": 0.03,
+      "maxDrawdown": 0.1,
+      "dailyLossLimit": 50
+    }
+  },
+
+  "spreadRadar": {
+    "enabled": true,
+    "name": "Spread Radar",
+    "description": "Real-time opportunity monitoring",
+    
+    "monitoring": {
+      "symbols": ["BTC", "ETH", "SOL", "HYPE"],
+      "updateInterval": 30000,
+      "minSpread": 0.001
+    },
+    
+    "opportunities": {
+      "funding": {
+        "enabled": true,
+        "threshold": 0.0005,
+        "lookback": 10
+      },
+      "volatility": {
+        "enabled": true,
+        "threshold": 0.001,
+        "lookback": 20
+      },
+      "momentum": {
+        "enabled": true,
+        "threshold": 0.005,
+        "lookback": 10
+      }
+    },
+
+    "alerts": {
+      "enabled": true,
+      "minScore": 10,
+      "cooldown": 60000
+    }
+  },
+
+  "mlOptimization": {
+    "enabled": true,
+    "description": "ML-enhanced parameter optimization",
+    
+    "models": {
+      "primary": "xgboost",
+      "fallback": "randomforest"
+    },
+    
+    "features": [
+      "rsi",
+      "bollinger_bands",
+      "adx",
+      "macd",
+      "ema",
+      "atr",
+      "funding_rate",
+      "volatility"
+    ],
+    
+    "optimization": {
+      "datasetSize": 1000,
+      "targetMetric": "sharpe_ratio",
+      "retrainInterval": 86400
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "files": {
+      "main": "paper-trading.log",
+      "quantDesk": "quant-desk.log",
+      "spreadRadar": "spread-radar.log",
+      "trades": "trades.log"
+    }
+  },
+
+  "reporting": {
+    "enabled": true,
+    "interval": 300000,
+    "metrics": [
+      "total_return",
+      "sharpe_ratio",
+      "max_drawdown",
+      "win_rate",
+      "profit_factor",
+      "avg_trade_duration"
+    ]
+  }
+}
