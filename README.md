@@ -1,266 +1,130 @@
-# Hyperliquid Algo Trading Bot
+# HyperLiquidAlgoBot
 
-An advanced algorithmic trading bot for the Hyperliquid DEX, featuring a Bollinger Bands + RSI + ADX strategy, comprehensive backtesting framework, and machine learning optimization capabilities. This bot is designed for algorithmic trading on perpetual futures contracts, with a focus on automated strategy execution and optimization.
+An advanced algorithmic trading bot for the HyperLiquid DEX, featuring Bollinger Bands + RSI + ADX strategy, comprehensive backtesting framework, and machine learning optimization capabilities.
 
 ## Features
 
-- **Multiple Trading Strategies**:
+### 🎯 Trading Strategies
+- **BBRSI Strategy**: Bollinger Bands + RSI + ADX combined
+  - Long: RSI < 30 + Price < Lower Band + ADX > 25
+  - Short: RSI > 70 + Price > Upper Band + ADX > 25
+- **ML-Enhanced Strategy**: XGBoost/Random Forest optimized parameters
 
-    - Bollinger Bands + RSI + ADX strategy (BBRSI)
-    - ML-enhanced strategies with optimized parameters
-    - Customizable entry/exit conditions
+### 📊 Backtesting System
+- **Multi-Symbol Testing**: BTC, ETH, SOL, HYPE, ARB, OP, LINK, AVAX, NEAR, UNI
+- **Multiple Timeframes**: 1m, 15m, 1h, 4h
+- **Performance Metrics**: Sharpe ratio, max drawdown, win rate, profit factor
+- **ML Optimization**: Automated parameter tuning
 
-- **Advanced Backtesting System**:
+### 🎮 Paper Trading
+- **Virtual Portfolio**: $1,000 initial capital
+- **Real-time Simulation**: Test strategies without real money
+- **Risk Management**: 2% stop-loss, 3% take-profit, max 3 positions
 
-    - Historical data analysis with realistic trade simulation
-    - Performance metrics and statistics
-    - Visualization of equity curves and trade performance
-    - Multi-symbol testing capabilities
-    - Risk management analysis
+### 📈 Visualization
+- Equity curve charts
+- Trade performance analysis
+- Drawdown visualization
+- Interactive HTML reports
 
-- **Machine Learning Optimization**:
+## Quick Start
 
-    - Automated parameter optimization using ML models
-    - Feature importance analysis
-    - Support for different ML models (Random Forest, XGBoost, Neural Networks)
-    - Optimized strategy parameter generation
-
-- **Risk Management**:
-
-    - Configurable position sizing
-    - Take profit mechanisms
-    - Liquidation prevention
-    - Performance analysis
-
-- **Visualization Tools**:
-    - Equity curve visualization
-    - Trade performance charts
-    - Drawdown analysis
-    - Interactive HTML reports
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- npm (Node Package Manager)
-- Python 3.x (for ML optimization features)
-- Python packages: numpy, pandas, scikit-learn, xgboost, shap, matplotlib
-
-## Installation
-
-1. Clone the repository:
-
-    ```bash
-    git clone <repository-url>
-    cd hyperliquidalgobot
-    ```
-
-2. Install Node.js dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3. Install Python dependencies (for ML features):
-
-    ```bash
-    pip install numpy pandas scikit-learn xgboost shap matplotlib
-    ```
-
-4. Create a `.env` file in the root directory:
-    ```env
-    PRIVATE_KEY=your_private_key_here
-    ```
-
-## Configuration
-
-The bot's behavior can be customized through the configuration files in the `config/` directory:
-
-- `default.json`: Default trading settings
-- `backtest.json`: Specific settings for backtesting
-
-### Key Configuration Parameters
-
-**Trading Parameters:**
-
-- `market`: Trading pair (default: BTC-PERP)
-- `positionSize`: Position size as a decimal (e.g., 0.1 for 10%)
-- `leverage`: Trading leverage
-- `timeframe`: Candlestick interval
-- `profitTarget`: Take profit percentage
-
-**Indicator Parameters:**
-
-- RSI settings: period, overbought, oversold levels
-- Bollinger Bands settings: period, standard deviation
-- ADX settings: period, threshold
-
-## Usage
-
-### Live Trading
-
-Start the trading bot (not fully implemented yet):
-
+### Installation
 ```bash
-npm start
+npm install
+pip install numpy pandas scikit-learn xgboost shap matplotlib
 ```
 
-### Backtesting
-
-Run a backtest with default settings:
-
+### Configuration
+Create `.env`:
 ```bash
-npm run backtest
+PRIVATE_KEY=your_hyperliquid_private_key
 ```
 
-Run a backtest with specific configuration:
-
+### Run Backtest
 ```bash
-node src/backtesting/run.js --config backtest
+# Single market
+node src/backtesting/run.js --market BTC-PERP --timeframe 15m
+
+# With ML optimization
+node src/backtesting/run.js --market BTC-PERP --use-ml
+
+# Top 10 coins
+node top10-backtest.js
 ```
 
-### ML-Enhanced Backtesting
-
-Run a backtest with ML-optimized parameters:
-
+### Paper Trading
 ```bash
-node src/backtesting/run.js --config backtest --use-ml
+node paper-trade.js
 ```
-
-Specify a particular ML model:
-
-```bash
-node src/backtesting/run.js --config backtest --use-ml --ml-model BTC-PERP_15m_randomforest
-```
-
-### Visualization
-
-Visualize backtest results:
-
-```bash
-node src/backtesting/visualize.js
-```
-
-### ML Optimization
-
-Generate ML-optimized parameters:
-
-```bash
-node src/backtesting/ml_optimize.js --market BTC-PERP --timeframe 15m
-```
-
-## Trading Strategies
-
-### BBRSI Strategy
-
-A strategy that combines Bollinger Bands, RSI, and ADX indicators:
-
-- **Long Entry Conditions**:
-
-    - Price crosses below the lower Bollinger Band
-    - RSI is below the oversold level
-    - ADX is above the threshold
-
-- **Short Entry Conditions**:
-
-    - Price crosses above the upper Bollinger Band
-    - RSI is above the overbought level
-    - ADX is above the threshold
-
-- **Exit Conditions**:
-    - Take profit at the configured target
-    - Cross of price under/over middle Bollinger Band
-    - RSI extreme levels (>80 for longs, <20 for shorts)
-
-### ML-Enhanced Strategy
-
-Extends the base strategies by applying machine learning optimized parameters:
-
-- Uses the same signal generation logic as the base strategy
-- Parameters are optimized using machine learning models
-- Models analyze historical performance to find optimal settings
-- Feature importance analysis identifies key indicators
 
 ## Project Structure
 
 ```
-├── config/                      # Configuration files
-│   ├── default.json             # Default trading settings
-│   └── backtest.json            # Backtesting settings
+HyperLiquidAlgoBot/
+├── config/
+│   ├── default.json          # Trading settings
+│   └── backtest.json         # Backtest configuration
 ├── src/
-│   ├── application/             # Main application code
-│   │   └── controller.js        # Application controller
-│   ├── backtesting/             # Backtesting framework
-│   │   ├── Backtester.js        # Core backtesting engine
-│   │   ├── RiskManager.js       # Risk management module
-│   │   ├── ml_optimizer.js      # ML optimization implementation
-│   │   ├── ml_optimize.js       # ML optimization CLI
-│   │   ├── visualization.js     # Visualization library
-│   │   ├── visualize.js         # Visualization CLI
-│   │   ├── run.js               # Backtesting runner
-│   │   ├── strategies/          # Strategy implementations for backtesting
-│   │   │   └── MLEnhancedStrategy.js  # ML-enhanced strategy
-│   │   └── data/                # Historical data for backtesting
-│   ├── hyperliquid/             # Hyperliquid integration
-│   │   ├── marketInfo.js        # Market information fetching
-│   │   ├── trade.js             # Trading functions
-│   │   └── websocket.js         # WebSocket connection
-│   └── strategy/                # Trading strategies
-│       ├── BBRSIStrategy.js     # Bollinger Bands + RSI + ADX strategy
-│       ├── ScalpingStrategy.js  # Scalping strategy
-│       └── indicators/          # Technical indicators
-│           ├── ema.js           # EMA calculation
-│           └── index.js         # Indicator utilities
-├── .env                         # Environment variables (not in repo)
-└── package.json                 # Project dependencies
+│   ├── backtesting/
+│   │   ├── Backtester.js     # Core backtest engine
+│   │   ├── ml_optimizer.js   # ML optimization
+│   │   └── run.js            # Backtest runner
+│   ├── strategy/
+│   │   ├── BBRSIStrategy.js  # Main strategy
+│   │   └── indicators/       # Technical indicators
+│   └── hyperliquid/          # Exchange integration
+├── paper-trade.js            # Paper trading entry
+└── top10-backtest.js         # Multi-coin backtest
 ```
 
-## Backtesting Results
+## Backtesting
 
-The backtesting system generates several output files:
+### Performance Metrics
+| Metric | Description | Target |
+|--------|-------------|--------|
+| Total Return | Overall P&L | > 0% |
+| Win Rate | % winning trades | > 50% |
+| Profit Factor | Gross profit / loss | > 1.5 |
+| Max Drawdown | Largest peak-to-trough | < 20% |
+| Sharpe Ratio | Risk-adjusted return | > 1.0 |
 
-- `equity_curve.json`: Equity curve data
-- `backtest_trades.json`: Detailed trade information
-- `trade_statistics.json`: Performance statistics
-- `equity_curve_chart.html`: Visual equity curve chart
-- `trade_performance_chart.html`: Trade performance visualization
-- `drawdown_chart.html`: Drawdown analysis
-- `backtest_summary.html`: Complete backtest summary
+### ML Optimization
+```bash
+# Train model for BTC-PERP 15m
+node src/backtesting/ml_optimize.js --market BTC-PERP --timeframe 15m --model xgboost
 
-## ML Optimization Results
+# Use optimized model in backtest
+node src/backtesting/run.js --market BTC-PERP --use-ml
+```
 
-The ML optimization process generates:
+## Risk Management
 
-- Optimized parameter files in `src/backtesting/ml_models/`
-- Feature importance analysis
-- Performance metrics
-- HTML reports
+- **Max Position Size**: 10% of portfolio
+- **Max Leverage**: 3x
+- **Stop Loss**: 2% from entry
+- **Take Profit**: 3% from entry
+- **Max Concurrent Positions**: 3
+- **Max Daily Loss**: $50 (5%)
 
-## Safety Features
+## Workflow
 
-- Configurable position sizing
-- Take-profit mechanisms
-- Risk management controls
-- Comprehensive error handling
+```
+Backtest → Optimize (ML) → Paper Trade → Live Trade
+```
 
-## Logging
+## Strategy Ideas / Backlog
 
-The bot maintains detailed logs in:
-
-- Console output for important information
-- Log files for debugging and detailed operations
-
-## Disclaimer
-
-This bot is for educational purposes only. Cryptocurrency trading carries significant risks. Always test thoroughly on testnet before using real funds.
+See [GitHub Issues](../../issues) for:
+- Strategy enhancements
+- Bug reports
+- Risk management improvements
+- Feature requests
 
 ## License
 
 MIT
 
-## Contributing
+## Disclaimer
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
+This bot is for educational purposes. Cryptocurrency trading carries significant risks. Always test thoroughly before using real funds.
