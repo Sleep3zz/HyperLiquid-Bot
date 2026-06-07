@@ -14,10 +14,9 @@ class BBRSIStrategy {
  this.maxLeverage = Number(trading.maxLeverage) || 5;
  this.mode = (trading.mode || "reversion").toLowerCase();
 
- // HyperLiquid-specific
  this.assetMaxLeverage = Number(trading.assetMaxLeverage) || this.maxLeverage;
- this.takerFeeRate = Number(trading.takerFeeRate) || 0.00045; // per side
- this.liqSafetyBuffer = Number(trading.liqSafetyBuffer) || 0.005; // 0.5% gap
+ this.takerFeeRate = Number(trading.takerFeeRate) || 0.00045;
+ this.liqSafetyBuffer = Number(trading.liqSafetyBuffer) || 0.005;
 
  const indicators = config.get("indicators");
  this.rsiPeriod = indicators.rsi.period || 14;
@@ -35,7 +34,6 @@ class BBRSIStrategy {
  stopLossPercent: this.stopLossPercent,
  profitTarget: this.profitTarget,
  riskPerTrade: this.riskPerTrade,
- assetMaxLeverage: this.assetMaxLeverage,
  });
  }
 
@@ -70,32 +68,33 @@ class BBRSIStrategy {
  if (stopDistance <= 0) return 0;
 
  let size = riskAmount / stopDistance;
- let notional = size * entryPrice;
 
  // Cap by max leverage
  const maxNotional = accountEquity * this.maxLeverage;
- if (notional > maxNotional) {
+ if (size * entryPrice > maxNotional) {
  size = maxNotional / entryPrice;
- notional = size * entryPrice;
  this.logger.warn("Position size capped by maxLeverage");
  }
 
- // Liquidation safety (side-aware)
+ // Iterative liquidation safety
+ let attempts = 0;
+ while (size > 0 && attempts < 20) {
+ const notional = size * entryPrice;
  const leverage = notional / accountEquity;
  const liqPrice = this.liquidationPrice(side, entryPrice, leverage);
- const stopPrice = stopLossPrice;
 
- let safe = true;
- if (Number.isFinite(liqPrice)) {
- const margin = side === "LONG" 
- ? (stopPrice - liqPrice) / entryPrice 
- : (liqPrice - stopPrice) / entryPrice;
- if (margin < this.liqSafetyBuffer) safe = false;
+ const margin = side === "LONG"
+ ? (stopLossPrice - liqPrice) / entryPrice
+ : (liqPrice - stopLossPrice) / entryPrice;
+
+ if (margin >= this.liqSafetyBuffer) break;
+
+ size *= 0.8;
+ attempts++;
  }
 
- if (!safe) {
- size *= 0.8; // reduce size until safe
- this.logger.warn("Position size reduced for liquidation safety");
+ if (attempts > 0) {
+ this.logger.warn("Position size reduced for liquidation safety", { attempts });
  }
 
  return size > 0 ? size : 0;
