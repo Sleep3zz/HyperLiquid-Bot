@@ -16,8 +16,8 @@ class BBRSIStrategy {
 
  // HyperLiquid-specific
  this.assetMaxLeverage = Number(trading.assetMaxLeverage) || this.maxLeverage;
- this.takerFeeRate = Number(trading.takerFeeRate) || 0.00045; // round-trip ~0.09%
- this.liqSafetyBuffer = Number(trading.liqSafetyBuffer) || 0.005; // 0.5% safety gap
+ this.takerFeeRate = Number(trading.takerFeeRate) || 0.00045; // per side
+ this.liqSafetyBuffer = Number(trading.liqSafetyBuffer) || 0.005; // 0.5% gap
 
  const indicators = config.get("indicators");
  this.rsiPeriod = indicators.rsi.period || 14;
@@ -60,9 +60,10 @@ class BBRSIStrategy {
  return NaN;
  }
 
- calculatePositionSize(accountEquity, entryPrice, stopLossPrice) {
+ calculatePositionSize(accountEquity, entryPrice, stopLossPrice, side = "LONG") {
  if (![accountEquity, entryPrice, stopLossPrice].every(Number.isFinite)) return 0;
  if (accountEquity <= 0 || entryPrice <= 0) return 0;
+ if (side !== "LONG" && side !== "SHORT") return 0;
 
  const riskAmount = accountEquity * (this.riskPerTrade / 100);
  const stopDistance = Math.abs(entryPrice - stopLossPrice);
@@ -70,23 +71,31 @@ class BBRSIStrategy {
 
  let size = riskAmount / stopDistance;
  let notional = size * entryPrice;
- const maxNotional = accountEquity * this.maxLeverage;
 
+ // Cap by max leverage
+ const maxNotional = accountEquity * this.maxLeverage;
  if (notional > maxNotional) {
  size = maxNotional / entryPrice;
  notional = size * entryPrice;
  this.logger.warn("Position size capped by maxLeverage");
  }
 
- // Liquidation safety check
+ // Liquidation safety (side-aware)
  const leverage = notional / accountEquity;
- const liqPrice = this.liquidationPrice("LONG", entryPrice, leverage); // assume LONG for calculation
- const stopPrice = entryPrice * (1 - this.stopLossPercent / 100);
- const safetyMargin = (liqPrice - stopPrice) / entryPrice;
+ const liqPrice = this.liquidationPrice(side, entryPrice, leverage);
+ const stopPrice = stopLossPrice;
 
- if (safetyMargin < this.liqSafetyBuffer) {
- this.logger.warn("Stop-loss too close to liquidation price - reducing size", { safetyMargin });
- size *= 0.8; // reduce size by 20% for safety
+ let safe = true;
+ if (Number.isFinite(liqPrice)) {
+ const margin = side === "LONG" 
+ ? (stopPrice - liqPrice) / entryPrice 
+ : (liqPrice - stopPrice) / entryPrice;
+ if (margin < this.liqSafetyBuffer) safe = false;
+ }
+
+ if (!safe) {
+ size *= 0.8; // reduce size until safe
+ this.logger.warn("Position size reduced for liquidation safety");
  }
 
  return size > 0 ? size : 0;
@@ -159,14 +168,14 @@ class BBRSIStrategy {
  result.signal = "LONG";
  result.stopLoss = currentPrice * (1 - this.stopLossPercent / 100);
  result.takeProfit = currentPrice * (1 + this.profitTarget / 100);
- if (accountEquity) result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss);
- this.logger.debug("LONG signal with risk management");
+ if (accountEquity) result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss, "LONG");
+ this.logger.debug("LONG signal generated");
  } else if (shortConditions) {
  result.signal = "SHORT";
  result.stopLoss = currentPrice * (1 + this.stopLossPercent / 100);
  result.takeProfit = currentPrice * (1 - this.profitTarget / 100);
- if (accountEquity) result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss);
- this.logger.debug("SHORT signal with risk management");
+ if (accountEquity) result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss, "SHORT");
+ this.logger.debug("SHORT signal generated");
  }
 
  return result;
