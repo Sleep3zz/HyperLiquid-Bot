@@ -10,51 +10,53 @@ class BBRSIStrategy {
  this.timeframe = config.get("trading.timeframe");
  this.profitTarget = config.get("trading.profitTarget") || 2.0;
 
- // Risk management (configurable)
+ // Risk management
  const trading = config.get("trading");
- this.stopLossPercent = trading.stopLossPercent || 1.5; // Hard stop-loss %
- this.riskPerTrade = trading.riskPerTrade || 1.0; // % of account risked per trade
+ this.stopLossPercent = trading.stopLossPercent || 1.5;
+ this.riskPerTrade = trading.riskPerTrade || 1.0;
  this.maxLeverage = trading.maxLeverage || 5;
+ this.mode = (trading.mode || "reversion").toLowerCase(); // "reversion" or "breakout"
 
- // Indicator settings
+ // Indicators
  const indicators = config.get("indicators");
  this.rsiPeriod = indicators.rsi.period || 14;
  this.rsiOverbought = indicators.rsi.overbought || 75;
  this.rsiOversold = indicators.rsi.oversold || 25;
+ this.rsiExitLong = indicators.rsi.exitLong || this.rsiOverbought;
+ this.rsiExitShort = indicators.rsi.exitShort || this.rsiOversold;
  this.bbPeriod = indicators.bollinger.period || 20;
  this.bbStdDev = indicators.bollinger.stdDev || 2;
  this.adxPeriod = indicators.adx.period || 14;
  this.adxThreshold = indicators.adx.threshold || 25;
 
- this.logger.info("BBRSI Strategy initialized with full risk management", {
- market: this.market,
+ this.logger.info("BBRSI Strategy initialized", {
+ mode: this.mode,
  stopLossPercent: this.stopLossPercent,
  riskPerTrade: this.riskPerTrade,
  maxLeverage: this.maxLeverage,
  });
  }
 
- /**
- * Calculate position size based on risk per trade and stop-loss distance
- */
+ _num(v) {
+ if (v == null) return NaN;
+ if (typeof v === "number") return v;
+ if (Array.isArray(v)) return this._num(v.at(-1));
+ if (typeof v === "object") return this._num(v.adx ?? v.value ?? v.rsi);
+ return NaN;
+ }
+
  calculatePositionSize(accountEquity, entryPrice, stopLossPrice) {
  if (!accountEquity || !entryPrice || !stopLossPrice) return 0;
-
  const riskAmount = accountEquity * (this.riskPerTrade / 100);
  const stopDistance = Math.abs(entryPrice - stopLossPrice);
-
  if (stopDistance <= 0) return 0;
-
  let size = riskAmount / stopDistance;
-
- // Enforce leverage cap
  const notional = size * entryPrice;
  const maxNotional = accountEquity * this.maxLeverage;
  if (notional > maxNotional) {
  size = maxNotional / entryPrice;
  this.logger.warn("Position size capped by maxLeverage");
  }
-
  return size;
  }
 
@@ -64,101 +66,87 @@ class BBRSIStrategy {
  return { signal: "NONE", reason: "insufficient data" };
  }
 
- // Calculate indicators
- const bb = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
- const adx = calculateADX(data, this.adxPeriod);
- const rsi = calculateRSI(data, this.rsiPeriod);
+ const bbRaw = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
+ const adx = this._num(calculateADX(data, this.adxPeriod));
+ const rsi = this._num(calculateRSI(data, this.rsiPeriod));
 
- const currentPrice = parseFloat(data[data.length - 1].c);
- const previousPrice = parseFloat(data[data.length - 2].c);
+ const last = data[data.length - 1];
+ const prev = data[data.length - 2];
 
- // Validate indicators
- if (![bb?.upper, bb?.middle, bb?.lower, rsi, adx, currentPrice].every(Number.isFinite)) {
+ const currentPrice = parseFloat(last.c);
+ const previousPrice = parseFloat(prev.c);
+ const currentHigh = parseFloat(last.h ?? last.c);
+ const currentLow = parseFloat(last.l ?? last.c);
+
+ const bb = {
+ upper: this._num(bbRaw?.upper),
+ middle: this._num(bbRaw?.middle),
+ lower: this._num(bbRaw?.lower),
+ };
+
+ if (![bb.upper, bb.middle, bb.lower, rsi, adx, currentPrice, previousPrice].every(Number.isFinite)) {
  return { signal: "NONE", reason: "invalid indicator values" };
  }
 
- const result = {
- signal: "NONE",
- indicators: { bb, rsi, adx, price: currentPrice },
- };
+ const result = { signal: "NONE", indicators: { bb, rsi, adx, price: currentPrice } };
 
- // === EXIT LOGIC FIRST (if already in position) ===
+ // === EXIT LOGIC FIRST ===
  if (currentPosition === "LONG") {
- // Check stop-loss / take-profit first
- if (entryPrice && currentPrice <= entryPrice * (1 - this.stopLossPercent / 100)) {
- result.signal = "CLOSE_LONG";
- result.reason = "stop-loss hit";
- this.logger.debug("Stop-loss triggered on LONG");
- return result;
+ if (entryPrice && currentLow <= entryPrice * (1 - this.stopLossPercent / 100)) {
+ return { ...result, signal: "CLOSE_LONG", reason: "stop-loss hit" };
  }
- if (entryPrice && currentPrice >= entryPrice * (1 + this.profitTarget / 100)) {
- result.signal = "CLOSE_LONG";
- result.reason = "take-profit hit";
- this.logger.debug("Take-profit triggered on LONG");
- return result;
+ if (entryPrice && currentHigh >= entryPrice * (1 + this.profitTarget / 100)) {
+ return { ...result, signal: "CLOSE_LONG", reason: "take-profit hit" };
  }
-
- // Indicator exits
  const crossedUnderMiddle = previousPrice >= bb.middle && currentPrice < bb.middle;
- const rsiExit = rsi > 80;
- if (crossedUnderMiddle || rsiExit) {
- result.signal = "CLOSE_LONG";
- this.logger.debug("Exit LONG triggered by indicator");
- return result;
+ if (crossedUnderMiddle || rsi > this.rsiExitLong) {
+ return { ...result, signal: "CLOSE_LONG", reason: "indicator exit" };
  }
  }
 
  if (currentPosition === "SHORT") {
- if (entryPrice && currentPrice >= entryPrice * (1 + this.stopLossPercent / 100)) {
- result.signal = "CLOSE_SHORT";
- result.reason = "stop-loss hit";
- this.logger.debug("Stop-loss triggered on SHORT");
- return result;
+ if (entryPrice && currentHigh >= entryPrice * (1 + this.stopLossPercent / 100)) {
+ return { ...result, signal: "CLOSE_SHORT", reason: "stop-loss hit" };
  }
- if (entryPrice && currentPrice <= entryPrice * (1 - this.profitTarget / 100)) {
- result.signal = "CLOSE_SHORT";
- result.reason = "take-profit hit";
- this.logger.debug("Take-profit triggered on SHORT");
- return result;
+ if (entryPrice && currentLow <= entryPrice * (1 - this.profitTarget / 100)) {
+ return { ...result, signal: "CLOSE_SHORT", reason: "take-profit hit" };
  }
-
  const crossedOverMiddle = previousPrice <= bb.middle && currentPrice > bb.middle;
- const rsiExit = rsi < 20;
- if (crossedOverMiddle || rsiExit) {
- result.signal = "CLOSE_SHORT";
- this.logger.debug("Exit SHORT triggered by indicator");
- return result;
+ if (crossedOverMiddle || rsi < this.rsiExitShort) {
+ return { ...result, signal: "CLOSE_SHORT", reason: "indicator exit" };
  }
  }
 
- // === ENTRY LOGIC (only if no position) ===
+ // === ENTRY LOGIC ===
  if (!currentPosition) {
- const crossedBelowLower = previousPrice >= bb.lower && currentPrice < bb.lower;
- const longConditions = crossedBelowLower && rsi < this.rsiOversold && adx >= this.adxThreshold;
+ let longConditions = false;
+ let shortConditions = false;
 
- const crossedAboveUpper = previousPrice <= bb.upper && currentPrice > bb.upper;
- const shortConditions = crossedAboveUpper && rsi > this.rsiOverbought && adx >= this.adxThreshold;
+ if (this.mode === "breakout") {
+ const brokeAboveUpper = previousPrice <= bb.upper && currentPrice > bb.upper;
+ const brokeBelowLower = previousPrice >= bb.lower && currentPrice < bb.lower;
+ longConditions = brokeAboveUpper && rsi > 50 && adx >= this.adxThreshold;
+ shortConditions = brokeBelowLower && rsi < 50 && adx >= this.adxThreshold;
+ } else {
+ // reversion mode
+ const touchedLower = previousPrice >= bb.lower && currentPrice > bb.lower;
+ const touchedUpper = previousPrice <= bb.upper && currentPrice < bb.upper;
+ longConditions = touchedLower && rsi < this.rsiOversold && adx < this.adxThreshold;
+ shortConditions = touchedUpper && rsi > this.rsiOverbought && adx < this.adxThreshold;
+ }
 
  if (longConditions) {
  result.signal = "LONG";
  result.stopLoss = currentPrice * (1 - this.stopLossPercent / 100);
  result.takeProfit = currentPrice * (1 + this.profitTarget / 100);
-
- if (accountEquity) {
- result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss);
- }
-
- this.logger.debug("LONG signal generated with risk management");
+ if (accountEquity) result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss);
+ this.logger.debug("LONG signal with risk management");
  } else if (shortConditions) {
  result.signal = "SHORT";
  result.stopLoss = currentPrice * (1 + this.stopLossPercent / 100);
  result.takeProfit = currentPrice * (1 - this.profitTarget / 100);
-
- if (accountEquity) {
- result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss);
- }
-
- this.logger.debug("SHORT signal generated with risk management");
+ if (accountEquity) result.positionSize = this.calculatePositionSize(accountEquity, currentPrice, result.stopLoss);
+ this.logger.debug("SHORT signal with risk management");
  }
  }
 
