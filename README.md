@@ -5,9 +5,10 @@ An advanced algorithmic trading bot for the HyperLiquid DEX, featuring Bollinger
 ## Features
 
 ### 🎯 Trading Strategies
-- **BBRSI Strategy**: Bollinger Bands + RSI + ADX combined
-  - Long: RSI < 30 + Price < Lower Band + ADX > 25
-  - Short: RSI > 70 + Price > Upper Band + ADX > 25
+- **BBRSI Strategy**: Bollinger Bands + RSI + ADX combined with configurable risk management
+  - Long: RSI < oversold + Price < Lower Band + ADX > threshold
+  - Short: RSI > overbought + Price > Upper Band + ADX > threshold
+  - Dynamic stop-loss and take-profit calculations
 - **ML-Enhanced Strategy**: XGBoost/Random Forest optimized parameters
 
 ### 📊 Backtesting System
@@ -100,10 +101,29 @@ node src/backtesting/run.js --market BTC-PERP --use-ml
 
 ## Risk Management
 
+### Configurable Parameters (config/default.json)
+```json
+{
+  "trading": {
+    "stopLossPercent": 1.5,
+    "riskPerTrade": 1.0,
+    "maxLeverage": 5,
+    "profitTarget": 2.0
+  }
+}
+```
+
+- **stopLossPercent**: Hard stop-loss percentage from entry price
+- **riskPerTrade**: Percentage of account risked per trade
+- **maxLeverage**: Maximum leverage allowed
+- **profitTarget**: Take-profit target percentage
+
+### Exit Logic
+- **LONG exits**: Price crosses below BB middle band OR RSI > 80
+- **SHORT exits**: Price crosses above BB middle band OR RSI < 20
+
+### Legacy Settings
 - **Max Position Size**: 10% of portfolio
-- **Max Leverage**: 3x
-- **Stop Loss**: 2% from entry
-- **Take Profit**: 3% from entry
 - **Max Concurrent Positions**: 3
 - **Max Daily Loss**: $50 (5%)
 
