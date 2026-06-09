@@ -46,15 +46,18 @@ describe('BBRSIStrategy', () => {
 
     test('trailing stop fires correctly after high-water mark retrace (LONG)', () => {
         const entry = 100;
-        strategy.checkTrailingStop("LONG", entry, 110, {}); // set high-water
-        const exit = strategy.checkTrailingStop("LONG", entry, 108, { signal: "NONE" });
+        // Set high-water at 110 (currentHigh=110, currentLow=109)
+        strategy.checkTrailingStop("LONG", entry, 110, 109, { signal: "NONE" });
+        // Price drops to 108, low hits 107 — should trigger trailing stop
+        const exit = strategy.checkTrailingStop("LONG", entry, 108, 107, { signal: "NONE" });
         expect(exit?.signal).toBe("CLOSE_LONG");
         expect(exit?.reason).toBe("trailing-stop");
     });
 
     test('trailing stop does NOT fire on entry bar', () => {
         const entry = 100;
-        const exit = strategy.checkTrailingStop("LONG", entry, 100, { signal: "NONE" });
+        // On entry bar: high=100, low=100 — no retrace yet
+        const exit = strategy.checkTrailingStop("LONG", entry, 100, 100, { signal: "NONE" });
         expect(exit).toBeNull();
     });
 
