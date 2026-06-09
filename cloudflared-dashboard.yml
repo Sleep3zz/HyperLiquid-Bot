@@ -1,0 +1,7 @@
+tunnel: 423fd6a5-3b25-4d8e-8ecb-d43f995b45b6
+credentials-file: ~/.cloudflared/423fd6a5-3b25-4d8e-8ecb-d43f995b45b6.json
+
+ingress:
+  - hostname: trading.s3zapp.us
+    service: http://localhost:3456
+  - service: http_status:404

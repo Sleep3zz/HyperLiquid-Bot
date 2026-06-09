@@ -1,72 +1,95 @@
 #!/bin/bash
-# Start Webhook Dashboard with Public URL
-# 
-# Usage: ./start-dashboard.sh [--subdomain mybot]
+# Start Paper Trader Dashboard with Permanent Cloudflare Tunnel
+# URL: https://trading.s3zapp.us
 
-DASHBOARD_DIR="$(cd "$(dirname "$0")" && pwd)"
-PORT=${PORT:-3000}
-SUBDOMAIN=${1:---subdomain=hyperliquid-bot}
+cd /home/clawdbot/.openclaw/workspace/HyperLiquid-Bot
 
-cd "$DASHBOARD_DIR"
+PORT=3456
+TUNNEL_NAME="hyperliquid-dashboard"
+DOMAIN="s3zapp.us"
+TUNNEL_ID="3e32e5c8-6625-44e6-b24d-96996e3a02df"
 
-echo "🚀 Starting Paper Trader Dashboard..."
-echo "=============================================="
+# Kill existing processes
+pkill -f "webhook-dashboard.*$PORT" 2>/dev/null
+pkill -f "cloudflared.*$PORT" 2>/dev/null
+sleep 2
 
-# Check if localtunnel is installed
-if ! command -v lt &> /dev/null; then
-    echo "📦 Installing localtunnel..."
-    npm install -g localtunnel
+echo "🚀 Starting Paper Trader Dashboard"
+echo "=============================================================="
+echo "Domain: $DOMAIN"
+echo "URL: https://trading.$DOMAIN"
+echo ""
+
+# Create config file if not exists
+CONFIG_FILE="cloudflared-dashboard.yml"
+if [ ! -f "$CONFIG_FILE" ]; then
+    cat > "$CONFIG_FILE" << EOF
+tunnel: $TUNNEL_ID
+credentials-file: ~/.cloudflared/$TUNNEL_ID.json
+
+ingress:
+  - hostname: trading.$DOMAIN
+    service: http://localhost:$PORT
+  - service: http_status:404
+EOF
+    echo "✅ Created config: $CONFIG_FILE"
 fi
 
-# Start the dashboard server in background
-echo "🌐 Starting dashboard server on port $PORT..."
-node webhook-dashboard.js --port=$PORT &
-DASHBOARD_PID=$!
-
-# Wait for server to start
+# Start dashboard
+echo "[1/2] Starting dashboard server on port $PORT..."
+node webhook-dashboard.js --port=$PORT > /tmp/dashboard.log 2>&1 &
+DASH_PID=$!
 sleep 3
 
-# Check if server is running
-if ! kill -0 $DASHBOARD_PID 2>/dev/null; then
-    echo "❌ Failed to start dashboard server"
+# Verify dashboard is responding
+if ! curl -s http://localhost:$PORT/api/traders > /dev/null 2>&1; then
+    echo "      ❌ Dashboard failed to start"
+    echo "      Check /tmp/dashboard.log"
     exit 1
 fi
+echo "      ✅ Dashboard running on localhost:$PORT"
 
-echo "✅ Dashboard server started (PID: $DASHBOARD_PID)"
-echo ""
-
-# Start localtunnel
-echo "📡 Exposing to internet via localtunnel..."
-echo "   Subdomain: ${SUBDOMAIN#--subdomain=}"
-echo ""
-
-# Store the public URL when available
-lt --port $PORT $SUBDOMAIN &
+# Start tunnel
+echo "[2/2] Starting Cloudflare tunnel..."
+cloudflared tunnel --config "$CONFIG_FILE" run > /tmp/tunnel.log 2>&1 &
 TUNNEL_PID=$!
 
+sleep 5
+
 echo ""
-echo "=============================================="
-echo "Dashboard is starting up..."
+echo "╔════════════════════════════════════════════════════════════╗"
+echo "║  🎉 DASHBOARD IS LIVE!                                     ║"
+echo "╠════════════════════════════════════════════════════════════╣"
+echo "║                                                            ║"
+echo "║  🌐 URL: https://trading.s3zapp.us                        ║"
+echo "║                                                            ║"
+echo "║  🔒 Password: sleep3zz                                     ║"
+echo "║                                                            ║"
+echo "╚════════════════════════════════════════════════════════════╝"
 echo ""
-echo "Local:     http://localhost:$PORT"
-echo "Password:  sleep3zz"
+echo "Dashboard PID: $DASH_PID"
+echo "Tunnel PID:    $TUNNEL_PID"
 echo ""
-echo "Public URL will appear above (ending in .loca.lt)"
-echo "=============================================="
+echo "Logs:"
+echo "  Dashboard: tail -f /tmp/dashboard.log"
+echo "  Tunnel:    tail -f /tmp/tunnel.log"
 echo ""
 echo "Press Ctrl+C to stop"
-echo ""
+
+# Save PIDs
+echo "$DASH_PID $TUNNEL_PID" > /tmp/dashboard-pids.txt
 
 # Handle shutdown
 cleanup() {
     echo ""
-    echo "🛑 Shutting down..."
+    echo "🛑 Stopping dashboard..."
     kill $TUNNEL_PID 2>/dev/null
-    kill $DASHBOARD_PID 2>/dev/null
+    kill $DASH_PID 2>/dev/null
+    wait
+    echo "✅ Stopped"
     exit 0
 }
 
 trap cleanup SIGINT SIGTERM
 
-# Keep script running
 wait
