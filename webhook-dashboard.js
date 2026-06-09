@@ -2,11 +2,48 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const ParameterManager = require('./param-manager');
+const WayfinderAgent = require('./../model-router/src/agents/wayfinder-agent');
 
 const DATA_DIR = path.join(__dirname, 'data', 'paper-trading');
 const app = express();
 const PORT = process.argv.find(arg => arg.startsWith('--port'))?.split('=')[1] || 3456;
 const PASSWORD = 'sleep3zz';
+
+// Initialize price feed
+const priceAgent = new WayfinderAgent({ autoConnect: false });
+let priceCache = {};
+let priceHistory = {}; // Store prices for 24h change calculation
+
+// Fetch prices every 30 seconds
+async function updatePrices() {
+    try {
+        const coins = ['BTC', 'ETH', 'SOL', 'HYPE', 'ARB', 'OP', 'LINK', 'AVAX', 'NEAR', 'UNI'];
+        for (const coin of coins) {
+            try {
+                // Get current price
+                const candles = await priceAgent.getHistoricalCandles(coin, '15m', 100);
+                if (candles && candles.length > 0) {
+                    const currentPrice = candles[candles.length - 1].c;
+                    const openPrice = candles[0].o; // Price ~24h ago (100 * 15m = 25h)
+                    const change24h = ((currentPrice - openPrice) / openPrice) * 100;
+                    
+                    priceCache[coin] = {
+                        price: currentPrice,
+                        change24h: change24h,
+                        high24h: Math.max(...candles.map(c => c.h)),
+                        low24h: Math.min(...candles.map(c => c.l)),
+                        volume24h: candles.reduce((a, b) => a + b.v, 0),
+                        updated: Date.now()
+                    };
+                }
+            } catch (e) {}
+        }
+    } catch (e) {}
+}
+
+// Initial fetch and periodic updates
+updatePrices();
+setInterval(updatePrices, 30000);
 
 // Middleware
 app.use((req, res, next) => {
@@ -113,6 +150,14 @@ app.get('/api/traders/:coin', (req, res) => {
     res.json(d);
 });
 
+// Price feed endpoint
+app.get('/api/prices', (req, res) => {
+    res.json({
+        timestamp: Date.now(),
+        prices: priceCache
+    });
+});
+
 // Dashboard HTML
 app.get('/', checkAuth, (req, res) => {
     res.send(`<!DOCTYPE html>
@@ -154,6 +199,14 @@ app.get('/', checkAuth, (req, res) => {
         .card-stat{background:rgba(15,23,42,.5);padding:14px;border-radius:10px}
         .card-stat-label{color:var(--muted);font-size:.7rem;text-transform:uppercase}.card-stat-value{font-size:1.1rem;font-weight:600;margin-top:4px}
         .mini-chart{height:70px;background:rgba(15,23,42,.5);border-radius:10px;padding:10px}
+        .prices{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+        .price-card{background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);text-align:center;transition:all .2s}
+        .price-card:hover{border-color:var(--blue);transform:translateY(-2px)}
+        .price-coin{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+        .price-value{font-size:1.4rem;font-weight:700;margin:4px 0}
+        .price-change{font-size:.85rem;font-weight:600;padding:2px 8px;border-radius:4px;display:inline-block}
+        .price-change.positive{background:rgba(16,185,129,.15);color:var(--green)}
+        .price-change.negative{background:rgba(239,68,68,.15);color:var(--red)}
         .footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:12px 24px;display:flex;justify-content:space-between;font-size:.85rem}
         .status{display:flex;align-items:center;gap:8px;color:var(--green)}
         .dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
@@ -167,14 +220,56 @@ app.get('/', checkAuth, (req, res) => {
 <body>
     <div class="header"><h1>📈 Paper Trader Dashboard</h1><p>HyperLiquid • Top 5 Coins: ARB, HYPE, ETH, UNI, BTC</p></div>
     <div class="container">
+        <div class="section"><h2>💰 Live Prices (24h)</h2></div>
+        <div id="prices" class="prices"><div class="loading"><div class="spinner"></div>Loading prices...</div></div>
         <div id="overview" class="stats"><div class="loading"><div class="spinner"></div>Loading...</div></div>
-        <div class="section"><h2>📊 Active Traders</h2><button class="btn" onclick="loadData()">🔄 Refresh</button></div>
+        <div class="section"><h2>📊 Active Traders</h2><button class="btn" onclick="loadAll()">🔄 Refresh</button></div>
         <div id="traders" class="traders"><div class="loading"><div class="spinner"></div>Loading traders...</div></div>
     </div>
     <div class="footer"><div class="status"><span class="dot"></span><span id="status">Connected</span></div><div class="muted">Last updated: <span id="updated">-</span></div></div>
     <script>
-        let countdown=5;setInterval(()=>countdown--,1000);setInterval(()=>{if(countdown<=0){loadData();countdown=5}},1000);
-        async function loadData(){try{const r=await fetch('/api/traders'),d=await r.json();renderOverview(d);renderTraders(d);document.getElementById('status').textContent='Connected';document.getElementById('updated').textContent=new Date().toLocaleTimeString();countdown=5}catch(e){document.getElementById('status').textContent='Disconnected'}}
+        let countdown=5;
+        setInterval(()=>countdown--,1000);
+        setInterval(()=>{if(countdown<=0){loadAll();countdown=5}},1000);
+        
+        async function loadAll(){
+            await Promise.all([loadData(), loadPrices()]);
+        }
+        
+        async function loadData(){
+            try{
+                const r=await fetch('/api/traders'),d=await r.json();
+                renderOverview(d);
+                renderTraders(d);
+                document.getElementById('status').textContent='Connected';
+                document.getElementById('updated').textContent=new Date().toLocaleTimeString();
+            }catch(e){
+                document.getElementById('status').textContent='Disconnected';
+            }
+        }
+        
+        async function loadPrices(){
+            try{
+                const r=await fetch('/api/prices'),d=await r.json();
+                renderPrices(d.prices);
+            }catch(e){}
+        }
+        
+        function renderPrices(prices){
+            const coins=['BTC','ETH','ARB','HYPE','UNI','SOL','OP','LINK','AVAX','NEAR'];
+            const html=coins.map(c=>{
+                const p=prices[c];
+                if(!p)return'';
+                const change=p.change24h>=0?'+':'-';
+                const changeClass=p.change24h>=0?'positive':'negative';
+                return'<div class="price-card">'+
+                    '<div class="price-coin">'+c+'</div>'+
+                    '<div class="price-value">$'+p.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div>'+
+                    '<div class="price-change '+changeClass+'">'+change+Math.abs(p.change24h).toFixed(2)+'%</div>'+
+                '</div>';
+            }).filter(Boolean).join('');
+            document.getElementById('prices').innerHTML=html||'<div class="loading">Loading prices...</div>';
+        }
         function renderOverview(d){const t=d.traders||[],eq=d.totalEquity||0,ret=d.totalReturn||0,avg=t.length?t.reduce((a,b)=>a+b.totalReturn,0)/t.length:0,trades=t.reduce((a,b)=>a+b.totalTrades,0),active=t.filter(x=>x.hasPosition).length,sharpe=t.length?t.reduce((a,b)=>a+b.sharpe,0)/t.length:0;
             document.getElementById('overview').innerHTML=\`
             <div class="stat"><div class="stat-label">Total Equity</div><div class="stat-value">$\${eq.toFixed(2)}</div><div class="stat-change \${ret>=0?'positive':'negative'}">\${ret>=0?'▲':'▼'} \${Math.abs(ret).toFixed(2)}%</div></div>
@@ -194,7 +289,7 @@ app.get('/', checkAuth, (req, res) => {
                 </div>
                 <div class="mini-chart"><svg viewBox="0 0 100 40" style="width:100%;height:100%"><polyline points="0,20 100,20" fill="none" stroke="\${c.totalReturn>=0?'var(--green)':'var(--red)'}" stroke-width="2"/></svg></div>
             </div>\`).join('')}
-        loadData();
+        loadAll();
     </script>
 </body>
 </html>`);
@@ -209,8 +304,8 @@ app.get('/trader/:coin', checkAuth, (req, res) => {
     const equityChart = d.equity.length > 1 ? (() => {
         const vals = d.equity.map(e => e.equity);
         const min = Math.min(...vals), max = Math.max(...vals), range = max - min || 1;
-        const pts = vals.map((v, i) => \`\${(i / (vals.length - 1)) * 100},\${40 - ((v - min) / range) * 30}\`).join(' ');
-        return \`<svg viewBox="0 0 100 40" style="width:100%;height:100%"><polyline points="0,40 \${pts} 100,40" fill="rgba(59,130,246,0.1)" stroke="var(--blue)" stroke-width="1.5"/></svg>\`;
+        const pts = vals.map((v, i) => ((i / (vals.length - 1)) * 100) + ',' + (40 - ((v - min) / range) * 30)).join(' ');
+        return '<svg viewBox="0 0 100 40" style="width:100%;height:100%"><polyline points="0,40 ' + pts + ' 100,40" fill="rgba(59,130,246,0.1)" stroke="var(--blue)" stroke-width="1.5"/></svg>';
     })() : '';
     
     res.send(`<!DOCTYPE html>
