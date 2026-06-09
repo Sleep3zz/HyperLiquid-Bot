@@ -293,3 +293,23 @@ class BBRSIStrategy {
 }
 
 module.exports = BBRSIStrategy;
+
+/*
+// In your main trading loop / executor
+async function onNewCandle(data, currentPosition, accountEquity, entryPrice, currentPnl = 0) {
+    const last = data[data.length - 1];
+    const barTs = Number(last.t ?? last.T ?? last.openTime ?? Date.now());
+
+    strategy.setCurrentTimestamp(barTs);
+
+    const signal = await strategy.evaluatePosition(data, currentPosition, accountEquity, entryPrice, currentPnl);
+
+    if (signal.signal === "LONG" || signal.signal === "SHORT") {
+        // place order on HyperLiquid
+        console.log("ENTRY SIGNAL", signal);
+    } else if (signal.signal.startsWith("CLOSE_")) {
+        // close order on HyperLiquid
+        strategy.registerExit(currentPnl); // pass realized PnL here
+    }
+}
+*/
