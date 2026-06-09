@@ -15,6 +15,7 @@
     "config": "^3.3.9",
     "dotenv": "^16.6.1",
     "ethers": "^6.9.0",
+    "express": "^5.2.1",
     "hyperliquid": "^1.5.6",
     "lodash": "^4.17.23",
     "open": "^10.1.0",
