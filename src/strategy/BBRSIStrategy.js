@@ -374,79 +374,152 @@ class BBRSIStrategy {
  return null;
  }
 
- // ── Main entry point ──
- async evaluatePosition(data, currentPosition = null, accountEquity = null, entryPrice = null, currentPnl = 0) {
+ /**
+ * Evaluate the current bar and decide on a trading action.
+ *
+ * Safety circuit-breakers (daily-loss force-close / entry block) run FIRST,
+ * before any indicator computation, so they can never be suppressed by
+ * NaN indicators, thin data, or price gaps.
+ *
+ * @param {Array} data OHLCV bars (ascending; last = current bar)
+ * @param {string|null} currentPosition "LONG" | "SHORT" | null
+ * @param {number|null} accountEquity
+ * @param {number|null} entryPrice
+ * @param {number} currentPnl Unrealized PnL % for the open position (signed)
+ * @returns {Promise<{signal: string, reason: string, [size]: number}>}
+ */
+ async evaluatePosition(
+ data,
+ currentPosition = null,
+ accountEquity = null,
+ entryPrice = null,
+ currentPnl = 0
+ ) {
  try {
- if (!Array.isArray(data) || data.length < this.bbPeriod + 2)
- return { signal: "NONE", reason: "insufficient data" };
-
- const last = data[data.length - 1];
- const barTs = Number(last.t ?? last.T ?? last.openTime ?? Date.now());
+ // ──────────────────────────────────────────────────────────────
+ // 0) Resolve current timestamp as early as possible.
+ // We tolerate missing/short data here because the safety
+ // circuit-breaker must not depend on data sufficiency.
+ // ──────────────────────────────────────────────────────────────
+ const last =
+ Array.isArray(data) && data.length > 0 ? data[data.length - 1] : null;
+ const barTs = Number(
+ last?.t ?? last?.T ?? last?.openTime ?? this.currentTs ?? Date.now()
+ );
  this.setCurrentTimestamp(barTs);
 
- // Only block entries on daily limit; let open positions reach force-close logic
- if (!currentPosition && this.checkDailyLossLimit(currentPnl, barTs))
- return { signal: "NONE", reason: "daily loss limit reached" };
+ // ──────────────────────────────────────────────────────────────
+ // 1) SAFETY CIRCUIT-BREAKER (indicator-independent)
+ // - If holding and daily loss limit breached → FORCE CLOSE.
+ // - If flat and daily loss limit breached → BLOCK ENTRY.
+ // checkDailyLossLimit also handles the UTC day rollover/reset.
+ // ──────────────────────────────────────────────────────────────
+ const dailyLimitBreached = this.checkDailyLossLimit(currentPnl, barTs);
 
- // Update position fingerprint
- if (currentPosition && Number.isFinite(entryPrice)) {
+ if (currentPosition === "LONG" || currentPosition === "SHORT") {
+ if (dailyLimitBreached) {
+ const signal =
+ currentPosition === "LONG" ? "CLOSE_LONG" : "CLOSE_SHORT";
+ this.logger.warn(
+ `Force-closing ${currentPosition} @${barTs}: daily loss limit breached`
+ );
+ // Durable flush: this is a state-changing safety event.
+ this._markDirty();
+ this._flushState(barTs, /* force */ true);
+ return { signal, reason: "daily-loss-limit-force-close" };
+ }
+ } else if (dailyLimitBreached) {
+ // Flat: do not open new risk while the day is blown.
+ return { signal: "NONE", reason: "daily loss limit reached" };
+ }
+
+ // ──────────────────────────────────────────────────────────────
+ // 2) DATA SUFFICIENCY (only matters from here on, for indicators)
+ // ──────────────────────────────────────────────────────────────
+ if (!Array.isArray(data) || data.length < this.bbPeriod + 2) {
+ return { signal: "NONE", reason: "insufficient data" };
+ }
+
+ // ──────────────────────────────────────────────────────────────
+ // 3) PRICE / OHLC EXTRACTION
+ // ──────────────────────────────────────────────────────────────
+ const currentPrice = Number(last.c ?? last.close);
+ const currentHigh = Number(last.h ?? last.high ?? currentPrice);
+ const currentLow = Number(last.l ?? last.low ?? currentPrice);
+
+ if (![currentPrice, currentHigh, currentLow].every(Number.isFinite)) {
+ return { signal: "NONE", reason: "invalid price values" };
+ }
+
+ // ──────────────────────────────────────────────────────────────
+ // 4) INDICATORS
+ // ──────────────────────────────────────────────────────────────
+ const closes = data.map((d) => Number(d.c ?? d.close));
+ const highs = data.map((d) => Number(d.h ?? d.high));
+ const lows = data.map((d) => Number(d.l ?? d.low));
+
+ const rsi = calculateRSI(closes, this.rsiPeriod);
+ const bb = calculateBollingerBands(closes, this.bbPeriod, this.bbStdDev);
+ const adx = calculateADX(highs, lows, closes, this.adxPeriod);
+
+ if (
+ ![bb.upper, bb.middle, bb.lower, rsi, adx].every(Number.isFinite)
+ ) {
+ return { signal: "NONE", reason: "invalid indicator/price values" };
+ }
+
+ // ──────────────────────────────────────────────────────────────
+ // 5) POSITION MANAGEMENT (EXITS) — only when holding
+ // Order: trailing stop (locks gains) → hard stop / take-profit.
+ // Daily-loss force-close already handled above in step (1).
+ // ──────────────────────────────────────────────────────────────
+ if (currentPosition === "LONG" || currentPosition === "SHORT") {
+ // Reset trailing high-water mark if the live position no longer
+ // matches the persisted fingerprint (e.g., manual close + reopen).
  const fp = this._positionFingerprint(currentPosition, entryPrice);
  if (fp !== this.positionFingerprint) {
  this.positionFingerprint = fp;
  this.trailHighWater = null;
  this._markDirty();
  }
- }
-
- const bbRaw = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
- const adx = this._num(calculateADX(data, this.adxPeriod));
- const rsiSeries = calculateRSI(data, this.rsiPeriod);
- const rsi = this._num(rsiSeries);
- const prevRsi = this._num(rsiSeries.length >= 2 ? rsiSeries[rsiSeries.length - 2] : NaN);
-
- const prev = data[data.length - 2];
-
- const currentPrice = parseFloat(last.c);
- const previousPrice = parseFloat(prev.c);
- const currentHigh = parseFloat(last.h ?? last.c);
- const currentLow = parseFloat(last.l ?? last.c);
-
- const bb = {
- upper: this._num(bbRaw?.upper),
- middle: this._num(bbRaw?.middle),
- lower: this._num(bbRaw?.lower),
- };
-
- if (![bb.upper, bb.middle, bb.lower, rsi, adx, currentPrice, previousPrice, currentHigh, currentLow].every(Number.isFinite))
- return { signal: "NONE", reason: "invalid indicator/price values" };
-
- const result = { signal: "NONE", indicators: { bb, rsi, adx, price: currentPrice } };
-
- // ── Position management (exits) ──
- if (currentPosition === "LONG" || currentPosition === "SHORT") {
- // Force-close if daily loss limit breached while in a position
- if (this.checkDailyLossLimit(currentPnl, barTs)) {
- const signal = currentPosition === "LONG" ? "CLOSE_LONG" : "CLOSE_SHORT";
- return { signal, reason: "daily-loss-limit-force-close" };
- }
 
  const trailingExit = this.checkTrailingStop(
- currentPosition, entryPrice, currentHigh, currentLow, { signal: "NONE" }, barTs
+ currentPosition,
+ entryPrice,
+ currentHigh,
+ currentLow,
+ { signal: "NONE" },
+ barTs
  );
  if (trailingExit) return trailingExit;
 
- const exit = this.evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, { signal: "NONE" });
+ const exit = this.evaluateExit(
+ currentPosition,
+ entryPrice,
+ currentHigh,
+ currentLow,
+ { signal: "NONE" }
+ );
  if (exit) return exit;
 
- return { ...result, signal: "NONE", reason: "holding position" };
+ return { signal: "NONE", reason: "holding position" };
  }
 
- // ── Entry logic ──
- if (this.inCooldown())
- return { ...result, signal: "NONE", reason: "cooldown active" };
+ // ──────────────────────────────────────────────────────────────
+ // 6) ENTRY LOGIC — only when flat
+ // Cooldown gate prevents immediate re-entry after an exit.
+ // ──────────────────────────────────────────────────────────────
+ if (this.inCooldown()) {
+ return { signal: "NONE", reason: "cooldown active" };
+ }
 
- if (!Number.isFinite(accountEquity) || accountEquity <= 0)
- return { ...result, signal: "NONE", reason: "missing accountEquity" };
+ if (!Number.isFinite(accountEquity) || accountEquity <= 0) {
+ return { signal: "NONE", reason: "missing accountEquity" };
+ }
+
+ // Get previous price for entry conditions
+ const prev = data[data.length - 2];
+ const previousPrice = Number(prev?.c ?? prev?.close ?? currentPrice);
 
  let longConditions = false;
  let shortConditions = false;
@@ -460,9 +533,14 @@ class BBRSIStrategy {
  const bouncedUpFromLower = previousPrice <= bb.lower && currentPrice > bb.lower;
  const bouncedDownFromUpper = previousPrice >= bb.upper && currentPrice < bb.upper;
 
- longConditions = bouncedUpFromLower && Number.isFinite(prevRsi) && prevRsi <= this.rsiOversold && adx < this.adxThreshold;
- shortConditions = bouncedDownFromUpper && Number.isFinite(prevRsi) && prevRsi >= this.rsiOverbought && adx < this.adxThreshold;
+ longConditions = bouncedUpFromLower && rsi < this.rsiOversold && adx < this.adxThreshold;
+ shortConditions = bouncedDownFromUpper && rsi > this.rsiOverbought && adx < this.adxThreshold;
  }
+
+ const result = {
+ signal: "NONE",
+ indicators: { bb, rsi, adx, price: currentPrice },
+ };
 
  if (longConditions) {
  result.signal = "LONG";
