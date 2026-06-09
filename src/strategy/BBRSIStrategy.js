@@ -132,19 +132,15 @@ class BBRSIStrategy {
 
  inCooldown() {
  if (this.cooldownPeriodMs <= 0) return false;
- return (this.currentTs - this.lastExitTs) <= this.cooldownPeriodMs;
+ return (this.currentTs - this.lastExitTs) < this.cooldownPeriodMs; // strict < for boundary
  }
 
- registerExit() {
- this.lastExitTs = this.currentTs || Date.now();
+ // Called by executor after confirmed fill
+ notifyExit(exitTs, realizedPnl = 0) {
+ this.lastExitTs = Number.isFinite(exitTs) ? exitTs : (this.currentTs ?? Date.now());
+ this.dailyRealizedPnl += realizedPnl; // accumulate ONLY on confirmed close
  this.trailHighWater = null;
- this.logger.info("Cooldown & trailing stop reset on exit");
- }
-
- notifyExit(exitTs = null) {
- this.lastExitTs = Number.isFinite(exitTs) ? exitTs : (this.currentTs || Date.now());
- this.trailHighWater = null;
- this.logger.info("Cooldown started via external exit");
+ this.logger.info("Cooldown started via confirmed exit", { realizedPnl });
  }
 
  checkTrailingStop(currentPosition, entryPrice, currentPrice, baseResult) {
@@ -174,9 +170,10 @@ class BBRSIStrategy {
  this.dailyLossStartTs = nowTs;
  }
 
- this.dailyRealizedPnl += currentPnl;
- if (this.dailyRealizedPnl <= -this.dailyLossLimitPercent) {
- this.logger.warn(`Daily loss limit hit: ${this.dailyRealizedPnl.toFixed(2)}%`);
+ // realized (banked) + current open snapshot — NOT accumulated each bar
+ const totalDayPnl = this.dailyRealizedPnl + currentPnl;
+ if (totalDayPnl <= -this.dailyLossLimitPercent) {
+ this.logger.warn(`Daily loss limit hit: ${totalDayPnl.toFixed(2)}%`);
  return true;
  }
  return false;
@@ -206,7 +203,9 @@ class BBRSIStrategy {
  return { signal: "NONE", reason: "insufficient data" };
 
  const last = data[data.length - 1];
- this.setCurrentTimestamp(Number(last.t ?? last.T ?? last.openTime ?? Date.now()));
+ const ts = Number(last.t ?? last.T ?? last.openTime);
+ if (!Number.isFinite(ts)) return { signal: "NONE", reason: "missing candle timestamp" };
+ this.setCurrentTimestamp(ts);
 
  if (this.checkDailyLossLimit(currentPnl, this.currentTs))
  return { signal: "NONE", reason: "daily loss limit reached" };
@@ -238,12 +237,12 @@ class BBRSIStrategy {
  if (currentPosition === "LONG" || currentPosition === "SHORT") {
  const trailingExit = this.checkTrailingStop(currentPosition, entryPrice, currentPrice, result);
  if (trailingExit) {
- this.registerExit();
+ this.trailHighWater = null; // local state only, executor calls notifyExit after fill
  return trailingExit;
  }
  const exit = this.evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, result);
  if (exit) {
- this.registerExit();
+ this.trailHighWater = null;
  return exit;
  }
  return { ...result, signal: "NONE", reason: "holding position" };
