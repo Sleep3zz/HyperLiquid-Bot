@@ -1,5 +1,5 @@
 const assert = require("assert");
-const BBRSIStrategy = require("../src/strategy/BBRSIStrategy");
+const { BBRSIStrategy } = require("../src/strategy/BBRSIStrategy");
 
 function makeStrategy(overrides = {}) {
     const s = Object.create(BBRSIStrategy.prototype);

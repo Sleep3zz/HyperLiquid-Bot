@@ -36,15 +36,11 @@ jest.mock("config", () => ({
 // Mock indicators to NEUTRAL values so they never drive an exit/entry
 // and never return NaN. This isolates the daily-loss circuit-breaker.
 // ──────────────────────────────────────────────────────────────
-jest.mock(
- "../indicators",
- () => ({
- calculateRSI: () => 50,
- calculateBollingerBands: () => ({ upper: 110, middle: 100, lower: 90 }),
- calculateADX: () => 30,
- }),
- { virtual: true }
-);
+jest.mock("../indicators", () => ({
+ calculateRSI: jest.fn(() => 50),
+ calculateBollingerBands: jest.fn(() => ({ upper: 110, middle: 100, lower: 90 })),
+ calculateADX: jest.fn(() => 30),
+}));
 
 const { BBRSIStrategy } = require("../BBRSIStrategy");
 
@@ -105,20 +101,16 @@ describe("Daily loss limit force-close (regression)", () => {
  });
 
  test("force-close fires even when indicators are NaN", async () => {
- const indicators = require("../indicators");
- const rsiSpy = jest.spyOn(indicators, "calculateRSI").mockReturnValue(NaN);
- const bbSpy = jest.spyOn(indicators, "calculateBollingerBands").mockReturnValue({ upper: NaN, middle: NaN, lower: NaN });
- const adxSpy = jest.spyOn(indicators, "calculateADX").mockReturnValue(NaN);
+ const { calculateRSI, calculateBollingerBands, calculateADX } = require("../indicators");
+ calculateRSI.mockReturnValueOnce(NaN);
+ calculateBollingerBands.mockReturnValueOnce({ upper: NaN, middle: NaN, lower: NaN });
+ calculateADX.mockReturnValueOnce(NaN);
 
  const data = makeBars({ c: 99, h: 99.5, l: 98.8 }, UTC_NOON);
  const result = await strategy.evaluatePosition(data, "LONG", EQUITY, 100, -1.0);
 
  expect(result.signal).toBe("CLOSE_LONG");
  expect(result.reason).toBe("daily-loss-limit-force-close");
-
- rsiSpy.mockRestore();
- bbSpy.mockRestore();
- adxSpy.mockRestore();
  });
 
  test("force-close fires even with insufficient data", async () => {
