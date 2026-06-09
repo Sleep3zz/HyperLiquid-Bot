@@ -1,0 +1,21 @@
+{
+  "coin": "BTC",
+  "updatedAt": "2026-06-09T21:27:55.339Z",
+  "recommended": "Mean-Reversion",
+  "params": {
+    "name": "Mean-Reversion",
+    "leverage": 4,
+    "positionSize": 0.12,
+    "profitTarget": 1.2,
+    "stopLoss": 0.8,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 65,
+    "rsiOversold": 35,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 20
+  },
+  "expectedReturn": 0.040680926132572494,
+  "expectedSharpe": 0.03717194357831216
+}

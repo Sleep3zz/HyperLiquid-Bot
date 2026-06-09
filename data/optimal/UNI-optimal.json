@@ -1,0 +1,21 @@
+{
+  "coin": "UNI",
+  "updatedAt": "2026-06-09T21:28:40.835Z",
+  "recommended": "Mean-Reversion",
+  "params": {
+    "name": "Mean-Reversion",
+    "leverage": 4,
+    "positionSize": 0.12,
+    "profitTarget": 1.2,
+    "stopLoss": 0.8,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 65,
+    "rsiOversold": 35,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 20
+  },
+  "expectedReturn": 0.1531001127554373,
+  "expectedSharpe": 0.09631913636354353
+}

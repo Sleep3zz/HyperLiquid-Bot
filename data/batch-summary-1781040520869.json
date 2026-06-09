@@ -1,0 +1,310 @@
+{
+  "timestamp": "2026-06-09T21:28:40.869Z",
+  "duration": "46.1s",
+  "coins": [
+    "BTC",
+    "ETH",
+    "SOL",
+    "HYPE",
+    "ARB",
+    "OP",
+    "LINK",
+    "AVAX",
+    "NEAR",
+    "UNI"
+  ],
+  "results": [
+    {
+      "coin": "BTC",
+      "status": "SUCCESS",
+      "duration": "0.6s",
+      "recommended": "Mean-Reversion",
+      "expectedReturn": 0.040680926132572494,
+      "expectedSharpe": 0.03717194357831216
+    },
+    {
+      "coin": "ETH",
+      "status": "SUCCESS",
+      "duration": "3.7s",
+      "recommended": "Mean-Reversion",
+      "expectedReturn": 0.15526410259783008,
+      "expectedSharpe": 0.10353148065323715
+    },
+    {
+      "coin": "SOL",
+      "status": "SUCCESS",
+      "duration": "3.0s",
+      "recommended": "Aggressive",
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "HYPE",
+      "status": "SUCCESS",
+      "duration": "2.8s",
+      "recommended": "Mean-Reversion",
+      "expectedReturn": 0.5648816871810778,
+      "expectedSharpe": 0.2845540565788353
+    },
+    {
+      "coin": "ARB",
+      "status": "SUCCESS",
+      "duration": "2.8s",
+      "recommended": "Mean-Reversion",
+      "expectedReturn": 0.9122077689211802,
+      "expectedSharpe": 0.32779720791811645
+    },
+    {
+      "coin": "OP",
+      "status": "SUCCESS",
+      "duration": "2.8s",
+      "recommended": "Aggressive",
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "LINK",
+      "status": "SUCCESS",
+      "duration": "3.0s",
+      "recommended": "Aggressive",
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "AVAX",
+      "status": "SUCCESS",
+      "duration": "3.3s",
+      "recommended": "Conservative",
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "NEAR",
+      "status": "SUCCESS",
+      "duration": "3.0s",
+      "recommended": "Aggressive",
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "UNI",
+      "status": "SUCCESS",
+      "duration": "2.9s",
+      "recommended": "Mean-Reversion",
+      "expectedReturn": 0.1531001127554373,
+      "expectedSharpe": 0.09631913636354353
+    }
+  ],
+  "optimalConfigs": [
+    {
+      "coin": "ARB",
+      "updatedAt": "2026-06-09T21:28:15.807Z",
+      "recommended": "Mean-Reversion",
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "expectedReturn": 0.9122077689211802,
+      "expectedSharpe": 0.32779720791811645
+    },
+    {
+      "coin": "HYPE",
+      "updatedAt": "2026-06-09T21:28:10.979Z",
+      "recommended": "Mean-Reversion",
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "expectedReturn": 0.5648816871810778,
+      "expectedSharpe": 0.2845540565788353
+    },
+    {
+      "coin": "ETH",
+      "updatedAt": "2026-06-09T21:28:01.066Z",
+      "recommended": "Mean-Reversion",
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "expectedReturn": 0.15526410259783008,
+      "expectedSharpe": 0.10353148065323715
+    },
+    {
+      "coin": "UNI",
+      "updatedAt": "2026-06-09T21:28:40.835Z",
+      "recommended": "Mean-Reversion",
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "expectedReturn": 0.1531001127554373,
+      "expectedSharpe": 0.09631913636354353
+    },
+    {
+      "coin": "BTC",
+      "updatedAt": "2026-06-09T21:27:55.339Z",
+      "recommended": "Mean-Reversion",
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "expectedReturn": 0.040680926132572494,
+      "expectedSharpe": 0.03717194357831216
+    },
+    {
+      "coin": "SOL",
+      "updatedAt": "2026-06-09T21:28:06.137Z",
+      "recommended": "Aggressive",
+      "params": {
+        "name": "Aggressive",
+        "leverage": 5,
+        "positionSize": 0.15,
+        "profitTarget": 2.5,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 14,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 30
+      },
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "OP",
+      "updatedAt": "2026-06-09T21:28:20.596Z",
+      "recommended": "Aggressive",
+      "params": {
+        "name": "Aggressive",
+        "leverage": 5,
+        "positionSize": 0.15,
+        "profitTarget": 2.5,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 14,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 30
+      },
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "LINK",
+      "updatedAt": "2026-06-09T21:28:25.597Z",
+      "recommended": "Aggressive",
+      "params": {
+        "name": "Aggressive",
+        "leverage": 5,
+        "positionSize": 0.15,
+        "profitTarget": 2.5,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 14,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 30
+      },
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "AVAX",
+      "updatedAt": "2026-06-09T21:28:30.897Z",
+      "recommended": "Conservative",
+      "params": {
+        "name": "Conservative",
+        "leverage": 2,
+        "positionSize": 0.08,
+        "profitTarget": 1,
+        "stopLoss": 0.6,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 70,
+        "rsiOversold": 30,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 25
+      },
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    },
+    {
+      "coin": "NEAR",
+      "updatedAt": "2026-06-09T21:28:35.932Z",
+      "recommended": "Aggressive",
+      "params": {
+        "name": "Aggressive",
+        "leverage": 5,
+        "positionSize": 0.15,
+        "profitTarget": 2.5,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 14,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 30
+      },
+      "expectedReturn": 0,
+      "expectedSharpe": 0
+    }
+  ]
+}

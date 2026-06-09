@@ -1,0 +1,21 @@
+{
+  "coin": "ETH",
+  "updatedAt": "2026-06-09T21:28:01.066Z",
+  "recommended": "Mean-Reversion",
+  "params": {
+    "name": "Mean-Reversion",
+    "leverage": 4,
+    "positionSize": 0.12,
+    "profitTarget": 1.2,
+    "stopLoss": 0.8,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 65,
+    "rsiOversold": 35,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 20
+  },
+  "expectedReturn": 0.15526410259783008,
+  "expectedSharpe": 0.10353148065323715
+}

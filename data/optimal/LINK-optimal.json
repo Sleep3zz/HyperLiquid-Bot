@@ -1,0 +1,21 @@
+{
+  "coin": "LINK",
+  "updatedAt": "2026-06-09T21:28:25.597Z",
+  "recommended": "Aggressive",
+  "params": {
+    "name": "Aggressive",
+    "leverage": 5,
+    "positionSize": 0.15,
+    "profitTarget": 2.5,
+    "stopLoss": 1.5,
+    "bbPeriod": 20,
+    "bbStdDev": 2.5,
+    "rsiPeriod": 14,
+    "rsiOverbought": 75,
+    "rsiOversold": 25,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 30
+  },
+  "expectedReturn": 0,
+  "expectedSharpe": 0
+}

@@ -1,0 +1,21 @@
+{
+  "coin": "AVAX",
+  "updatedAt": "2026-06-09T21:28:30.897Z",
+  "recommended": "Conservative",
+  "params": {
+    "name": "Conservative",
+    "leverage": 2,
+    "positionSize": 0.08,
+    "profitTarget": 1,
+    "stopLoss": 0.6,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 70,
+    "rsiOversold": 30,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 25
+  },
+  "expectedReturn": 0,
+  "expectedSharpe": 0
+}

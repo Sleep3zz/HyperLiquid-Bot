@@ -1,0 +1,313 @@
+{
+  "coin": "AVAX",
+  "timestamp": "2026-06-09T21:28:30.897Z",
+  "results": [
+    {
+      "initialCapital": 10000,
+      "finalEquity": 10000,
+      "totalReturn": 0,
+      "totalPnL": 0,
+      "totalTrades": 0,
+      "winningTrades": 0,
+      "losingTrades": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0,
+      "sharpeRatio": 0,
+      "calmarRatio": 0,
+      "avgWin": 0,
+      "avgLoss": 0,
+      "params": {
+        "name": "Conservative",
+        "leverage": 2,
+        "positionSize": 0.08,
+        "profitTarget": 1,
+        "stopLoss": 0.6,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 70,
+        "rsiOversold": 30,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 25
+      },
+      "exitReasons": {},
+      "coin": "AVAX",
+      "testDuration": "0.13"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 10000,
+      "totalReturn": 0,
+      "totalPnL": 0,
+      "totalTrades": 0,
+      "winningTrades": 0,
+      "losingTrades": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0,
+      "sharpeRatio": 0,
+      "calmarRatio": 0,
+      "avgWin": 0,
+      "avgLoss": 0,
+      "params": {
+        "name": "Moderate",
+        "leverage": 3,
+        "positionSize": 0.1,
+        "profitTarget": 1.5,
+        "stopLoss": 1,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 70,
+        "rsiOversold": 30,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 25
+      },
+      "exitReasons": {},
+      "coin": "AVAX",
+      "testDuration": "0.12"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 10000,
+      "totalReturn": 0,
+      "totalPnL": 0,
+      "totalTrades": 0,
+      "winningTrades": 0,
+      "losingTrades": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0,
+      "sharpeRatio": 0,
+      "calmarRatio": 0,
+      "avgWin": 0,
+      "avgLoss": 0,
+      "params": {
+        "name": "Aggressive",
+        "leverage": 5,
+        "positionSize": 0.15,
+        "profitTarget": 2.5,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 14,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 30
+      },
+      "exitReasons": {},
+      "coin": "AVAX",
+      "testDuration": "0.07"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 9928.931980281659,
+      "totalReturn": -0.7106801971834102,
+      "totalPnL": -71.06801971834172,
+      "totalTrades": 1,
+      "winningTrades": 0,
+      "losingTrades": 1,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0.7106801971834102,
+      "sharpeRatio": -0.22567602564951075,
+      "calmarRatio": -1,
+      "avgWin": 0,
+      "avgLoss": 71.06801971834172,
+      "params": {
+        "name": "High-Risk",
+        "leverage": 8,
+        "positionSize": 0.2,
+        "profitTarget": 4,
+        "stopLoss": 2.5,
+        "bbPeriod": 15,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 10,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 10,
+        "adxTrendThreshold": 35
+      },
+      "exitReasons": {
+        "STOP_LOSS": 1
+      },
+      "coin": "AVAX",
+      "testDuration": "0.04"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 9957.622922004464,
+      "totalReturn": -0.4237707799553573,
+      "totalPnL": -42.37707799553654,
+      "totalTrades": 4,
+      "winningTrades": 1,
+      "losingTrades": 3,
+      "winRate": 25,
+      "profitFactor": 0.2402185382656562,
+      "maxDrawdown": 0.4237707799553573,
+      "sharpeRatio": -0.2682136141344247,
+      "calmarRatio": -1,
+      "avgWin": 13.398273378268902,
+      "avgLoss": 18.59178379126848,
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "exitReasons": {
+        "STOP_LOSS": 3,
+        "TAKE_PROFIT": 1
+      },
+      "coin": "AVAX",
+      "testDuration": "0.07"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 10000,
+      "totalReturn": 0,
+      "totalPnL": 0,
+      "totalTrades": 0,
+      "winningTrades": 0,
+      "losingTrades": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0,
+      "sharpeRatio": 0,
+      "calmarRatio": 0,
+      "avgWin": 0,
+      "avgLoss": 0,
+      "params": {
+        "name": "Trend-Following",
+        "leverage": 5,
+        "positionSize": 0.1,
+        "profitTarget": 3,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 80,
+        "rsiOversold": 20,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 35
+      },
+      "exitReasons": {},
+      "coin": "AVAX",
+      "testDuration": "0.04"
+    }
+  ],
+  "rankings": {
+    "byReturn": [
+      {
+        "name": "Conservative",
+        "value": 0
+      },
+      {
+        "name": "Moderate",
+        "value": 0
+      },
+      {
+        "name": "Aggressive",
+        "value": 0
+      },
+      {
+        "name": "Trend-Following",
+        "value": 0
+      },
+      {
+        "name": "Mean-Reversion",
+        "value": -0.4237707799553573
+      },
+      {
+        "name": "High-Risk",
+        "value": -0.7106801971834102
+      }
+    ],
+    "bySharpe": [
+      {
+        "name": "Conservative",
+        "value": 0
+      },
+      {
+        "name": "Moderate",
+        "value": 0
+      },
+      {
+        "name": "Aggressive",
+        "value": 0
+      },
+      {
+        "name": "Trend-Following",
+        "value": 0
+      },
+      {
+        "name": "High-Risk",
+        "value": -0.22567602564951075
+      },
+      {
+        "name": "Mean-Reversion",
+        "value": -0.2682136141344247
+      }
+    ],
+    "byCalmar": [
+      {
+        "name": "Conservative",
+        "value": 0
+      },
+      {
+        "name": "Moderate",
+        "value": 0
+      },
+      {
+        "name": "Aggressive",
+        "value": 0
+      },
+      {
+        "name": "Trend-Following",
+        "value": 0
+      },
+      {
+        "name": "High-Risk",
+        "value": -1
+      },
+      {
+        "name": "Mean-Reversion",
+        "value": -1
+      }
+    ]
+  },
+  "recommendation": {
+    "config": "Conservative",
+    "params": {
+      "name": "Conservative",
+      "leverage": 2,
+      "positionSize": 0.08,
+      "profitTarget": 1,
+      "stopLoss": 0.6,
+      "bbPeriod": 20,
+      "bbStdDev": 2,
+      "rsiPeriod": 14,
+      "rsiOverbought": 70,
+      "rsiOversold": 30,
+      "adxPeriod": 14,
+      "adxTrendThreshold": 25
+    },
+    "metrics": {
+      "return": 0,
+      "sharpe": 0,
+      "winRate": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0
+    }
+  }
+}

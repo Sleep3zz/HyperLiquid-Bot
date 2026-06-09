@@ -1,0 +1,317 @@
+{
+  "coin": "SOL",
+  "timestamp": "2026-06-09T21:28:06.137Z",
+  "results": [
+    {
+      "initialCapital": 10000,
+      "finalEquity": 9992.895474731575,
+      "totalReturn": -0.07104525268425277,
+      "totalPnL": -7.104525268424517,
+      "totalTrades": 1,
+      "winningTrades": 0,
+      "losingTrades": 1,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0.07104525268425277,
+      "sharpeRatio": -0.22567602564949674,
+      "calmarRatio": -1,
+      "avgWin": 0,
+      "avgLoss": 7.104525268424517,
+      "params": {
+        "name": "Conservative",
+        "leverage": 2,
+        "positionSize": 0.08,
+        "profitTarget": 1,
+        "stopLoss": 0.6,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 70,
+        "rsiOversold": 30,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 25
+      },
+      "exitReasons": {
+        "STOP_LOSS": 1
+      },
+      "coin": "SOL",
+      "testDuration": "0.14"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 9987.679015121705,
+      "totalReturn": -0.12320984878295349,
+      "totalPnL": -12.320984878295969,
+      "totalTrades": 1,
+      "winningTrades": 0,
+      "losingTrades": 1,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0.12320984878295349,
+      "sharpeRatio": -0.22567602564945696,
+      "calmarRatio": -1,
+      "avgWin": 0,
+      "avgLoss": 12.320984878295969,
+      "params": {
+        "name": "Moderate",
+        "leverage": 3,
+        "positionSize": 0.1,
+        "profitTarget": 1.5,
+        "stopLoss": 1,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 70,
+        "rsiOversold": 30,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 25
+      },
+      "exitReasons": {
+        "STOP_LOSS": 1
+      },
+      "coin": "SOL",
+      "testDuration": "0.09"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 10000,
+      "totalReturn": 0,
+      "totalPnL": 0,
+      "totalTrades": 0,
+      "winningTrades": 0,
+      "losingTrades": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0,
+      "sharpeRatio": 0,
+      "calmarRatio": 0,
+      "avgWin": 0,
+      "avgLoss": 0,
+      "params": {
+        "name": "Aggressive",
+        "leverage": 5,
+        "positionSize": 0.15,
+        "profitTarget": 2.5,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 14,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 30
+      },
+      "exitReasons": {},
+      "coin": "SOL",
+      "testDuration": "0.06"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 9940.954747315755,
+      "totalReturn": -0.590452526842455,
+      "totalPnL": -59.04525268424516,
+      "totalTrades": 1,
+      "winningTrades": 0,
+      "losingTrades": 1,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0.590452526842455,
+      "sharpeRatio": -0.22567602564947567,
+      "calmarRatio": -1,
+      "avgWin": 0,
+      "avgLoss": 59.04525268424516,
+      "params": {
+        "name": "High-Risk",
+        "leverage": 8,
+        "positionSize": 0.2,
+        "profitTarget": 4,
+        "stopLoss": 2.5,
+        "bbPeriod": 15,
+        "bbStdDev": 2.5,
+        "rsiPeriod": 10,
+        "rsiOverbought": 75,
+        "rsiOversold": 25,
+        "adxPeriod": 10,
+        "adxTrendThreshold": 35
+      },
+      "exitReasons": {
+        "STOP_LOSS": 1
+      },
+      "coin": "SOL",
+      "testDuration": "0.04"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 9925.171238336685,
+      "totalReturn": -0.7482876166331517,
+      "totalPnL": -74.82876166331661,
+      "totalTrades": 8,
+      "winningTrades": 3,
+      "losingTrades": 5,
+      "winRate": 37.5,
+      "profitFactor": 0.37136406018454327,
+      "maxDrawdown": 1.1872086699633706,
+      "sharpeRatio": -0.23616866968702646,
+      "calmarRatio": -0.6302915701047221,
+      "avgWin": 14.73492631152484,
+      "avgLoss": 23.80670811957823,
+      "params": {
+        "name": "Mean-Reversion",
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 65,
+        "rsiOversold": 35,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 20
+      },
+      "exitReasons": {
+        "TAKE_PROFIT": 3,
+        "STOP_LOSS": 5
+      },
+      "coin": "SOL",
+      "testDuration": "0.08"
+    },
+    {
+      "initialCapital": 10000,
+      "finalEquity": 10000,
+      "totalReturn": 0,
+      "totalPnL": 0,
+      "totalTrades": 0,
+      "winningTrades": 0,
+      "losingTrades": 0,
+      "winRate": 0,
+      "profitFactor": 0,
+      "maxDrawdown": 0,
+      "sharpeRatio": 0,
+      "calmarRatio": 0,
+      "avgWin": 0,
+      "avgLoss": 0,
+      "params": {
+        "name": "Trend-Following",
+        "leverage": 5,
+        "positionSize": 0.1,
+        "profitTarget": 3,
+        "stopLoss": 1.5,
+        "bbPeriod": 20,
+        "bbStdDev": 2,
+        "rsiPeriod": 14,
+        "rsiOverbought": 80,
+        "rsiOversold": 20,
+        "adxPeriod": 14,
+        "adxTrendThreshold": 35
+      },
+      "exitReasons": {},
+      "coin": "SOL",
+      "testDuration": "0.05"
+    }
+  ],
+  "rankings": {
+    "byReturn": [
+      {
+        "name": "Aggressive",
+        "value": 0
+      },
+      {
+        "name": "Trend-Following",
+        "value": 0
+      },
+      {
+        "name": "Conservative",
+        "value": -0.07104525268425277
+      },
+      {
+        "name": "Moderate",
+        "value": -0.12320984878295349
+      },
+      {
+        "name": "High-Risk",
+        "value": -0.590452526842455
+      },
+      {
+        "name": "Mean-Reversion",
+        "value": -0.7482876166331517
+      }
+    ],
+    "bySharpe": [
+      {
+        "name": "Aggressive",
+        "value": 0
+      },
+      {
+        "name": "Trend-Following",
+        "value": 0
+      },
+      {
+        "name": "Moderate",
+        "value": -0.22567602564945696
+      },
+      {
+        "name": "High-Risk",
+        "value": -0.22567602564947567
+      },
+      {
+        "name": "Conservative",
+        "value": -0.22567602564949674
+      },
+      {
+        "name": "Mean-Reversion",
+        "value": -0.23616866968702646
+      }
+    ],
+    "byCalmar": [
+      {
+        "name": "Aggressive",
+        "value": 0
+      },
+      {
+        "name": "Trend-Following",
+        "value": 0
+      },
+      {
+        "name": "Mean-Reversion",
+        "value": -0.6302915701047221
+      },
+      {
+        "name": "Conservative",
+        "value": -1
+      },
+      {
+        "name": "Moderate",
+        "value": -1
+      },
+      {
+        "name": "High-Risk",
+        "value": -1
+      }
+    ]
+  },
+  "recommendation": {
+    "config": "Aggressive",
+    "params": {
+      "name": "Aggressive",
+      "leverage": 5,
+      "positionSize": 0.15,
+      "profitTarget": 2.5,
+      "stopLoss": 1.5,
+      "bbPeriod": 20,
+      "bbStdDev": 2.5,
+      "rsiPeriod": 14,
+      "rsiOverbought": 75,
+      "rsiOversold": 25,
+      "adxPeriod": 14,
+      "adxTrendThreshold": 30
+    },
+    "metrics": {
+      "return": 0,
+      "sharpe": 0,
+      "winRate": 0,
+      "maxDrawdown": 0,
+      "totalTrades": 0
+    }
+  }
+}
