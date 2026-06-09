@@ -141,4 +141,30 @@ describe('BBRSIStrategy', () => {
         expect(r2.signal).toBe("NONE");
         expect(r2.reason).toBe("force-close already emitted; awaiting fill");
     });
+
+    test('#4: force-close re-arms after UTC day rollover if position still open', async () => {
+        const day1 = Date.UTC(2024, 0, 15, 12, 0, 0);
+        const day2 = Date.UTC(2024, 0, 16, 12, 0, 0);
+
+        // Day 1: breach + emit
+        strategy.dailyRealizedPnl = -2.5;
+        strategy.dailyLossStartTs = strategy._utcDayStart(day1);
+        const r1 = await strategy.evaluatePosition(
+            makeBars({ c: 99, h: 99.5, l: 98.8 }, day1), "LONG", 10000, 100, -1.0
+        );
+        expect(r1.signal).toBe("CLOSE_LONG");
+        expect(r1.reason).toBe("daily-loss-limit-force-close");
+
+        // Day 2: position STILL open (executor never filled), breaches again
+        // (dailyRealizedPnl reset to 0 by checkDailyLossLimit on day rollover,
+        //  but we simulate fresh-day losses accumulating again)
+        strategy.dailyRealizedPnl = -2.5; // simulate fresh-day losses
+        const r2 = await strategy.evaluatePosition(
+            makeBars({ c: 99, h: 99.5, l: 98.8 }, day2), "LONG", 10000, 100, -1.0
+        );
+
+        // MUST re-emit, not suppress:
+        expect(r2.signal).toBe("CLOSE_LONG");
+        expect(r2.reason).toBe("daily-loss-limit-force-close");
+    });
 });
