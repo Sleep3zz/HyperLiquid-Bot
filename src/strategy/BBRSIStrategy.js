@@ -331,36 +331,44 @@ class BBRSIStrategy {
 
  checkTrailingStop(currentPosition, entryPrice, currentHigh, currentLow, baseResult, nowTs = Date.now()) {
  if (currentPosition !== "LONG" && currentPosition !== "SHORT") return null;
+ if (!Number.isFinite(entryPrice)) return null;
 
  if (currentPosition === "LONG") {
  const extreme = Number.isFinite(currentHigh) ? currentHigh : currentLow;
- // Seed from entryPrice (or max(entryPrice, extreme)) so trail can't trigger before price exceeds entry
- const seed = Number.isFinite(entryPrice) ? Math.max(entryPrice, extreme) : extreme;
+ // #1: seed from max(entry, extreme) so trail starts at/above entry.
+ const seed = Math.max(entryPrice, extreme);
  const prev = this.trailHighWater;
  const next = prev === null ? seed : Math.max(prev, extreme);
- if (next !== prev) { this.trailHighWater = next; this._markDirty(); }
+ if (next !== prev) {
+ this.trailHighWater = next;
+ this._markDirty();
+ }
 
  const stop = this.trailHighWater * (1 - this.trailingStopPercent / 100);
- if (currentLow <= stop) {
- this._flushState(nowTs, true);
+ // Only meaningful once the high-water mark has risen above entry.
+ if (this.trailHighWater > entryPrice && currentLow <= stop) {
+ this._flushState(nowTs, /* force */ true); // durable on exit
  return { ...baseResult, signal: "CLOSE_LONG", reason: "trailing-stop" };
  }
  } else {
  const extreme = Number.isFinite(currentLow) ? currentLow : currentHigh;
- // Seed from entryPrice (or min(entryPrice, extreme)) so trail can't trigger before price drops below entry
- const seed = Number.isFinite(entryPrice) ? Math.min(entryPrice, extreme) : extreme;
+ // #1: seed from min(entry, extreme) for SHORT.
+ const seed = Math.min(entryPrice, extreme);
  const prev = this.trailHighWater;
  const next = prev === null ? seed : Math.min(prev, extreme);
- if (next !== prev) { this.trailHighWater = next; this._markDirty(); }
+ if (next !== prev) {
+ this.trailHighWater = next;
+ this._markDirty();
+ }
 
  const stop = this.trailHighWater * (1 + this.trailingStopPercent / 100);
- if (currentHigh >= stop) {
- this._flushState(nowTs, true);
+ if (this.trailHighWater < entryPrice && currentHigh >= stop) {
+ this._flushState(nowTs, /* force */ true);
  return { ...baseResult, signal: "CLOSE_SHORT", reason: "trailing-stop" };
  }
  }
 
- this._flushState(nowTs);
+ this._flushState(nowTs); // debounced; only writes if window elapsed
  return null;
  }
 
@@ -510,30 +518,40 @@ class BBRSIStrategy {
 
  // ──────────────────────────────────────────────────────────────
  // 5) POSITION MANAGEMENT (EXITS) — only when holding
- // Order: hard stop (risk floor) → trailing stop (locks gains) → take-profit.
- // Daily-loss force-close already handled above in step (1).
+ // Ordering rationale:
+ // a) Fingerprint reset (stale trail/latch on identity change)
+ // b) HARD STOP-LOSS first — it defines the risk envelope and must
+ // never be masked by a looser trailing stop (#2).
+ // c) Trailing stop next — may beat take-profit (locking gains early
+ // is desirable).
+ // d) Take-profit last.
  // ──────────────────────────────────────────────────────────────
  if (currentPosition === "LONG" || currentPosition === "SHORT") {
- // Reset trailing high-water mark if the live position no longer
- // matches the persisted fingerprint (e.g., manual close + reopen).
+ // (a) Reset trail + force-close latch if live position identity changed.
  const fp = this._positionFingerprint(currentPosition, entryPrice);
  if (fp !== this.positionFingerprint) {
  this.positionFingerprint = fp;
  this.trailHighWater = null;
+ this._forceCloseEmittedFor = null; // #4: new position → re-arm latch
  this._markDirty();
  }
 
- // Hard stop / take-profit defines the risk envelope — check FIRST.
- // This guarantees the hard stop is never masked by a looser trailing stop.
- const exit = this.evaluateExit(
+ // Evaluate hard stop / take-profit once; split by reason for ordering.
+ const hardExit = this.evaluateExit(
  currentPosition,
  entryPrice,
  currentHigh,
  currentLow,
  { signal: "NONE" }
  );
- if (exit && exit.reason === "stop-loss") return exit;
 
+ // (b) HARD STOP-LOSS takes precedence over everything (#2).
+ if (hardExit && hardExit.reason === "stop-loss") {
+ this._flushState(barTs, /* force */ true);
+ return hardExit;
+ }
+
+ // (c) Trailing stop — may pre-empt take-profit.
  const trailingExit = this.checkTrailingStop(
  currentPosition,
  entryPrice,
@@ -544,7 +562,11 @@ class BBRSIStrategy {
  );
  if (trailingExit) return trailingExit;
 
- if (exit) return exit; // take-profit
+ // (d) Take-profit (the remaining hardExit case).
+ if (hardExit) {
+ this._flushState(barTs, /* force */ true);
+ return hardExit;
+ }
 
  return { signal: "NONE", reason: "holding position" };
  }
