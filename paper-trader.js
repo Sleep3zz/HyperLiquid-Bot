@@ -112,6 +112,10 @@ class PaperTrader {
         this.statusLoop();
         
         console.log('✅ Paper trader is running. Press Ctrl+C to stop.\n');
+        
+        // Save initial state so dashboard can see this trader
+        this.saveState();
+        console.log(`[PAPER TRADER] ${this.coin} state initialized and saved`);
     }
 
     async waitForConnection(timeout = 30000) {
