@@ -43,6 +43,8 @@ class BBRSIStrategy {
  this.dailyLossStartTs = -Infinity;
  this.dailyRealizedPnl = 0;
 
+ this.trailHighWater = null;
+
  this._validateConfig();
  this.logger.info("BBRSIStrategy initialized", { mode: this.mode });
  }
@@ -132,15 +134,21 @@ class BBRSIStrategy {
 
  inCooldown() {
  if (this.cooldownPeriodMs <= 0) return false;
- return (this.currentTs - this.lastExitTs) < this.cooldownPeriodMs; // strict < for boundary
+ return (this.currentTs - this.lastExitTs) <= this.cooldownPeriodMs;
  }
 
- // Called by executor after confirmed fill
- notifyExit(exitTs, realizedPnl = 0) {
- this.lastExitTs = Number.isFinite(exitTs) ? exitTs : (this.currentTs ?? Date.now());
- this.dailyRealizedPnl += realizedPnl; // accumulate ONLY on confirmed close
+ registerExit(realizedPnl = 0) {
+ this.lastExitTs = this.currentTs || Date.now();
+ this.dailyRealizedPnl += realizedPnl;
  this.trailHighWater = null;
- this.logger.info("Cooldown started via confirmed exit", { realizedPnl });
+ this.logger.info("Cooldown & trailing stop reset on exit");
+ }
+
+ notifyExit(exitTs = null, realizedPnl = 0) {
+ this.lastExitTs = Number.isFinite(exitTs) ? exitTs : (this.currentTs || Date.now());
+ this.dailyRealizedPnl += realizedPnl;
+ this.trailHighWater = null;
+ this.logger.info("Cooldown started via external exit");
  }
 
  checkTrailingStop(currentPosition, entryPrice, currentPrice, baseResult) {
@@ -170,7 +178,6 @@ class BBRSIStrategy {
  this.dailyLossStartTs = nowTs;
  }
 
- // realized (banked) + current open snapshot — NOT accumulated each bar
  const totalDayPnl = this.dailyRealizedPnl + currentPnl;
  if (totalDayPnl <= -this.dailyLossLimitPercent) {
  this.logger.warn(`Daily loss limit hit: ${totalDayPnl.toFixed(2)}%`);
@@ -203,9 +210,7 @@ class BBRSIStrategy {
  return { signal: "NONE", reason: "insufficient data" };
 
  const last = data[data.length - 1];
- const ts = Number(last.t ?? last.T ?? last.openTime);
- if (!Number.isFinite(ts)) return { signal: "NONE", reason: "missing candle timestamp" };
- this.setCurrentTimestamp(ts);
+ this.setCurrentTimestamp(Number(last.t ?? last.T ?? last.openTime ?? Date.now()));
 
  if (this.checkDailyLossLimit(currentPnl, this.currentTs))
  return { signal: "NONE", reason: "daily loss limit reached" };
@@ -237,12 +242,12 @@ class BBRSIStrategy {
  if (currentPosition === "LONG" || currentPosition === "SHORT") {
  const trailingExit = this.checkTrailingStop(currentPosition, entryPrice, currentPrice, result);
  if (trailingExit) {
- this.trailHighWater = null; // local state only, executor calls notifyExit after fill
+ this.registerExit();
  return trailingExit;
  }
  const exit = this.evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, result);
  if (exit) {
- this.trailHighWater = null;
+ this.registerExit();
  return exit;
  }
  return { ...result, signal: "NONE", reason: "holding position" };
@@ -293,23 +298,3 @@ class BBRSIStrategy {
 }
 
 module.exports = BBRSIStrategy;
-
-/*
-// In your main trading loop / executor
-async function onNewCandle(data, currentPosition, accountEquity, entryPrice, currentPnl = 0) {
-    const last = data[data.length - 1];
-    const barTs = Number(last.t ?? last.T ?? last.openTime ?? Date.now());
-
-    strategy.setCurrentTimestamp(barTs);
-
-    const signal = await strategy.evaluatePosition(data, currentPosition, accountEquity, entryPrice, currentPnl);
-
-    if (signal.signal === "LONG" || signal.signal === "SHORT") {
-        // place order on HyperLiquid
-        console.log("ENTRY SIGNAL", signal);
-    } else if (signal.signal.startsWith("CLOSE_")) {
-        // close order on HyperLiquid
-        strategy.registerExit(currentPnl); // pass realized PnL here
-    }
-}
-*/
