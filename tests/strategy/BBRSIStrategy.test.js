@@ -84,14 +84,17 @@ describe('BBRSIStrategy', () => {
         expect(strategy.checkDailyLossLimit(-0.5, 1000003)).toBe(true);
     });
 
-    test('daily loss limit resets after 24h window', () => {
-        const day1 = 1000000;
+    test('daily loss limit resets after UTC day rollover', () => {
+        const day1 = Date.UTC(2024, 0, 15, 23, 0, 0); // 23:00 UTC
         strategy.notifyExit(day1, -2.5);
         expect(strategy.dailyRealizedPnl).toBeCloseTo(-2.5);
+        expect(strategy.dailyLossStartTs).toBe(strategy._utcDayStart(day1));
 
-        const day2 = day1 + 24 * 60 * 60 * 1000 + 1;
-        strategy.checkDailyLossLimit(0, day2); // crosses window
+        const day2 = Date.UTC(2024, 0, 16, 1, 0, 0); // 01:00 UTC next day
+        const breached = strategy.checkDailyLossLimit(0, day2);
+        expect(breached).toBe(false);
         expect(strategy.dailyRealizedPnl).toBe(0); // reset happened
+        expect(strategy.dailyLossStartTs).toBe(strategy._utcDayStart(day2));
     });
 
     test('position size never returns negative or zero when conditions are valid', () => {
