@@ -380,6 +380,7 @@ class BBRSIStrategy {
  todayStart > this.dailyLossStartTs) {
  this.dailyRealizedPnl = 0;
  this.dailyLossStartTs = todayStart;
+ this._forceCloseEmittedFor = null; // re-arm force-close latch across day boundaries
  this._markDirty();
  this._flushState(nowTs, true);
  }

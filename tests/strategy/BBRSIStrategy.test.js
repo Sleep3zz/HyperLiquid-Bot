@@ -27,6 +27,20 @@ jest.mock("config", () => ({
 
 const { BBRSIStrategy } = require('../../src/strategy/BBRSIStrategy');
 
+// Helpers for regression tests
+const HOUR_MS = 3600_000;
+const UTC_NOON = Date.UTC(2024, 0, 15, 12, 0, 0);
+
+function makeBars(last, endTs, basePrice = 100, n = 30) {
+    const bars = [];
+    for (let i = 0; i < n; i++) {
+        const t = endTs - (n - 1 - i) * HOUR_MS;
+        bars.push({ t, c: basePrice, h: basePrice, l: basePrice });
+    }
+    bars[n - 1] = { t: endTs, c: last.c, h: last.h, l: last.l };
+    return bars;
+}
+
 describe('BBRSIStrategy', () => {
     let strategy;
     const logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
@@ -83,5 +97,45 @@ describe('BBRSIStrategy', () => {
     test('position size never returns negative or zero when conditions are valid', () => {
         const size = strategy.calculatePositionSize("LONG", 10000, 100, 98);
         expect(size).toBeGreaterThan(0);
+    });
+
+    // Regression tests for fixes #1, #2, #4
+    test('#1: trailing stop does NOT fire on entry bar (seed from entry)', async () => {
+        // Wide entry bar: high 100, low 98.5, trail 0.8% → naive stop 99.2 would fire.
+        // Seed is max(100, 100) = 100. Trail needs high-water > 100 to arm.
+        const data = makeBars({ c: 99, h: 100, l: 98.5 }, UTC_NOON);
+        const result = await strategy.evaluatePosition(data, "LONG", 10000, 100, -0.5);
+        // Should NOT be trailing-stop; hard stop at 98.5 (1.5%) is the floor.
+        expect(result.reason).not.toBe("trailing-stop");
+    });
+
+    test('#2: hard stop takes precedence over trailing on same bar', async () => {
+        // Move price up first to arm the trail above entry
+        await strategy.evaluatePosition(
+            makeBars({ c: 103, h: 103, l: 102 }, UTC_NOON - HOUR_MS),
+            "LONG", 10000, 100, 3
+        );
+        // Crash bar that hits BOTH the hard stop (98.5) and the trail
+        const result = await strategy.evaluatePosition(
+            makeBars({ c: 98, h: 102.5, l: 98.0 }, UTC_NOON),
+            "LONG", 10000, 100, -2
+        );
+        expect(result.reason).toBe("stop-loss");
+    });
+
+    test('#4: force-close emitted once, then suppressed until fill', async () => {
+        strategy.dailyRealizedPnl = -2.5;
+        strategy.dailyLossStartTs = strategy._utcDayStart(UTC_NOON);
+
+        // First call emits force-close
+        const data = makeBars({ c: 99, h: 99.5, l: 98.8 }, UTC_NOON);
+        const r1 = await strategy.evaluatePosition(data, "LONG", 10000, 100, -1.0);
+        expect(r1.signal).toBe("CLOSE_LONG");
+        expect(r1.reason).toBe("daily-loss-limit-force-close");
+
+        // Second call (same position, still breached) is suppressed
+        const r2 = await strategy.evaluatePosition(data, "LONG", 10000, 100, -1.0);
+        expect(r2.signal).toBe("NONE");
+        expect(r2.reason).toBe("force-close already emitted; awaiting fill");
     });
 });
