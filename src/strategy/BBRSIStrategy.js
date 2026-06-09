@@ -84,6 +84,8 @@ class BBRSIStrategy {
  if (this.maxLeverage <= 0 || this.assetMaxLeverage <= 0) throw new Error("leverage values must be positive");
  if (this.mode !== "reversion" && this.mode !== "breakout") throw new Error(`unknown mode: ${this.mode}`);
  if (this.rsiOversold >= this.rsiOverbought) throw new Error("rsiOversold must be less than rsiOverbought");
+ if (this.trailingStopPercent <= 0) throw new Error("trailingStopPercent must be positive");
+ if (this.dailyLossLimitPercent <= 0) throw new Error("dailyLossLimitPercent must be positive");
  }
 
  _num(v) {
@@ -309,8 +311,10 @@ class BBRSIStrategy {
 
  if (currentPosition === "LONG") {
  const extreme = Number.isFinite(currentHigh) ? currentHigh : currentLow;
+ // Seed from entryPrice (or max(entryPrice, extreme)) so trail can't trigger before price exceeds entry
+ const seed = Number.isFinite(entryPrice) ? Math.max(entryPrice, extreme) : extreme;
  const prev = this.trailHighWater;
- const next = prev === null ? extreme : Math.max(prev, extreme);
+ const next = prev === null ? seed : Math.max(prev, extreme);
  if (next !== prev) { this.trailHighWater = next; this._markDirty(); }
 
  const stop = this.trailHighWater * (1 - this.trailingStopPercent / 100);
@@ -320,8 +324,10 @@ class BBRSIStrategy {
  }
  } else {
  const extreme = Number.isFinite(currentLow) ? currentLow : currentHigh;
+ // Seed from entryPrice (or min(entryPrice, extreme)) so trail can't trigger before price drops below entry
+ const seed = Number.isFinite(entryPrice) ? Math.min(entryPrice, extreme) : extreme;
  const prev = this.trailHighWater;
- const next = prev === null ? extreme : Math.min(prev, extreme);
+ const next = prev === null ? seed : Math.min(prev, extreme);
  if (next !== prev) { this.trailHighWater = next; this._markDirty(); }
 
  const stop = this.trailHighWater * (1 + this.trailingStopPercent / 100);
@@ -426,6 +432,10 @@ class BBRSIStrategy {
  // Durable flush: this is a state-changing safety event.
  this._markDirty();
  this._flushState(barTs, /* force */ true);
+ // CONTRACT: Caller MUST call notifyExit(realizedPnl) after the fill confirms.
+ // If notifyExit is not called, dailyRealizedPnl won't update and this
+ // force-close may fire repeatedly. The executor is responsible for
+ // bridging the signal to the actual position close and calling back.
  return { signal, reason: "daily-loss-limit-force-close" };
  }
  } else if (dailyLimitBreached) {
@@ -470,7 +480,7 @@ class BBRSIStrategy {
 
  // ──────────────────────────────────────────────────────────────
  // 5) POSITION MANAGEMENT (EXITS) — only when holding
- // Order: trailing stop (locks gains) → hard stop / take-profit.
+ // Order: hard stop (risk floor) → trailing stop (locks gains) → take-profit.
  // Daily-loss force-close already handled above in step (1).
  // ──────────────────────────────────────────────────────────────
  if (currentPosition === "LONG" || currentPosition === "SHORT") {
@@ -483,6 +493,17 @@ class BBRSIStrategy {
  this._markDirty();
  }
 
+ // Hard stop / take-profit defines the risk envelope — check FIRST.
+ // This guarantees the hard stop is never masked by a looser trailing stop.
+ const exit = this.evaluateExit(
+ currentPosition,
+ entryPrice,
+ currentHigh,
+ currentLow,
+ { signal: "NONE" }
+ );
+ if (exit && exit.reason === "stop-loss") return exit;
+
  const trailingExit = this.checkTrailingStop(
  currentPosition,
  entryPrice,
@@ -493,14 +514,7 @@ class BBRSIStrategy {
  );
  if (trailingExit) return trailingExit;
 
- const exit = this.evaluateExit(
- currentPosition,
- entryPrice,
- currentHigh,
- currentLow,
- { signal: "NONE" }
- );
- if (exit) return exit;
+ if (exit) return exit; // take-profit
 
  return { signal: "NONE", reason: "holding position" };
  }
