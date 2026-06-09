@@ -177,6 +177,25 @@ class BBRSIStrategy {
  return null;
  }
 
+ // ── Daily loss limit (REALIZED + current snapshot) ──
+ checkDailyLossLimit(currentPnl, nowTs) {
+ if (this.dailyLossStartTs === -Infinity) this.dailyLossStartTs = nowTs;
+
+ const msPerDay = 24 * 60 * 60 * 1000;
+ if (nowTs - this.dailyLossStartTs >= msPerDay) {
+ this.dailyRealizedPnl = 0;
+ this.dailyLossStartTs = nowTs;
+ }
+
+ const totalDayPnl = this.dailyRealizedPnl + currentPnl;
+
+ if (totalDayPnl <= -this.dailyLossLimitPercent) {
+ this.logger.warn(`Daily loss limit hit: ${totalDayPnl.toFixed(2)}%`);
+ return true;
+ }
+ return false;
+ }
+
  evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, baseResult) {
  if (!Number.isFinite(entryPrice) || entryPrice <= 0) return null;
 
@@ -196,22 +215,15 @@ class BBRSIStrategy {
  }
 
  // ── Main entry point ──
- async evaluatePosition(data, currentPosition = null, accountEquity = null, entryPrice = null) {
+ async evaluatePosition(data, currentPosition = null, accountEquity = null, entryPrice = null, currentPnl = 0) {
  const last = data[data.length - 1];
  const barTs = Number(last.t ?? last.T ?? last.openTime ?? Date.now());
 
  this.setCurrentTimestamp(barTs);
 
- // Daily loss window reset
- if (this.dailyLossStartTs === -Infinity || this.dailyLossStartTs == null) {
- this.dailyLossStartTs = barTs;
- } else {
- const msPerDay = 24 * 60 * 60 * 1000;
- if (barTs - this.dailyLossStartTs >= msPerDay) {
- this.dailyRealizedPnl = 0;
- this.dailyLossStartTs = barTs;
- }
- }
+ // Daily loss limit check
+ if (this.checkDailyLossLimit(currentPnl, barTs))
+ return { signal: "NONE", reason: "daily loss limit reached" };
 
  // Indicators
  const bbRaw = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
@@ -253,10 +265,6 @@ class BBRSIStrategy {
 
  if (!Number.isFinite(accountEquity) || accountEquity <= 0)
  return { signal: "NONE", reason: "missing accountEquity" };
-
- // Daily loss limit check (prevent new entries if limit hit)
- if (this.dailyRealizedPnl <= -this.dailyLossLimitPercent)
- return { signal: "NONE", reason: "daily loss limit reached" };
 
  let longConditions = false;
  let shortConditions = false;
