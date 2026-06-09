@@ -155,12 +155,11 @@ describe('BBRSIStrategy', () => {
         expect(r1.signal).toBe("CLOSE_LONG");
         expect(r1.reason).toBe("daily-loss-limit-force-close");
 
-        // Day 2: position STILL open (executor never filled), breaches again
-        // (dailyRealizedPnl reset to 0 by checkDailyLossLimit on day rollover,
-        //  but we simulate fresh-day losses accumulating again)
-        strategy.dailyRealizedPnl = -2.5; // simulate fresh-day losses
+        // Day 2: rollover zeroes realized PnL. To breach again, currentPnl alone
+        // must exceed the limit. Use -3.5% unrealized (beyond -3.0% limit).
+        // low: 98.8 > hard stop 98.5, so daily force-close is the exit under test.
         const r2 = await strategy.evaluatePosition(
-            makeBars({ c: 99, h: 99.5, l: 98.8 }, day2), "LONG", 10000, 100, -1.0
+            makeBars({ c: 96.5, h: 99.0, l: 98.8 }, day2), "LONG", 10000, 100, -3.5
         );
 
         // MUST re-emit, not suppress:

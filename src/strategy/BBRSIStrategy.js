@@ -483,6 +483,24 @@ class BBRSIStrategy {
  }
 
  // ──────────────────────────────────────────────────────────────
+ // 1b) HARD-STOP PRE-CHECK (indicator-independent)
+ // Hard stop is a safety exit and shouldn't depend on indicators.
+ // Extract price early for the safety stop; tolerate short data.
+ // ──────────────────────────────────────────────────────────────
+ if (currentPosition === "LONG" || currentPosition === "SHORT") {
+ const pxLast = last || {};
+ const cHigh = Number(pxLast.h ?? pxLast.high ?? pxLast.c ?? pxLast.close);
+ const cLow = Number(pxLast.l ?? pxLast.low ?? pxLast.c ?? pxLast.close);
+ if (Number.isFinite(cHigh) && Number.isFinite(cLow) && Number.isFinite(entryPrice)) {
+ const hardExit = this.evaluateExit(currentPosition, entryPrice, cHigh, cLow, { signal: "NONE" });
+ if (hardExit && hardExit.reason === "stop-loss") {
+ this._flushState(barTs, /* force */ true);
+ return hardExit;
+ }
+ }
+ }
+
+ // ──────────────────────────────────────────────────────────────
  // 2) DATA SUFFICIENCY (only matters from here on, for indicators)
  // ──────────────────────────────────────────────────────────────
  if (!Array.isArray(data) || data.length < this.bbPeriod + 2) {
