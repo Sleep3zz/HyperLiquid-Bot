@@ -16,7 +16,13 @@ class FileStateStore {
  save(state) {
  const fs = require("fs");
  const tmp = `${this.filePath}.tmp`;
- fs.writeFileSync(tmp, JSON.stringify(state, null, 2));
+ const fd = fs.openSync(tmp, "w");
+ try {
+ fs.writeSync(fd, JSON.stringify(state, null, 2));
+ fs.fsyncSync(fd);
+ } finally {
+ fs.closeSync(fd);
+ }
  fs.renameSync(tmp, this.filePath);
  }
 }
@@ -72,6 +78,9 @@ class BBRSIStrategy {
  this._lastFlushTs = 0;
  this.persistDebounceMs = Number(trading.persistDebounceMs) || 5000;
  this.positionFingerprint = null;
+ this._forceCloseEmittedFor = null;
+ this.currentTs = Date.now(); // safety init
+ this.minOrderSize = Number(trading.minOrderSize) || 0;
  this._restoreState();
 
  this._validateConfig();
@@ -145,6 +154,7 @@ class BBRSIStrategy {
  version: 2,
  market: this.market,
  positionFingerprint: this.positionFingerprint || null,
+ forceCloseEmittedFor: this._forceCloseEmittedFor || null,
  lastExitTs: this.lastExitTs,
  dailyLossStartTs: this.dailyLossStartTs,
  dailyRealizedPnl: this.dailyRealizedPnl,
@@ -157,6 +167,11 @@ class BBRSIStrategy {
  try {
  const s = this.stateStore.load() || {};
 
+ if (s.version && s.version !== 2) {
+ this.logger.warn(`State version ${s.version} != 2; ignoring persisted state`);
+ return;
+ }
+
  if (Number.isFinite(s.lastExitTs)) this.lastExitTs = s.lastExitTs;
  if (Number.isFinite(s.dailyLossStartTs)) this.dailyLossStartTs = s.dailyLossStartTs;
  if (Number.isFinite(s.dailyRealizedPnl)) this.dailyRealizedPnl = s.dailyRealizedPnl;
@@ -165,8 +180,10 @@ class BBRSIStrategy {
  this.logger.warn(`State market mismatch (${s.market} != ${this.market}); dropping position-specific state`);
  this.trailHighWater = null;
  this.positionFingerprint = null;
+ this._forceCloseEmittedFor = null;
  } else if (s.positionFingerprint) {
  this.positionFingerprint = s.positionFingerprint;
+ if (s.forceCloseEmittedFor) this._forceCloseEmittedFor = s.forceCloseEmittedFor;
  if (Number.isFinite(s.trailHighWater)) this.trailHighWater = s.trailHighWater;
  }
 
@@ -227,6 +244,7 @@ class BBRSIStrategy {
  this.dailyRealizedPnl += netPnl;
  this.trailHighWater = null;
  this.positionFingerprint = null;
+ this._forceCloseEmittedFor = null; // clear the force-close latch
  this._markDirty();
  this._flushState(ts, true);
 
@@ -302,6 +320,11 @@ class BBRSIStrategy {
 
  const sizeDecimals = 4;
  size = Math.floor(size * 10 ** sizeDecimals) / 10 ** sizeDecimals;
+
+ if (this.minOrderSize > 0 && size < this.minOrderSize) {
+ this.logger.warn(`Position size ${size} below minOrderSize ${this.minOrderSize}; skipping`);
+ return 0;
+ }
 
  return size > 0 ? size : 0;
  }
@@ -424,6 +447,13 @@ class BBRSIStrategy {
 
  if (currentPosition === "LONG" || currentPosition === "SHORT") {
  if (dailyLimitBreached) {
+ const fp = this._positionFingerprint(currentPosition, entryPrice);
+ if (this._forceCloseEmittedFor === fp) {
+ // Already emitted force-close for this position; hold quietly to avoid spamming
+ return { signal: "NONE", reason: "force-close already emitted; awaiting fill" };
+ }
+ this._forceCloseEmittedFor = fp;
+
  const signal =
  currentPosition === "LONG" ? "CLOSE_LONG" : "CLOSE_SHORT";
  this.logger.warn(
