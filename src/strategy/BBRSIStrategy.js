@@ -66,8 +66,12 @@ class BBRSIStrategy {
  // Trailing stop state
  this.trailHighWater = null;
 
- // State persistence
+ // State persistence with debounce
  this.stateStore = stateStore;
+ this._dirty = false;
+ this._lastFlushTs = 0;
+ this.persistDebounceMs = Number(trading.persistDebounceMs) || 5000;
+ this.positionFingerprint = null;
  this._restoreState();
 
  this._validateConfig();
@@ -98,9 +102,47 @@ class BBRSIStrategy {
  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
  }
 
+ // ── Fingerprint helpers ──
+ _positionFingerprint(side, entryPrice) {
+ if (side !== "LONG" && side !== "SHORT") return null;
+ if (!Number.isFinite(entryPrice)) return null;
+ const px = Math.round(entryPrice * 1e8) / 1e8;
+ return `${this.market}:${side}:${px}`;
+ }
+
  // ── Persistence ──
+ _markDirty() {
+ this._dirty = true;
+ }
+
+ _flushState(nowTs = Date.now(), force = false) {
+ if (!this.stateStore) return false;
+ if (!this._dirty) return false;
+
+ if (!force && (nowTs - this._lastFlushTs) < this.persistDebounceMs) {
+ return false;
+ }
+
+ try {
+ this.stateStore.save(this._serializableState());
+ this._dirty = false;
+ this._lastFlushTs = nowTs;
+ return true;
+ } catch (e) {
+ this.logger.error(`State flush failed: ${e.message}`);
+ return false;
+ }
+ }
+
+ shutdown(nowTs = Date.now()) {
+ return this._flushState(nowTs, true);
+ }
+
  _serializableState() {
  return {
+ version: 2,
+ market: this.market,
+ positionFingerprint: this.positionFingerprint || null,
  lastExitTs: this.lastExitTs,
  dailyLossStartTs: this.dailyLossStartTs,
  dailyRealizedPnl: this.dailyRealizedPnl,
@@ -108,23 +150,24 @@ class BBRSIStrategy {
  };
  }
 
- _persistState() {
- if (!this.stateStore) return;
- try {
- this.stateStore.save(this._serializableState());
- } catch (e) {
- this.logger.error(`State persist failed: ${e.message}`);
- }
- }
-
  _restoreState() {
  if (!this.stateStore) return;
  try {
  const s = this.stateStore.load() || {};
+
  if (Number.isFinite(s.lastExitTs)) this.lastExitTs = s.lastExitTs;
  if (Number.isFinite(s.dailyLossStartTs)) this.dailyLossStartTs = s.dailyLossStartTs;
  if (Number.isFinite(s.dailyRealizedPnl)) this.dailyRealizedPnl = s.dailyRealizedPnl;
+
+ if (s.market && s.market !== this.market) {
+ this.logger.warn(`State market mismatch (${s.market} != ${this.market}); dropping position-specific state`);
+ this.trailHighWater = null;
+ this.positionFingerprint = null;
+ } else if (s.positionFingerprint) {
+ this.positionFingerprint = s.positionFingerprint;
  if (Number.isFinite(s.trailHighWater)) this.trailHighWater = s.trailHighWater;
+ }
+
  this.logger.info("State restored", this._serializableState());
  } catch (e) {
  this.logger.error(`State restore failed: ${e.message}`);
@@ -181,7 +224,9 @@ class BBRSIStrategy {
 
  this.dailyRealizedPnl += netPnl;
  this.trailHighWater = null;
- this._persistState();
+ this.positionFingerprint = null;
+ this._markDirty();
+ this._flushState(ts, true);
 
  this.logger.info(
  `Exit @${ts}: net=${netPnl.toFixed(3)}%, dayPnL=${this.dailyRealizedPnl.toFixed(3)}%`
@@ -189,8 +234,8 @@ class BBRSIStrategy {
  return netPnl;
  }
 
- registerExit(realizedPnl = 0) {
- return this.notifyExit(this.currentTs, realizedPnl);
+ registerExit(realizedPnl = 0, opts = {}) {
+ return this.notifyExit(this.currentTs, realizedPnl, opts);
  }
 
  maintMarginFraction() {
@@ -259,29 +304,34 @@ class BBRSIStrategy {
  return size > 0 ? size : 0;
  }
 
- checkTrailingStop(currentPosition, entryPrice, currentHigh, currentLow, baseResult) {
+ checkTrailingStop(currentPosition, entryPrice, currentHigh, currentLow, baseResult, nowTs = Date.now()) {
  if (currentPosition !== "LONG" && currentPosition !== "SHORT") return null;
 
  if (currentPosition === "LONG") {
  const extreme = Number.isFinite(currentHigh) ? currentHigh : currentLow;
- if (this.trailHighWater === null) this.trailHighWater = extreme;
- this.trailHighWater = Math.max(this.trailHighWater, extreme);
+ const prev = this.trailHighWater;
+ const next = prev === null ? extreme : Math.max(prev, extreme);
+ if (next !== prev) { this.trailHighWater = next; this._markDirty(); }
+
  const stop = this.trailHighWater * (1 - this.trailingStopPercent / 100);
  if (currentLow <= stop) {
- this._persistState();
+ this._flushState(nowTs, true);
  return { ...baseResult, signal: "CLOSE_LONG", reason: "trailing-stop" };
  }
  } else {
  const extreme = Number.isFinite(currentLow) ? currentLow : currentHigh;
- if (this.trailHighWater === null) this.trailHighWater = extreme;
- this.trailHighWater = Math.min(this.trailHighWater, extreme);
+ const prev = this.trailHighWater;
+ const next = prev === null ? extreme : Math.min(prev, extreme);
+ if (next !== prev) { this.trailHighWater = next; this._markDirty(); }
+
  const stop = this.trailHighWater * (1 + this.trailingStopPercent / 100);
  if (currentHigh >= stop) {
- this._persistState();
+ this._flushState(nowTs, true);
  return { ...baseResult, signal: "CLOSE_SHORT", reason: "trailing-stop" };
  }
  }
- this._persistState();
+
+ this._flushState(nowTs);
  return null;
  }
 
@@ -293,7 +343,8 @@ class BBRSIStrategy {
  todayStart > this.dailyLossStartTs) {
  this.dailyRealizedPnl = 0;
  this.dailyLossStartTs = todayStart;
- this._persistState();
+ this._markDirty();
+ this._flushState(nowTs, true);
  }
 
  const totalDayPnl = this.dailyRealizedPnl + (Number.isFinite(currentPnl) ? currentPnl : 0);
@@ -333,8 +384,19 @@ class BBRSIStrategy {
  const barTs = Number(last.t ?? last.T ?? last.openTime ?? Date.now());
  this.setCurrentTimestamp(barTs);
 
- if (this.checkDailyLossLimit(currentPnl, barTs))
+ // Only block entries on daily limit; let open positions reach force-close logic
+ if (!currentPosition && this.checkDailyLossLimit(currentPnl, barTs))
  return { signal: "NONE", reason: "daily loss limit reached" };
+
+ // Update position fingerprint
+ if (currentPosition && Number.isFinite(entryPrice)) {
+ const fp = this._positionFingerprint(currentPosition, entryPrice);
+ if (fp !== this.positionFingerprint) {
+ this.positionFingerprint = fp;
+ this.trailHighWater = null;
+ this._markDirty();
+ }
+ }
 
  const bbRaw = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
  const adx = this._num(calculateADX(data, this.adxPeriod));
@@ -369,7 +431,7 @@ class BBRSIStrategy {
  }
 
  const trailingExit = this.checkTrailingStop(
- currentPosition, entryPrice, currentHigh, currentLow, { signal: "NONE" }
+ currentPosition, entryPrice, currentHigh, currentLow, { signal: "NONE" }, barTs
  );
  if (trailingExit) return trailingExit;
 
