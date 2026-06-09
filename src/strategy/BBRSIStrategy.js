@@ -43,6 +43,7 @@ class BBRSIStrategy {
  this.dailyLossStartTs = -Infinity;
  this.dailyRealizedPnl = 0;
 
+ // Trailing stop state
  this.trailHighWater = null;
 
  this._validateConfig();
@@ -65,6 +66,36 @@ class BBRSIStrategy {
  }
  const n = Number(v);
  return Number.isFinite(n) ? n : NaN;
+ }
+
+ setCurrentTimestamp(ts) {
+ this.currentTs = Number.isFinite(ts) ? ts : Date.now();
+ }
+
+ // ── Cooldown (strict < boundary) ──
+ inCooldown() {
+ if (this.cooldownPeriodMs <= 0) return false;
+ return (this.currentTs - this.lastExitTs) < this.cooldownPeriodMs;
+ }
+
+ // ── Single source of truth for exits ──
+ notifyExit(exitTs = null, realizedPnl = 0) {
+ const ts = Number.isFinite(exitTs) ? exitTs : this.currentTs;
+
+ this.lastExitTs = ts;
+
+ if (this.dailyLossStartTs === -Infinity || this.dailyLossStartTs == null) {
+ this.dailyLossStartTs = ts;
+ }
+
+ this.dailyRealizedPnl += realizedPnl;
+ this.trailHighWater = null;
+
+ this.logger.info(`Exit confirmed @${ts}: realized=${realizedPnl.toFixed(2)}%, dayPnL=${this.dailyRealizedPnl.toFixed(2)}%`);
+ }
+
+ registerExit(realizedPnl = 0) {
+ return this.notifyExit(this.currentTs, realizedPnl);
  }
 
  maintMarginFraction() {
@@ -120,73 +151,33 @@ class BBRSIStrategy {
  }
 
  if (!satisfied) {
- this.logger.warn("calculatePositionSize: liq safety buffer not satisfied → returning 0");
+ this.logger.warn("Position rejected: could not satisfy liquidation safety buffer");
  return 0;
  }
 
  const sizeDecimals = 4;
- return Math.floor(size * 10 ** sizeDecimals) / 10 ** sizeDecimals;
- }
+ size = Math.floor(size * 10 ** sizeDecimals) / 10 ** sizeDecimals;
 
- setCurrentTimestamp(ts) {
- if (Number.isFinite(ts)) this.currentTs = ts;
- }
-
- inCooldown() {
- if (this.cooldownPeriodMs <= 0) return false;
- return (this.currentTs - this.lastExitTs) <= this.cooldownPeriodMs;
- }
-
- registerExit(realizedPnl = 0) {
- this.lastExitTs = this.currentTs || Date.now();
- this.dailyRealizedPnl += realizedPnl;
- this.trailHighWater = null;
- this.logger.info("Cooldown & trailing stop reset on exit");
- }
-
- notifyExit(exitTs = null, realizedPnl = 0) {
- this.lastExitTs = Number.isFinite(exitTs) ? exitTs : (this.currentTs || Date.now());
- this.dailyRealizedPnl += realizedPnl;
- this.trailHighWater = null;
- this.logger.info("Cooldown started via external exit");
+ return size > 0 ? size : 0;
  }
 
  checkTrailingStop(currentPosition, entryPrice, currentPrice, baseResult) {
  if (currentPosition !== "LONG" && currentPosition !== "SHORT") return null;
- if (!this.trailHighWater) this.trailHighWater = currentPrice;
+ if (this.trailHighWater === null) this.trailHighWater = currentPrice;
 
  if (currentPosition === "LONG") {
  this.trailHighWater = Math.max(this.trailHighWater, currentPrice);
  const stop = this.trailHighWater * (1 - this.trailingStopPercent / 100);
- if (currentPrice <= stop)
- return { ...baseResult, signal: "CLOSE_LONG", reason: "trailing-stop" };
+ if (currentPrice <= stop) return { ...baseResult, signal: "CLOSE_LONG", reason: "trailing-stop" };
  } else {
  this.trailHighWater = Math.min(this.trailHighWater, currentPrice);
  const stop = this.trailHighWater * (1 + this.trailingStopPercent / 100);
- if (currentPrice >= stop)
- return { ...baseResult, signal: "CLOSE_SHORT", reason: "trailing-stop" };
+ if (currentPrice >= stop) return { ...baseResult, signal: "CLOSE_SHORT", reason: "trailing-stop" };
  }
  return null;
  }
 
- checkDailyLossLimit(currentPnl, nowTs) {
- if (this.dailyLossStartTs === -Infinity) this.dailyLossStartTs = nowTs;
-
- const msPerDay = 24 * 60 * 60 * 1000;
- if (nowTs - this.dailyLossStartTs >= msPerDay) {
- this.dailyRealizedPnl = 0;
- this.dailyLossStartTs = nowTs;
- }
-
- const totalDayPnl = this.dailyRealizedPnl + currentPnl;
- if (totalDayPnl <= -this.dailyLossLimitPercent) {
- this.logger.warn(`Daily loss limit hit: ${totalDayPnl.toFixed(2)}%`);
- return true;
- }
- return false;
- }
-
- evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, baseResult = {}) {
+ evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, baseResult) {
  if (!Number.isFinite(entryPrice) || entryPrice <= 0) return null;
 
  if (currentPosition === "LONG") {
@@ -204,17 +195,25 @@ class BBRSIStrategy {
  return null;
  }
 
- async evaluatePosition(data, currentPosition = null, accountEquity = null, entryPrice = null, currentPnl = 0) {
- try {
- if (!Array.isArray(data) || data.length < this.bbPeriod + 2)
- return { signal: "NONE", reason: "insufficient data" };
-
+ // ── Main entry point ──
+ async evaluatePosition(data, currentPosition = null, accountEquity = null, entryPrice = null) {
  const last = data[data.length - 1];
- this.setCurrentTimestamp(Number(last.t ?? last.T ?? last.openTime ?? Date.now()));
+ const barTs = Number(last.t ?? last.T ?? last.openTime ?? Date.now());
 
- if (this.checkDailyLossLimit(currentPnl, this.currentTs))
- return { signal: "NONE", reason: "daily loss limit reached" };
+ this.setCurrentTimestamp(barTs);
 
+ // Daily loss window reset
+ if (this.dailyLossStartTs === -Infinity || this.dailyLossStartTs == null) {
+ this.dailyLossStartTs = barTs;
+ } else {
+ const msPerDay = 24 * 60 * 60 * 1000;
+ if (barTs - this.dailyLossStartTs >= msPerDay) {
+ this.dailyRealizedPnl = 0;
+ this.dailyLossStartTs = barTs;
+ }
+ }
+
+ // Indicators
  const bbRaw = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
  const adx = this._num(calculateADX(data, this.adxPeriod));
  const rsiSeries = calculateRSI(data, this.rsiPeriod);
@@ -237,27 +236,27 @@ class BBRSIStrategy {
  if (![bb.upper, bb.middle, bb.lower, rsi, adx, currentPrice, previousPrice, currentHigh, currentLow].every(Number.isFinite))
  return { signal: "NONE", reason: "invalid indicator/price values" };
 
- const result = { signal: "NONE", indicators: { bb, rsi, adx, price: currentPrice } };
-
+ // ── Position management (exits) ──
  if (currentPosition === "LONG" || currentPosition === "SHORT") {
- const trailingExit = this.checkTrailingStop(currentPosition, entryPrice, currentPrice, result);
- if (trailingExit) {
- this.registerExit();
- return trailingExit;
+ const trailingExit = this.checkTrailingStop(currentPosition, entryPrice, currentPrice, { signal: "NONE" });
+ if (trailingExit) return trailingExit;
+
+ const exit = this.evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, { signal: "NONE" });
+ if (exit) return exit;
+
+ return { signal: "NONE", reason: "holding position" };
  }
- const exit = this.evaluateExit(currentPosition, entryPrice, currentHigh, currentLow, result);
- if (exit) {
- this.registerExit();
- return exit;
- }
- return { ...result, signal: "NONE", reason: "holding position" };
- }
+
+ // ── Entry logic ──
+ if (this.inCooldown())
+ return { signal: "NONE", reason: "cooldown active" };
 
  if (!Number.isFinite(accountEquity) || accountEquity <= 0)
- return { ...result, signal: "NONE", reason: "missing accountEquity" };
+ return { signal: "NONE", reason: "missing accountEquity" };
 
- if (this.inCooldown())
- return { ...result, signal: "NONE", reason: "cooldown active" };
+ // Daily loss limit check (prevent new entries if limit hit)
+ if (this.dailyRealizedPnl <= -this.dailyLossLimitPercent)
+ return { signal: "NONE", reason: "daily loss limit reached" };
 
  let longConditions = false;
  let shortConditions = false;
@@ -275,6 +274,8 @@ class BBRSIStrategy {
  shortConditions = bouncedDownFromUpper && Number.isFinite(prevRsi) && prevRsi >= this.rsiOverbought && adx < this.adxThreshold;
  }
 
+ const result = { signal: "NONE", indicators: { bb, rsi, adx, price: currentPrice } };
+
  if (longConditions) {
  result.signal = "LONG";
  result.stopLoss = currentPrice * (1 - this.stopLossPercent / 100);
@@ -290,10 +291,6 @@ class BBRSIStrategy {
  }
 
  return result;
- } catch (error) {
- this.logger.error("Error in evaluatePosition", { error: error.message });
- return { signal: "NONE", reason: error.message };
- }
  }
 }
 
