@@ -1,0 +1,338 @@
+[WAYFINDER AGENT] REST-only mode (WebSocket disabled)
+
+================================================================================
+90-DAY MULTI-REGIME BACKTEST SUITE
+Using Improved WayfinderAgent Data Fetching
+================================================================================
+Coins: BTC, ETH, SOL, HYPE, ARB, OP, LINK, AVAX, NEAR, UNI
+Regimes: ranging, trending, volatile, balanced
+Initial Capital: $10,000 per coin
+================================================================================
+
+[INFO] Using REST API for historical data (no WebSocket needed)
+
+============================================================
+BACKTEST: BTC | 90 Days | Regime-Optimized
+============================================================
+
+[BTC] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of BTC 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2121 candles
+[WAYFINDER AGENT] Failed to fetch candles for BTC/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5001 unique candles (52.1 days)
+[BTC] Ready: 5001 candles (52.1 days)
+[BTC] Detected regime: RANGING
+[BTC] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: ETH | 90 Days | Regime-Optimized
+============================================================
+
+[ETH] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of ETH 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2120 candles
+[WAYFINDER AGENT] Failed to fetch candles for ETH/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5000 unique candles (52.1 days)
+[ETH] Ready: 5000 candles (52.1 days)
+[ETH] Detected regime: RANGING
+[ETH] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: SOL | 90 Days | Regime-Optimized
+============================================================
+
+[SOL] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of SOL 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2135 candles
+[WAYFINDER AGENT] Failed to fetch candles for SOL/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5015 unique candles (52.2 days)
+[SOL] Ready: 5015 candles (52.2 days)
+[SOL] Detected regime: RANGING
+[SOL] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: HYPE | 90 Days | Regime-Optimized
+============================================================
+
+[HYPE] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of HYPE 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2127 candles
+[WAYFINDER AGENT] Failed to fetch candles for HYPE/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5007 unique candles (52.2 days)
+[HYPE] Ready: 5007 candles (52.2 days)
+[HYPE] Detected regime: RANGING
+[HYPE] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: ARB | 90 Days | Regime-Optimized
+============================================================
+
+[ARB] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of ARB 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2134 candles
+[WAYFINDER AGENT] Failed to fetch candles for ARB/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5014 unique candles (52.2 days)
+[ARB] Ready: 5014 candles (52.2 days)
+[ARB] Detected regime: RANGING
+[ARB] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: OP | 90 Days | Regime-Optimized
+============================================================
+
+[OP] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of OP 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2134 candles
+[WAYFINDER AGENT] Failed to fetch candles for OP/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5014 unique candles (52.2 days)
+[OP] Ready: 5014 candles (52.2 days)
+[OP] Detected regime: RANGING
+[OP] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: LINK | 90 Days | Regime-Optimized
+============================================================
+
+[LINK] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of LINK 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2133 candles
+[WAYFINDER AGENT] Failed to fetch candles for LINK/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5013 unique candles (52.2 days)
+[LINK] Ready: 5013 candles (52.2 days)
+[LINK] Detected regime: RANGING
+[LINK] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: AVAX | 90 Days | Regime-Optimized
+============================================================
+
+[AVAX] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of AVAX 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2135 candles
+[WAYFINDER AGENT] Failed to fetch candles for AVAX/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5015 unique candles (52.2 days)
+[AVAX] Ready: 5015 candles (52.2 days)
+[AVAX] Detected regime: RANGING
+[AVAX] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: NEAR | 90 Days | Regime-Optimized
+============================================================
+
+[NEAR] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of NEAR 15m data in 3 chunks...
+[WAYFINDER AGENT] HyperLiquid /info 429 — retry 1/3 in 500ms
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2125 candles
+[WAYFINDER AGENT] HyperLiquid /info 429 — retry 1/3 in 500ms
+[WAYFINDER AGENT] Failed to fetch candles for NEAR/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5005 unique candles (52.1 days)
+[NEAR] Ready: 5005 candles (52.1 days)
+[NEAR] Detected regime: RANGING
+[NEAR] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+============================================================
+BACKTEST: UNI | 90 Days | Regime-Optimized
+============================================================
+
+[UNI] Fetching 90 days of 15m data...
+[WAYFINDER AGENT] Fetching 90 days of UNI 15m data in 3 chunks...
+[WAYFINDER AGENT] Chunk 1/3: 2881 candles
+[WAYFINDER AGENT] Chunk 2/3: 2130 candles
+[WAYFINDER AGENT] Failed to fetch candles for UNI/15m: Empty candle array from HyperLiquid
+[WAYFINDER AGENT] Chunk 3/3: No data
+[WAYFINDER AGENT] Total: 5010 unique candles (52.2 days)
+[UNI] Ready: 5010 candles (52.2 days)
+[UNI] Detected regime: RANGING
+[UNI] Parameters: {
+  "name": "Ranging",
+  "leverage": 3,
+  "positionSize": 0.12,
+  "profitTarget": 1.2,
+  "stopLoss": 0.8,
+  "bbPeriod": 20,
+  "bbStdDev": 2,
+  "rsiPeriod": 14,
+  "rsiOverbought": 65,
+  "rsiOversold": 35,
+  "adxPeriod": 14,
+  "adxTrendThreshold": 20
+}
+
+
+================================================================================
+COMPREHENSIVE BACKTEST REPORT
+================================================================================
+Duration: 43.7s
+Coins Tested: 10/10
+================================================================================
+
+RANKING BY TOTAL RETURN:
+----------------------------------------------------------------------------------------------------
+Rank   Coin       Regime       Return       Win Rate     Trades     Max DD       Sharpe    
+----------------------------------------------------------------------------------------------------
+1      ARB        RANGING      +0.65%      80.0%       5          0.16%       0.38
+2      HYPE       RANGING      +0.27%      100.0%      1          0.00%       0.27
+3      BTC        RANGING      +0.14%      100.0%      1          0.00%       0.27
+4      UNI        RANGING      +0.10%      50.0%       2          0.13%       0.10
+5      ETH        RANGING      +0.10%      50.0%       2          0.13%       0.10
+6      NEAR       RANGING       -0.19%     0.0%        1          0.19%       -0.27
+7      LINK       RANGING       -0.30%     0.0%        2          0.30%       -0.38
+8      OP         RANGING       -0.31%     25.0%       4          0.62%       -0.12
+9      AVAX       RANGING       -0.34%     0.0%        2          0.34%       -0.38
+10     SOL        RANGING       -0.98%     28.6%       7          1.33%       -0.37
+
+
+REGIME PERFORMANCE SUMMARY:
+--------------------------------------------------------------------------------
+Regime       Coins    Avg Return   Avg Win%     Avg DD       Avg Sharpe  
+--------------------------------------------------------------------------------
+RANGING      10       -0.08%      43.4%       0.32%       -0.04
+
+
+PORTFOLIO SIMULATION (Equal Weight):
+  Average Return Across All Coins: -0.08%
+  $10,000 per coin → $99915.18 total
+
+📊 Full results saved: /home/clawdbot/.openclaw/workspace/HyperLiquid-Bot/backtest-results/multi-regime-backtest-1781039884551.json
+================================================================================
+
+💡 KEY INSIGHTS:
+  • Best performing regime: RANGING
+  • Best performing coin: ARB (0.65%)
+  • Most trades: SOL (7 trades)
+  • Best risk-adjusted: ARB (Sharpe: 0.38)

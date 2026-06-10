@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-06-09T20:08:22.750Z",
+  "config": {
+    "market": "BTC",
+    "timeframe": "15m",
+    "profitTarget": 2,
+    "stopLossPercent": 1.5,
+    "riskPerTrade": 1,
+    "maxLeverage": 5,
+    "assetMaxLeverage": 10,
+    "takerFeeRate": 0.00045,
+    "liqSafetyBuffer": 0.005,
+    "mode": "reversion",
+    "trailingStopPercent": 0.8,
+    "dailyLossLimitPercent": 3,
+    "cooldownPeriod": 1,
+    "persistDebounceMs": 5000,
+    "minOrderSize": 0
+  },
+  "results": []
+}

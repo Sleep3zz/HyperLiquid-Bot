@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-06-09T21:35:46.012Z",
+  "summary": {
+    "totalCoins": 2,
+    "successful": 2,
+    "failed": 0,
+    "changed": 0
+  },
+  "coins": [
+    {
+      "coin": "BTC",
+      "status": "SUCCESS",
+      "config": "Mean-Reversion",
+      "leverage": 4,
+      "positionSize": 0.12,
+      "expectedReturn": 0.040680926132572494,
+      "expectedSharpe": 0.03717194357831216,
+      "changed": false
+    },
+    {
+      "coin": "ETH",
+      "status": "SUCCESS",
+      "config": "Mean-Reversion",
+      "leverage": 4,
+      "positionSize": 0.12,
+      "expectedReturn": 0.15526410259783008,
+      "expectedSharpe": 0.10353148065323715,
+      "changed": false
+    }
+  ],
+  "changes": [],
+  "recommendations": [
+    {
+      "coin": "BTC",
+      "action": "HOLD",
+      "priority": "low",
+      "reason": "No action required",
+      "params": {
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8
+      }
+    },
+    {
+      "coin": "ETH",
+      "action": "HOLD",
+      "priority": "low",
+      "reason": "No action required",
+      "params": {
+        "leverage": 4,
+        "positionSize": 0.12,
+        "profitTarget": 1.2,
+        "stopLoss": 0.8
+      }
+    }
+  ]
+}

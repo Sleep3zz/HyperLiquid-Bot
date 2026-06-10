@@ -18,6 +18,7 @@
     "express": "^5.2.1",
     "hyperliquid": "^1.5.6",
     "lodash": "^4.17.23",
+    "ngrok": "^5.0.0-beta.2",
     "open": "^10.1.0",
     "plotly": "^1.0.6",
     "sqlite3": "^5.1.6",

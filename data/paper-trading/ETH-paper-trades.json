@@ -1,0 +1,27 @@
+{
+  "coin": "ETH",
+  "initialCapital": 1000,
+  "currentEquity": 1000,
+  "position": null,
+  "params": {
+    "coin": "ETH",
+    "configName": "Mean-Reversion",
+    "name": "Mean-Reversion",
+    "leverage": 4,
+    "positionSize": 0.12,
+    "profitTarget": 1.2,
+    "stopLoss": 0.8,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 65,
+    "rsiOversold": 35,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 20,
+    "lastUpdated": "2026-06-09T21:35:44.983Z",
+    "expectedReturn": 0.15526410259783008,
+    "expectedSharpe": 0.10353148065323715
+  },
+  "trades": [],
+  "lastUpdated": "2026-06-10T05:45:08.769Z"
+}
