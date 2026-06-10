@@ -1,157 +1,115 @@
 /**
- * Strategy Orchestrator - Phase 3: Regime Observation
- * 
- * Wires RegimeDetector as read-only logger to observe market regime
- * without trading. Tracks regime flips for thrash analysis.
- * 
- * Phase 3 Goal: Build confidence in regime detection before it controls trades.
- * Run for 2-3 days, then check regimeThrashStats().
+ * Strategy Orchestrator - Phase 3: Regime Observation (per-coin state)
  */
-
 const { BBRSIStrategy } = require("./strategy/BBRSIStrategy");
 const RegimeDetector = require("./strategy/RegimeDetector");
 
 class StrategyOrchestrator {
-    constructor(wayfinder, logger = console) {
-        this.wayfinder = wayfinder;
-        this.logger = logger;
+ constructor(wayfinder, logger = console) {
+ this.wayfinder = wayfinder;
+ this.logger = logger;
 
-        // Strategies
-        // BBRSIStrategy constructor: (logger, stateStore)
-        this.bbrsi = new BBRSIStrategy(logger);
-        // GridStrategy lazy-loaded - only needed in Phase 4/5
-        this._grid = null;
+ this.bbrsi = new BBRSIStrategy(logger);
+ this._grid = null;
 
-        // Phase 3: Regime detection (observe-only)
-        this.regimeDetector = new RegimeDetector(this.bbrsi, wayfinder, logger, "15m");
-        
-        // Observation state
-        this._regimeLog = []; // rolling history for thrash analysis
-        this._lastConfirmedRegime = null;
-        this._observeInterval = null;
+ this.regimeDetector = new RegimeDetector(this.bbrsi, wayfinder, logger, "15m");
 
-        this.logger.info("[Orchestrator] Phase 3 initialized - regime observation mode");
-    }
+ this._regimeLog = [];
+ this._lastConfirmedRegime = {}; // FIX: per-coin, was a scalar
+ this._observers = new Map(); // FIX: per-coin timers (multi-coin safe)
 
-    /**
-     * Lazy-load GridStrategy (only needed in Phase 4/5)
-     */
-    get grid() {
-        if (!this._grid) {
-            const GridStrategy = require("./strategy/GridStrategy");
-            this._grid = new GridStrategy(this.logger, this.wayfinder);
-        }
-        return this._grid;
-    }
+ this.logger.info("[Orchestrator] Phase 3 initialized - regime observation mode");
+ }
 
-    /**
-     * Start Phase 3 observation
-     * @param {string} coin - Coin to observe (default: BTC)
-     * @param {number} intervalMs - Observation interval (default: 15 min = 900000ms)
-     */
-    async startObservation(coin = "BTC", intervalMs = 900000) {
-        this.logger.info(`[Orchestrator] Starting regime observation for ${coin} every ${intervalMs/1000}s`);
-        
-        // Initial observation
-        await this.observeRegime(coin);
-        
-        // Periodic observation
-        this._observeInterval = setInterval(() => {
-            this.observeRegime(coin).catch(err => {
-                this.logger.error(`[Orchestrator] Periodic observation error: ${err.message}`);
-            });
-        }, intervalMs);
+ get grid() {
+ if (!this._grid) {
+ const GridStrategy = require("./strategy/GridStrategy");
+ this._grid = new GridStrategy(this.logger, this.wayfinder);
+ }
+ return this._grid;
+ }
 
-        return `Observing ${coin} regime every ${intervalMs/1000}s`;
-    }
+ async startObservation(coin = "BTC", intervalMs = 900000) {
+ if (this._observers.has(coin)) {
+ return `Already observing ${coin}`;
+ }
+ this.logger.info(`[Orchestrator] Observing ${coin} every ${intervalMs / 1000}s`);
+ await this.observeRegime(coin);
+ const handle = setInterval(() => {
+ this.observeRegime(coin).catch((err) =>
+ this.logger.error(`[Orchestrator] Observation error (${coin}): ${err.message}`)
+ );
+ }, intervalMs);
+ this._observers.set(coin, handle);
+ return `Observing ${coin} regime every ${intervalMs / 1000}s`;
+ }
 
-    stopObservation() {
-        if (this._observeInterval) {
-            clearInterval(this._observeInterval);
-            this._observeInterval = null;
-            this.logger.info("[Orchestrator] Observation stopped");
-        }
-    }
+ stopObservation(coin = null) {
+ if (coin) {
+ const h = this._observers.get(coin);
+ if (h) { clearInterval(h); this._observers.delete(coin); }
+ return;
+ }
+ for (const h of this._observers.values()) clearInterval(h);
+ this._observers.clear();
+ this.logger.info("[Orchestrator] All observation stopped");
+ }
 
-    /**
-     * Phase 3: OBSERVE ONLY. Call on each new candle (e.g., every 15m).
-     * Logs the regime and tracks flips. Does NOT start/stop the grid.
-     */
-    async observeRegime(coin = "BTC") {
-        try {
-            const confirmed = await this.regimeDetector.getRegime(coin);
+ async observeRegime(coin = "BTC") {
+ try {
+ const confirmed = await this.regimeDetector.getRegime(coin);
+ const now = Date.now();
 
-            const now = Date.now();
-            const prev = this._lastConfirmedRegime;
-            const flipped = prev !== null && confirmed !== prev && confirmed !== "hold";
+ // FIX: "unknown" is not a real regime; never store it or flip on it.
+ const isReal = confirmed !== "hold" && confirmed !== "unknown";
+ const prev = this._lastConfirmedRegime[coin] ?? null;
+ const flipped = prev !== null && isReal && confirmed !== prev;
 
-            if (confirmed !== "hold") {
-                this._lastConfirmedRegime = confirmed;
-            }
+ if (isReal) this._lastConfirmedRegime[coin] = confirmed;
 
-            this._regimeLog.push({ ts: now, coin, confirmed, flipped });
-            if (this._regimeLog.length > 500) this._regimeLog.shift(); // bound memory
+ this._regimeLog.push({ ts: now, coin, confirmed, flipped });
+ if (this._regimeLog.length > 500) this._regimeLog.shift();
 
-            if (flipped) {
-                this.logger.warn(
-                    `[REGIME-OBSERVE] ${coin} FLIP ${prev} -> ${confirmed} ` +
-                    `(would switch strategy in live mode)`
-                );
-            }
+ if (flipped) {
+ this.logger.warn(
+ `[REGIME-OBSERVE] ${coin} FLIP ${prev} -> ${confirmed} (would switch in live mode)`
+ );
+ } else {
+ this.logger.info(`[REGIME-OBSERVE] ${coin} = ${confirmed}`);
+ }
+ return confirmed;
+ } catch (err) {
+ this.logger.error(`[Orchestrator] Regime observation failed (${coin}): ${err.message}`);
+ return "unknown";
+ }
+ }
 
-            return confirmed;
-        } catch (err) {
-            this.logger.error(`[Orchestrator] Regime observation failed: ${err.message}`);
-            return "unknown";
-        }
-    }
+ // FIX: flipRate now computed PER COIN so cross-coin contamination is impossible.
+ regimeThrashStats() {
+ const byCoin = {};
+ for (const e of this._regimeLog) {
+ const c = (byCoin[e.coin] ??= { total: 0, flips: 0, regimes: {} });
+ c.total++;
+ if (e.flipped) c.flips++;
+ if (e.confirmed !== "hold" && e.confirmed !== "unknown") {
+ c.regimes[e.confirmed] = (c.regimes[e.confirmed] || 0) + 1;
+ }
+ }
+ for (const c of Object.values(byCoin)) {
+ c.flipRate = c.total ? (c.flips / c.total).toFixed(3) : "0";
+ }
+ return {
+ byCoin,
+ lastRegime: { ...this._lastConfirmedRegime },
+ totalObservations: this._regimeLog.length,
+ };
+ }
 
-    /**
-     * Quick thrash report: flips per N observations.
-     * @returns {Object} flip stats
-     */
-    regimeThrashStats() {
-        const flips = this._regimeLog.filter(e => e.flipped).length;
-        const total = this._regimeLog.length;
-        const byRegime = {};
-        
-        // Count time spent in each regime
-        for (const entry of this._regimeLog) {
-            if (entry.confirmed !== "hold") {
-                byRegime[entry.confirmed] = (byRegime[entry.confirmed] || 0) + 1;
-            }
-        }
+ getRegimeLog() { return [...this._regimeLog]; }
 
-        return {
-            flips,
-            total,
-            flipRate: total ? (flips / total).toFixed(3) : "0",
-            byRegime,
-            lastRegime: this._lastConfirmedRegime,
-            recentLog: this._regimeLog.slice(-10) // last 10 observations
-        };
-    }
-
-    /**
-     * Get full regime log (for analysis)
-     */
-    getRegimeLog() {
-        return [...this._regimeLog];
-    }
-
-    /**
-     * Export observation report
-     */
-    exportReport() {
-        const stats = this.regimeThrashStats();
-        return {
-            phase: 3,
-            mode: "observe-only",
-            timestamp: Date.now(),
-            stats,
-            fullLog: this._regimeLog
-        };
-    }
+ exportReport() {
+ return { phase: 3, mode: "observe-only", timestamp: Date.now(), stats: this.regimeThrashStats() };
+ }
 }
 
 module.exports = StrategyOrchestrator;
