@@ -1,3 +1,5 @@
 [2026-06-10T05:58:09.447Z] INFO: BBRSIStrategy initialized
 [2026-06-10T05:58:09.448Z] INFO: [Orchestrator] Phase 3 initialized - regime observation mode
 [2026-06-10T05:58:09.448Z] INFO: [Orchestrator] Starting regime observation for BTC every 900s
+[2026-06-10T06:03:09.552Z] INFO: [STATUS] Observations: 1, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:03:09.553Z] INFO: [STATUS] Regime distribution: {"unknown":1}

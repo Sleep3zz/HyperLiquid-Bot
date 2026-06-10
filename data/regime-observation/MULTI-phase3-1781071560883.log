@@ -1,0 +1,14 @@
+[2026-06-10T06:06:00.886Z] INFO: Starting multi-coin observation for: BTC, ETH, ARB
+[2026-06-10T06:06:00.888Z] INFO: [BTC] BBRSIStrategy initialized
+[2026-06-10T06:06:00.888Z] INFO: [BTC] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T06:06:01.389Z] INFO: [BTC] [Orchestrator] Starting regime observation for BTC every 900s
+[2026-06-10T06:06:04.188Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=hold (adx=28.0 bw=0.0110 streak=1)
+[2026-06-10T06:06:04.189Z] INFO: [ETH] BBRSIStrategy initialized
+[2026-06-10T06:06:04.189Z] INFO: [ETH] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T06:06:04.690Z] INFO: [ETH] [Orchestrator] Starting regime observation for ETH every 900s
+[2026-06-10T06:06:06.251Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=hold (adx=30.9 bw=0.0125 streak=1)
+[2026-06-10T06:06:06.252Z] INFO: [ARB] BBRSIStrategy initialized
+[2026-06-10T06:06:06.253Z] INFO: [ARB] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T06:06:06.753Z] INFO: [ARB] [Orchestrator] Starting regime observation for ARB every 900s
+[2026-06-10T06:06:08.368Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=hold (adx=19.0 bw=0.0213 streak=1)
+[2026-06-10T06:06:08.369Z] INFO: All coins observing. Status reports every 5 minutes.

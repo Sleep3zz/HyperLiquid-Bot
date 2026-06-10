@@ -22,8 +22,13 @@ class RegimeDetector {
     }
 
     async getRegime(coin = "BTC") {
-        const candles = await this.wayfinder.getHistoricalCandles(coin, this.interval, 100);
-        if (!candles || candles.length < 50) return "unknown";
+        // Request more candles to ensure we get enough clean ones after filtering
+        // Wayfinder needs 22 minimum, we want 50+ for reliable indicators
+        const candles = await this.wayfinder.getHistoricalCandles(coin, this.interval, 200);
+        if (!candles || candles.length < 50) {
+            this.logger.warn(`Insufficient candles for ${coin}: got ${candles?.length || 0}, need 50+`);
+            return "unknown";
+        }
 
         // Indicators expect array of candle objects with c/h/l properties
         const bbRaw = calculateBollingerBands(candles, this.bb.bbPeriod, this.bb.bbStdDev);
