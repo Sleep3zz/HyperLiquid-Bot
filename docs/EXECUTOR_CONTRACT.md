@@ -46,31 +46,83 @@ From `model-router/src/agents/wayfinder-agent.js`:
 - `fetchAllPricesRest()` → Object (all market prices)
 - `_postInfo(body, attempts)` → axios response
 
-### Note on Position/Account Methods
-The current WayfinderAgent does NOT include:
-- getAccountEquity()
-- getOpenPosition()
-- placeOrder()
-- placeGridOrder()
-- cancelAllOrders()
-- closePosition()
+### Account & Position Methods (Now Available in WayfinderAgent)
 
-These would need to be added via:
-1. HyperLiquid SDK bridge
-2. Direct API calls
-3. Separate executor module
+The WayfinderAgent now includes full account/position/order support:
+
+**Authentication:**
+- `setWallet(address)` - Set wallet address for authenticated requests
+
+**Account Data:**
+- `getAccountEquity()` → `number|null` - Total account value in USD
+- `getOpenPosition(coin)` → `{side, size, entryPrice, unrealizedPnl, ...}|null`
+- `getAllPositions()` → `Array<Position>` - All open positions
+
+**Order Management (DRY_RUN by default):**
+- `placeOrder({coin, side, size, price, dryRun})` → `OrderResult`
+- `placeGridOrder(coin, side, price, amount, dryRun)` → `OrderResult`
+- `cancelAllOrders(coin, dryRun)` → `CancelResult`
+- `closePosition(coin, dryRun)` → `CloseResult`
+
+**Safety Note:** All order methods default to `dryRun=true`. Set `dryRun=false` ONLY when ready for live trading with proper private key signing.
 
 ## Integration Pattern
 
 ```javascript
-// Executor calls strategy
-const signal = strategy.evaluatePosition(candles, side, equity, entryPrice, currentPnl);
+// Setup
+const wayfinder = new WayfinderAgent({ autoConnect: false });
+wayfinder.setWallet('0x...'); // Set your wallet address
 
-// If signal is EXIT, executor places order, then:
-strategy.notifyExit(side, entryPrice, exitFillPrice, Date.now(), fundingPaid);
+// 1. Get account data
+const equity = await wayfinder.getAccountEquity();
+const position = await wayfinder.getOpenPosition('BTC');
 
-// For next evaluation, get fresh data:
-const newCandles = await wayfinder.getHistoricalCandles(coin, '15m', 100);
-const currentPrice = wayfinder.getLatestPrice(coin);
-// Calculate currentPnl from position + currentPrice
+// 2. Get market data
+const candles = await wayfinder.getHistoricalCandles('BTC', '15m', 100);
+const currentPrice = wayfinder.getLatestPrice('BTC');
+
+// 3. Calculate current PnL if in position
+let currentPnl = 0;
+if (position) {
+    const direction = position.side === 'LONG' ? 1 : -1;
+    const priceChange = (currentPrice - position.entryPrice) / position.entryPrice;
+    currentPnl = priceChange * direction * 100; // Percentage
+}
+
+// 4. Evaluate strategy
+const signal = strategy.evaluatePosition(
+    candles,
+    position?.side || null,
+    equity,
+    position?.entryPrice || 0,
+    currentPnl
+);
+
+// 5. Execute signal
+if (signal.signal === 'EXIT' || signal.signal === 'FORCE_CLOSE') {
+    // Close position
+    const result = await wayfinder.closePosition('BTC', true); // dryRun=true
+    
+    // Notify strategy of exit
+    if (result.success) {
+        strategy.notifyExit(
+            position.side,
+            position.entryPrice,
+            currentPrice,
+            Date.now(),
+            0 // fundingPaidPercent
+        );
+    }
+}
+
+// For new entries, use placeOrder or placeGridOrder
+if (signal.signal === 'LONG' && !position) {
+    await wayfinder.placeOrder({
+        coin: 'BTC',
+        side: 'BUY',
+        size: signal.size || 0.01,
+        price: 0, // Market order
+        dryRun: true
+    });
+}
 ```
