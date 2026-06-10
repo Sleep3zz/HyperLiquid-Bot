@@ -525,9 +525,9 @@ class BBRSIStrategy {
  const highs = data.map((d) => Number(d.h ?? d.high));
  const lows = data.map((d) => Number(d.l ?? d.low));
 
- const rsi = calculateRSI(closes, this.rsiPeriod);
- const bb = calculateBollingerBands(closes, this.bbPeriod, this.bbStdDev);
- const adx = calculateADX(highs, lows, closes, this.adxPeriod);
+ const rsi = calculateRSI(data, this.rsiPeriod);
+ const bb = calculateBollingerBands(data, this.bbPeriod, this.bbStdDev);
+ const adx = calculateADX(data, this.adxPeriod);
 
  if (
  ![bb.upper, bb.middle, bb.lower, rsi, adx].every(Number.isFinite)

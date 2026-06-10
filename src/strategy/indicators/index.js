@@ -23,9 +23,9 @@ function calculateBollingerBands(data, period, stdDev) {
     const result = bb.getResult()
 
     return {
-        lower: result.lower.valueOf(), // Convert to actual number
-        middle: result.middle.valueOf(),
-        upper: result.upper.valueOf(),
+        lower: parseFloat(result.lower.valueOf()), // Convert to actual number
+        middle: parseFloat(result.middle.valueOf()),
+        upper: parseFloat(result.upper.valueOf()),
     }
 }
 
