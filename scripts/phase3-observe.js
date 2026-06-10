@@ -11,11 +11,10 @@
 const path = require('path');
 const fs = require('fs');
 
-// Add workspace to path for requires
-process.chdir(path.join(__dirname, '..'));
+const WORKSPACE_ROOT = path.join(__dirname, '..');
 
-const StrategyOrchestrator = require('./src/orchestrator');
-const WayfinderAgent = require('../model-router/src/agents/wayfinder-agent');
+const StrategyOrchestrator = require(path.join(WORKSPACE_ROOT, 'src', 'orchestrator'));
+const WayfinderAgent = require(path.join(WORKSPACE_ROOT, '..', 'model-router', 'src', 'agents', 'wayfinder-agent'));
 
 const DATA_DIR = path.join(__dirname, '..', 'data', 'regime-observation');
 
@@ -77,7 +76,7 @@ async function main() {
     const orchestrator = new StrategyOrchestrator(wayfinder, logger);
 
     // Start observation
-    orchestrator.startObservation(COIN, INTERVAL_MS);
+    await orchestrator.startObservation(COIN, INTERVAL_MS);
 
     // Status reporting every 5 minutes
     const statusInterval = setInterval(() => {

@@ -8,8 +8,7 @@
  * Run for 2-3 days, then check regimeThrashStats().
  */
 
-const BBRSIStrategy = require("./strategy/BBRSIStrategy");
-const GridStrategy = require("./strategy/GridStrategy");
+const { BBRSIStrategy } = require("./strategy/BBRSIStrategy");
 const RegimeDetector = require("./strategy/RegimeDetector");
 
 class StrategyOrchestrator {
@@ -18,11 +17,13 @@ class StrategyOrchestrator {
         this.logger = logger;
 
         // Strategies
-        this.bbrsi = new BBRSIStrategy(wayfinder, logger);
-        this.grid = new GridStrategy(logger, wayfinder);
+        // BBRSIStrategy constructor: (logger, stateStore)
+        this.bbrsi = new BBRSIStrategy(logger);
+        // GridStrategy lazy-loaded - only needed in Phase 4/5
+        this._grid = null;
 
         // Phase 3: Regime detection (observe-only)
-        this.regimeDetector = new RegimeDetector(this.bbrsi, logger, "15m");
+        this.regimeDetector = new RegimeDetector(this.bbrsi, wayfinder, logger, "15m");
         
         // Observation state
         this._regimeLog = []; // rolling history for thrash analysis
@@ -33,19 +34,32 @@ class StrategyOrchestrator {
     }
 
     /**
+     * Lazy-load GridStrategy (only needed in Phase 4/5)
+     */
+    get grid() {
+        if (!this._grid) {
+            const GridStrategy = require("./strategy/GridStrategy");
+            this._grid = new GridStrategy(this.logger, this.wayfinder);
+        }
+        return this._grid;
+    }
+
+    /**
      * Start Phase 3 observation
      * @param {string} coin - Coin to observe (default: BTC)
      * @param {number} intervalMs - Observation interval (default: 15 min = 900000ms)
      */
-    startObservation(coin = "BTC", intervalMs = 900000) {
+    async startObservation(coin = "BTC", intervalMs = 900000) {
         this.logger.info(`[Orchestrator] Starting regime observation for ${coin} every ${intervalMs/1000}s`);
         
         // Initial observation
-        this.observeRegime(coin);
+        await this.observeRegime(coin);
         
         // Periodic observation
         this._observeInterval = setInterval(() => {
-            this.observeRegime(coin);
+            this.observeRegime(coin).catch(err => {
+                this.logger.error(`[Orchestrator] Periodic observation error: ${err.message}`);
+            });
         }, intervalMs);
 
         return `Observing ${coin} regime every ${intervalMs/1000}s`;

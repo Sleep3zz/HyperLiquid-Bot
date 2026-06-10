@@ -1,0 +1,4 @@
+[2026-06-10T05:56:05.308Z] INFO: BBRSIStrategy initialized
+[2026-06-10T05:56:05.309Z] INFO: [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T05:56:05.309Z] INFO: [Orchestrator] Starting regime observation for BTC every 900s
+[2026-06-10T05:56:05.413Z] ERROR: [Orchestrator] Regime observation failed: [big.js] Invalid number

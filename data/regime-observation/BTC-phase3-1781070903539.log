@@ -1,0 +1,4 @@
+[2026-06-10T05:55:03.543Z] INFO: BBRSIStrategy initialized
+[2026-06-10T05:55:03.544Z] INFO: [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T05:55:03.544Z] INFO: [Orchestrator] Starting regime observation for BTC every 900s
+[2026-06-10T05:55:03.546Z] ERROR: [Orchestrator] Regime observation failed: Cannot read properties of undefined (reading 'getHistoricalCandles')
