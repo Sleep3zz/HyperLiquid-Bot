@@ -361,6 +361,7 @@ class PaperTrader {
     async statusLoop() {
         while (this.isRunning) {
             this.printStatus();
+            this.saveState(); // Save state periodically even if no trades
             await this.sleep(30000); // Every 30 seconds
         }
     }
