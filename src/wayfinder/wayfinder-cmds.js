@@ -173,18 +173,6 @@ class WayfinderCommander {
     }
 
     /**
-     * Dead-man's-switch: schedule cancellation of ALL open orders at `timeMs` (UTC).
-     * Pass null/0 to clear a previously-set schedule.
-     * ⚠️ VERIFY the CLI action name + flag against the wayfinder CLI.
-     * @param {number} timeMs - UTC timestamp in milliseconds when to cancel all orders
-     * @returns {Object|null} CLI result, or null on failure
-     */
-    scheduleCancel(timeMs) {
-        const t = timeMs ? `--time ${Math.floor(timeMs)}` : `--time 0`;
-        return this._exec(`wayfinder hyperliquid_execute --action schedule_cancel --wallet_label ${this.walletLabel} ${t}`);
-    }
-
-    /**
      * Close position
      */
     closePosition(coin) {

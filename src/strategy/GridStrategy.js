@@ -250,18 +250,6 @@ class GridStrategy {
         this.logger.info(`[GRID] Grid stopped. Total orders filled: ${this.filledOrders.length}`);
         this.logger.info(`[GRID] Estimated PnL: $${this.totalPnL.toFixed(2)}`);
 
-        // Clear schedule_cancel on clean shutdown.
-        // schedule_cancel is wallet-wide; leaving it would nuke other strategies' orders.
-        // We rely on _cancelAllOrders for this grid's orders; clear the switch for others.
-        if (typeof this.wayfinder.scheduleCancel === 'function') {
-            try {
-                this.wayfinder.scheduleCancel(0); // clear, don't leave a wallet-wide bomb
-                this.logger.info(`[GRID] Cleared schedule_cancel (clean stop)`);
-            } catch (e) {
-                this.logger.warn(`[GRID] scheduleCancel clear failed: ${e.message}`);
-            }
-        }
-
         // DO NOT blindly clear gridOrders — _cancelAllOrders already removed
         // confirmed cancels. Anything still in the Map is a LIVE order.
         if (cancelResult.failed > 0) {
@@ -363,15 +351,11 @@ class GridStrategy {
     }
 
     /**
-     * Start automatic update loop with re-entrancy guard + dead-man's-switch.
+     * Start automatic update loop with re-entrancy guard.
      * @private
      */
     _startUpdateLoop() {
         if (this.updateInterval) clearInterval(this.updateInterval);
-
-        // Prime the dead-man's-switch immediately so a crash in the first 30s
-        // is still covered (don't wait for the first tick).
-        this._refreshDeadMansSwitch();
 
         this.updateInterval = setInterval(async () => {
             if (this._updating) return; // skip overlapping ticks
@@ -381,13 +365,6 @@ class GridStrategy {
                 if (Number.isFinite(price)) {
                     await this.update(price);
                 }
-
-                // Only refresh the switch if the grid is still active. If update()
-                // tore the grid down (range breach), don't re-arm it here — the
-                // loop is about to be cleared anyway.
-                if (this.active) {
-                    this._refreshDeadMansSwitch();
-                }
             } catch (e) {
                 this.logger.error(`[GRID] Update loop error: ${e.message}`);
             } finally {
@@ -396,22 +373,6 @@ class GridStrategy {
         }, 30000);
 
         this.logger.info(`[GRID] Auto-update started (30s interval)`);
-    }
-
-    /**
-     * Refresh the HyperLiquid dead-man's-switch: schedule cancel-all 60s out.
-     * Each healthy tick pushes the deadline forward; if the process dies, the
-     * exchange auto-cancels everything (including UNTRACKED orphans) at expiry.
-     * No-op if the SDK doesn't expose scheduleCancel.
-     * @private
-     */
-    _refreshDeadMansSwitch() {
-        if (typeof this.wayfinder.scheduleCancel !== 'function') return;
-        try {
-            this.wayfinder.scheduleCancel(Date.now() + 60_000);
-        } catch (e) {
-            this.logger.warn(`[GRID] scheduleCancel refresh failed: ${e.message}`);
-        }
     }
 
     /**
