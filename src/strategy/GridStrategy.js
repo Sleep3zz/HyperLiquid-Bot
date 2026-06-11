@@ -330,7 +330,7 @@ class GridStrategy {
      * Update grid status - call periodically to check fills and rebalance
      * @param {number} currentPrice - Current market price
      */
-    update(currentPrice) {
+    async update(currentPrice) {
         if (!this.active) return;
 
         // Check range bound
