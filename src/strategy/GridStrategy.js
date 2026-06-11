@@ -175,8 +175,8 @@ class GridStrategy {
 
         this.logger.info(`[GRID] Stopping grid on ${coin}...`);
 
-        // Cancel all orders
-        await this._cancelAllOrders();
+        // Cancel all orders (only successfully-cancelled ones are removed from tracking)
+        const cancelResult = await this._cancelAllOrders();
 
         // Close any open position
         const positionSize = Number(this.wayfinder.getPositionSize(coin)) || 0;
@@ -189,30 +189,65 @@ class GridStrategy {
         this.logger.info(`[GRID] Grid stopped. Total orders filled: ${this.filledOrders.length}`);
         this.logger.info(`[GRID] Estimated PnL: $${this.totalPnL.toFixed(2)}`);
 
-        this.gridOrders.clear();
+        // DO NOT blindly clear gridOrders — _cancelAllOrders already removed
+        // confirmed cancels. Anything still in the Map is a LIVE order.
+        if (cancelResult.failed > 0) {
+            this.logger.warn(
+                `[GRID] ⚠️ ${cancelResult.failed} order(s) still live after stop — manual intervention may be required.`
+            );
+            return `⚠️ Grid stopped on ${coin}, but ${cancelResult.failed} order(s) failed to cancel: ${cancelResult.failedIds.join(", ")}`;
+        }
+
         return `✅ Grid stopped on ${coin}`;
     }
 
     /**
-     * Cancel all orders
+     * Cancel all tracked grid orders via Wayfinder SDK.
+     * Synchronous SDK calls (execSync) — kept async for caller compatibility.
+     * Orders are only removed from tracking once cancel is confirmed, so
+     * failures remain visible and can be retried/escalated.
      * @private
+     * @returns {{cancelled: number, failed: number, failedIds: string[]}}
      */
     async _cancelAllOrders() {
-        const cancels = [];
-        
-        for (const [orderId, order] of this.gridOrders) {
+        let cancelled = 0;
+        const failedIds = [];
+
+        // Snapshot entries first so we can mutate the Map safely while iterating.
+        const entries = [...this.gridOrders.entries()];
+
+        for (const [orderId, order] of entries) {
             try {
-                // Note: cancelOrder would need to be implemented in WayfinderCommander
-                // For now, we log that we would cancel
-                this.logger.info(`[GRID] Cancelling ${orderId} (${order.side} @ $${order.price.toFixed(2)})`);
-                // TODO: await this.wayfinder.cancelOrder(this.coin, orderId);
+                const res = this.wayfinder.cancelOrder(this.coin, orderId);
+
+                // _exec returns null on failure; a truthy result means the CLI succeeded.
+                if (res) {
+                    this.gridOrders.delete(orderId);
+                    cancelled++;
+                    this.logger.info(
+                        `[GRID] Cancelled ${orderId} (${order.side} @ $${order.price.toFixed(2)})`
+                    );
+                } else {
+                    failedIds.push(orderId);
+                    this.logger.error(
+                        `[GRID] Cancel returned no result for ${orderId} (${order.side} @ $${order.price.toFixed(2)})`
+                    );
+                }
             } catch (e) {
+                failedIds.push(orderId);
                 this.logger.error(`[GRID] Failed to cancel ${orderId}: ${e.message}`);
             }
         }
-        
-        await Promise.allSettled(cancels);
-        this.gridOrders.clear();
+
+        if (failedIds.length > 0) {
+            this.logger.warn(
+                `[GRID] ${failedIds.length} order(s) could NOT be cancelled and remain LIVE: ${failedIds.join(", ")}`
+            );
+        } else {
+            this.logger.info(`[GRID] All ${cancelled} order(s) cancelled successfully`);
+        }
+
+        return { cancelled, failed: failedIds.length, failedIds };
     }
 
     /**

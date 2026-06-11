@@ -157,10 +157,17 @@ class WayfinderCommander {
     }
 
     /**
-     * Cancel an order
+     * Cancel an open order by order id (oid)
+     * @param {string} coin - Coin symbol (e.g. "BTC")
+     * @param {string|number} oid - Order id returned when the order was placed
+     * @returns {Object|null} CLI result, or null on failure
      */
-    cancelOrder(coin, orderId) {
-        const cmd = `wayfinder hyperliquid_execute --action cancel_order --wallet_label ${this.walletLabel} --coin ${coin} --order_id ${orderId}`;
+    cancelOrder(coin, oid) {
+        if (!coin || oid == null) {
+            this.logger.error(`cancelOrder: missing coin or oid (coin=${coin}, oid=${oid})`);
+            return null;
+        }
+        const cmd = `wayfinder hyperliquid_execute --action cancel_order --wallet_label ${this.walletLabel} --coin ${coin} --oid ${oid}`;
         return this._exec(cmd);
     }
 
