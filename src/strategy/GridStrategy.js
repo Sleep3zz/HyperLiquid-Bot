@@ -46,6 +46,7 @@ class GridStrategy {
         this.filledOrders = [];
         this.totalPnL = 0;
         this.updateInterval = null;
+        this._updating = false; // Re-entrancy guard for interval
     }
 
     /**
@@ -177,7 +178,11 @@ class GridStrategy {
                     placed.push(buyId.oid);
                     this.logger.info(`[GRID] Buy oid=${buyId.oid} @ $${buyPrice.toFixed(2)} (L${i}, ${buyId.status})`);
                 } else {
-                    this.logger.warn(`[GRID] Buy order L${i} @ $${buyPrice.toFixed(2)} returned no oid`);
+                    // FAIL-CLOSED: a null oid may mean the order IS live but untracked
+                    this.logger.error(`[GRID] Buy L${i} returned no oid — possible untracked LIVE order. Halting build.`);
+                    await this._cancelAllOrders(); // cancel everything we CAN
+                    this.active = false;
+                    return []; // abort → startGrid sees empty → warns
                 }
 
                 // --- SELL ---
@@ -195,7 +200,11 @@ class GridStrategy {
                     placed.push(sellId.oid);
                     this.logger.info(`[GRID] Sell oid=${sellId.oid} @ $${sellPrice.toFixed(2)} (L${i}, ${sellId.status})`);
                 } else {
-                    this.logger.warn(`[GRID] Sell order L${i} @ $${sellPrice.toFixed(2)} returned no oid`);
+                    // FAIL-CLOSED: a null oid may mean the order IS live but untracked
+                    this.logger.error(`[GRID] Sell L${i} returned no oid — possible untracked LIVE order. Halting build.`);
+                    await this._cancelAllOrders(); // cancel everything we CAN
+                    this.active = false;
+                    return []; // abort → startGrid sees empty → warns
                 }
             }
         } catch (e) {
@@ -236,6 +245,20 @@ class GridStrategy {
         // Log PnL summary
         this.logger.info(`[GRID] Grid stopped. Total orders filled: ${this.filledOrders.length}`);
         this.logger.info(`[GRID] Estimated PnL: $${this.totalPnL.toFixed(2)}`);
+
+        // Clear schedule_cancel on clean shutdown (or leave short one as final sweep)
+        if (typeof this.wayfinder.scheduleCancel === 'function') {
+            try {
+                // Option: clear immediately
+                // this.wayfinder.scheduleCancel(0);
+                
+                // Option: leave short final sweep (belt-and-suspenders for orphans)
+                this.wayfinder.scheduleCancel(Date.now() + 30_000);
+                this.logger.info(`[GRID] Set final schedule_cancel sweep in 30s`);
+            } catch (e) {
+                this.logger.warn(`[GRID] scheduleCancel on stop failed: ${e.message}`);
+            }
+        }
 
         // DO NOT blindly clear gridOrders — _cancelAllOrders already removed
         // confirmed cancels. Anything still in the Map is a LIVE order.
@@ -346,15 +369,28 @@ class GridStrategy {
             clearInterval(this.updateInterval);
         }
         
-        // Update every 30 seconds
-        this.updateInterval = setInterval(() => {
+        // Update every 30 seconds with re-entrancy guard
+        this.updateInterval = setInterval(async () => {
+            if (this._updating) return; // Skip if previous tick still running
+            this._updating = true;
             try {
                 const price = this.wayfinder.getPrice(this.coin);
                 if (Number.isFinite(price)) {
-                    this.update(price);
+                    await this.update(price);
+                }
+                
+                // Dead-man's-switch: refresh schedule_cancel timer
+                if (typeof this.wayfinder.scheduleCancel === 'function') {
+                    try {
+                        this.wayfinder.scheduleCancel(Date.now() + 60_000);
+                    } catch (e) {
+                        this.logger.warn(`[GRID] scheduleCancel refresh failed: ${e.message}`);
+                    }
                 }
             } catch (e) {
                 this.logger.error(`[GRID] Update loop error: ${e.message}`);
+            } finally {
+                this._updating = false;
             }
         }, 30000);
         
