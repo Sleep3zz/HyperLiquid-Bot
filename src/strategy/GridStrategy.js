@@ -49,11 +49,53 @@ class GridStrategy {
     }
 
     /**
+     * Extract the HyperLiquid order id (oid) from a placeLimitOrder response.
+     * Real shape: res.effects[].result.response.data.statuses[].{resting|filled}.oid
+     * Returns { oid, status } or null if no oid could be found.
+     * @private
+     */
+    _extractOrderId(res) {
+        try {
+            if (!res || res.status !== "ok" || !Array.isArray(res.effects)) {
+                return null;
+            }
+
+            for (const effect of res.effects) {
+                // Only trust effects that actually succeeded on HL
+                if (effect?.ok !== true) continue;
+
+                const statuses = effect?.result?.response?.data?.statuses;
+                if (!Array.isArray(statuses)) continue;
+
+                for (const s of statuses) {
+                    // Rejected order — surface the reason, no oid
+                    if (s?.error) {
+                        this.logger.warn(`[GRID] Order rejected by HL: ${s.error}`);
+                        continue;
+                    }
+                    // Resting limit order (normal grid case)
+                    if (s?.resting?.oid != null) {
+                        return { oid: String(s.resting.oid), status: "resting" };
+                    }
+                    // Immediately filled (marketable limit) — has oid too
+                    if (s?.filled?.oid != null) {
+                        return { oid: String(s.filled.oid), status: "filled" };
+                    }
+                }
+            }
+            return null;
+        } catch (e) {
+            this.logger.error(`[GRID] _extractOrderId failed: ${e.message}`);
+            return null;
+        }
+    }
+
+    /**
      * Start grid trading on a coin
      * @param {string} coin - Coin symbol (e.g., "BTC")
-     * @returns {string} Status message
+     * @returns {Promise<string>} Status message
      */
-    startGrid(coin = "BTC") {
+    async startGrid(coin = "BTC") {
         if (this.active) {
             return `Grid already running on ${this.coin}`;
         }
@@ -69,7 +111,7 @@ class GridStrategy {
         try {
             price = this.wayfinder.getPrice(coin);
         } catch (e) {
-            return `❌ Error getting price: ${e.message}`;
+            return `❌ Failed to get price: ${e.message}`;
         }
         
         if (!Number.isFinite(price) || price <= 0) {
@@ -84,75 +126,81 @@ class GridStrategy {
         this.totalPnL = 0;
 
         this.logger.info(`[GRID] Starting grid on ${coin} @ $${price.toFixed(2)}`);
-        this.logger.info(`[GRID] Levels: ${this.gridLevels}, Spacing: ${this.gridSpacingPct}%, Amount: $${this.baseAmount}`);
 
-        // Place grid orders
-        const placed = this._buildGrid();
-        
+        const placed = await this._buildGrid();
+
         if (placed.length === 0) {
+            // Critical: some orders may have placed but returned no parseable oid.
+            // We cannot cancel untracked oids, so warn loudly.
             this.active = false;
-            return "❌ Failed to place any grid orders";
+            await this._cancelAllOrders(); // cancels anything we *did* track
+            this.logger.error(`[GRID] No orders tracked — if any placed on-exchange, they are UNTRACKED and LIVE. Check manually.`);
+            return "❌ Failed to place/track any grid orders — verify exchange for orphaned orders";
         }
 
-        // Start automatic update loop
         this._startUpdateLoop();
-
-        return `✅ Grid active on ${coin} with ${placed.length} orders`;
+        return `✅ Grid active on ${coin} with ${placed.length} tracked orders`;
     }
 
     /**
      * Build the grid by placing limit orders
-     * @returns {Array} Placed order IDs
+     * @returns {Promise<Array>} Placed order IDs
      * @private
      */
-    _buildGrid() {
+    async _buildGrid() {
         const placed = [];
-        
+
         try {
+            // Capital guard (issue #5)
+            const totalCapital = this.gridLevels * 2 * this.baseAmount;
+            if (totalCapital > this.maxGridCapital) {
+                this.logger.error(`[GRID] Capital ${totalCapital} exceeds max ${this.maxGridCapital}`);
+                return [];
+            }
+
             for (let i = 1; i <= this.gridLevels; i++) {
-                // Calculate grid prices
                 const buyPrice = this.basePrice * (1 - (i * this.gridSpacingPct / 100));
                 const sellPrice = this.basePrice * (1 + (i * this.gridSpacingPct / 100));
 
-                // Place buy order via Wayfinder SDK
-                const buy = this.wayfinder.placeLimitOrder({
+                // --- BUY ---
+                const buyRes = this.wayfinder.placeLimitOrder({
                     coin: this.coin,
                     isBuy: true,
                     size: this.baseAmount / buyPrice,
                     price: buyPrice
                 });
-                
-                if (buy && buy.orderId) {
-                    this.gridOrders.set(buy.orderId, {
-                        side: "BUY",
-                        price: buyPrice,
-                        level: i
+                const buyId = this._extractOrderId(buyRes);
+                if (buyId) {
+                    this.gridOrders.set(buyId.oid, {
+                        side: "BUY", price: buyPrice, level: i, status: buyId.status
                     });
-                    placed.push(buy.orderId);
-                    this.logger.info(`[GRID] Buy order placed @ $${buyPrice.toFixed(2)} (Level ${i})`);
+                    placed.push(buyId.oid);
+                    this.logger.info(`[GRID] Buy oid=${buyId.oid} @ $${buyPrice.toFixed(2)} (L${i}, ${buyId.status})`);
+                } else {
+                    this.logger.warn(`[GRID] Buy order L${i} @ $${buyPrice.toFixed(2)} returned no oid`);
                 }
 
-                // Place sell order via Wayfinder SDK
-                const sell = this.wayfinder.placeLimitOrder({
+                // --- SELL ---
+                const sellRes = this.wayfinder.placeLimitOrder({
                     coin: this.coin,
                     isBuy: false,
                     size: this.baseAmount / sellPrice,
                     price: sellPrice
                 });
-                
-                if (sell && sell.orderId) {
-                    this.gridOrders.set(sell.orderId, {
-                        side: "SELL",
-                        price: sellPrice,
-                        level: i
+                const sellId = this._extractOrderId(sellRes);
+                if (sellId) {
+                    this.gridOrders.set(sellId.oid, {
+                        side: "SELL", price: sellPrice, level: i, status: sellId.status
                     });
-                    placed.push(sell.orderId);
-                    this.logger.info(`[GRID] Sell order placed @ $${sellPrice.toFixed(2)} (Level ${i})`);
+                    placed.push(sellId.oid);
+                    this.logger.info(`[GRID] Sell oid=${sellId.oid} @ $${sellPrice.toFixed(2)} (L${i}, ${sellId.status})`);
+                } else {
+                    this.logger.warn(`[GRID] Sell order L${i} @ $${sellPrice.toFixed(2)} returned no oid`);
                 }
             }
         } catch (e) {
             this.logger.error(`[GRID] Build failed: ${e.message}`);
-            this._cancelAllOrders();
+            await this._cancelAllOrders();
             this.active = false;
             return [];
         }
