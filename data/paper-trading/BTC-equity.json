@@ -73718,5 +73718,3125 @@
     "hasPosition": true,
     "positionType": "LONG",
     "unrealizedPnL": 5.1899544109413736
+  },
+  {
+    "timestamp": 1781205577424,
+    "price": 63596.5,
+    "equity": 1005.1899544109414,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.1899544109413736
+  },
+  {
+    "timestamp": 1781205578425,
+    "price": 63596.5,
+    "equity": 1005.1899544109414,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.1899544109413736
+  },
+  {
+    "timestamp": 1781205579426,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205580427,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205581428,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205582428,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205583430,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205584433,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205585436,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205586437,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205587437,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205588439,
+    "price": 63599.5,
+    "equity": 1005.2043509557706,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2043509557706145
+  },
+  {
+    "timestamp": 1781205589440,
+    "price": 63600.5,
+    "equity": 1005.209149804047,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.209149804047029
+  },
+  {
+    "timestamp": 1781205590441,
+    "price": 63601.5,
+    "equity": 1005.2139486523234,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.213948652323443
+  },
+  {
+    "timestamp": 1781205591442,
+    "price": 63601.5,
+    "equity": 1005.2139486523234,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.213948652323443
+  },
+  {
+    "timestamp": 1781205592444,
+    "price": 63606.5,
+    "equity": 1005.2379428937055,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.237942893705511
+  },
+  {
+    "timestamp": 1781205593447,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205594449,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205595450,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205596452,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205597453,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205598454,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205599455,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205600455,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205601457,
+    "price": 63607.5,
+    "equity": 1005.242741741982,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.242741741981924
+  },
+  {
+    "timestamp": 1781205602458,
+    "price": 63631,
+    "equity": 1005.3555146764777,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.355514676477645
+  },
+  {
+    "timestamp": 1781205603459,
+    "price": 63637.5,
+    "equity": 1005.3867071902744,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.3867071902743335
+  },
+  {
+    "timestamp": 1781205604460,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205605462,
+    "price": 63640.5,
+    "equity": 1005.4011037351036,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.401103735103574
+  },
+  {
+    "timestamp": 1781205606463,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205607464,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205608465,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205609467,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205610467,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205611468,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205612469,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205613471,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205614472,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205615473,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205616474,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205617475,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205618476,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205619477,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205620478,
+    "price": 63651.5,
+    "equity": 1005.4538910661441,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.453891066144125
+  },
+  {
+    "timestamp": 1781205621479,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205622480,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205623480,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205624481,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205625483,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205626484,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205627485,
+    "price": 63667.5,
+    "equity": 1005.5306726385668,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.530672638566744
+  },
+  {
+    "timestamp": 1781205628486,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205629487,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205630489,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205631490,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205632491,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205633493,
+    "price": 63673.5,
+    "equity": 1005.5594657282252,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.559465728225226
+  },
+  {
+    "timestamp": 1781205634494,
+    "price": 63671.5,
+    "equity": 1005.5498680316724,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.549868031672399
+  },
+  {
+    "timestamp": 1781205635495,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205636497,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205637499,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205638500,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205639501,
+    "price": 63672.5,
+    "equity": 1005.5546668799489,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.554666879948812
+  },
+  {
+    "timestamp": 1781205640502,
+    "price": 63665.5,
+    "equity": 1005.5210749420139,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.521074942013916
+  },
+  {
+    "timestamp": 1781205641503,
+    "price": 63658.5,
+    "equity": 1005.487483004079,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.487483004079022
+  },
+  {
+    "timestamp": 1781205642504,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205643505,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205644506,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205645507,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205646508,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205647509,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205648510,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205649512,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205650515,
+    "price": 63646.5,
+    "equity": 1005.4298968247621,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.429896824762056
+  },
+  {
+    "timestamp": 1781205651516,
+    "price": 63641.5,
+    "equity": 1005.40590258338,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.405902583379989
+  },
+  {
+    "timestamp": 1781205652517,
+    "price": 63632.5,
+    "equity": 1005.3627129488923,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.362712948892266
+  },
+  {
+    "timestamp": 1781205653518,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205654521,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205655522,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205656522,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205657523,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205658523,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205659525,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205660527,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205661528,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205662529,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205663531,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205664534,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205665536,
+    "price": 63627.5,
+    "equity": 1005.3387187075102,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.338718707510197
+  },
+  {
+    "timestamp": 1781205666537,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205667537,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205668539,
+    "price": 63624.5,
+    "equity": 1005.3243221626809,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.324322162680956
+  },
+  {
+    "timestamp": 1781205669541,
+    "price": 63629.5,
+    "equity": 1005.348316404063,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.348316404063025
+  },
+  {
+    "timestamp": 1781205670542,
+    "price": 63629.5,
+    "equity": 1005.348316404063,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.348316404063025
+  },
+  {
+    "timestamp": 1781205671543,
+    "price": 63629.5,
+    "equity": 1005.348316404063,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.348316404063025
+  },
+  {
+    "timestamp": 1781205672544,
+    "price": 63629.5,
+    "equity": 1005.348316404063,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.348316404063025
+  },
+  {
+    "timestamp": 1781205673545,
+    "price": 63629.5,
+    "equity": 1005.348316404063,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.348316404063025
+  },
+  {
+    "timestamp": 1781205674546,
+    "price": 63629.5,
+    "equity": 1005.348316404063,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.348316404063025
+  },
+  {
+    "timestamp": 1781205675547,
+    "price": 63625.5,
+    "equity": 1005.3291210109574,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.32912101095737
+  },
+  {
+    "timestamp": 1781205676548,
+    "price": 63612.5,
+    "equity": 1005.266735983364,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.266735983363993
+  },
+  {
+    "timestamp": 1781205677549,
+    "price": 63612.5,
+    "equity": 1005.266735983364,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.266735983363993
+  },
+  {
+    "timestamp": 1781205678550,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205679552,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205680553,
+    "price": 63636.5,
+    "equity": 1005.3819083419979,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.381908341997921
+  },
+  {
+    "timestamp": 1781205681554,
+    "price": 63636.5,
+    "equity": 1005.3819083419979,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.381908341997921
+  },
+  {
+    "timestamp": 1781205682555,
+    "price": 63636.5,
+    "equity": 1005.3819083419979,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.381908341997921
+  },
+  {
+    "timestamp": 1781205683556,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205684557,
+    "price": 63624,
+    "equity": 1005.3219227385428,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.32192273854275
+  },
+  {
+    "timestamp": 1781205685557,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205686557,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205687558,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205688559,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205689560,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205690561,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205691562,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205692562,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205693562,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205694564,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205695565,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205696566,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205697566,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205698567,
+    "price": 63620.5,
+    "equity": 1005.3051267695753,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.305126769575303
+  },
+  {
+    "timestamp": 1781205699569,
+    "price": 63625.5,
+    "equity": 1005.3291210109574,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.32912101095737
+  },
+  {
+    "timestamp": 1781205700570,
+    "price": 63625.5,
+    "equity": 1005.3291210109574,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.32912101095737
+  },
+  {
+    "timestamp": 1781205701571,
+    "price": 63625.5,
+    "equity": 1005.3291210109574,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.32912101095737
+  },
+  {
+    "timestamp": 1781205702572,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205703573,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205704574,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205705575,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205706577,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205707578,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205708579,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205709580,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205710581,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205711582,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205712584,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205713585,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205714586,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205715587,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205716588,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205717589,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205718590,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205719590,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205720591,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205721592,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205722592,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205723593,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205724595,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205725596,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205726596,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205727598,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205728599,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205729600,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205730602,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205731603,
+    "price": 63634.5,
+    "equity": 1005.372310645445,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.372310645445093
+  },
+  {
+    "timestamp": 1781205732603,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205733605,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205734606,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205735607,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205736608,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205737608,
+    "price": 63641.5,
+    "equity": 1005.40590258338,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.405902583379989
+  },
+  {
+    "timestamp": 1781205738609,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205739611,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205740612,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205741614,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205742616,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205743617,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205744620,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205745622,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205746623,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205747624,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205748625,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205749628,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205750630,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205751632,
+    "price": 63642.5,
+    "equity": 1005.4107014316564,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.410701431656403
+  },
+  {
+    "timestamp": 1781205752634,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205753635,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205754636,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205755637,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205756638,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205757639,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205758640,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205759641,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205760642,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205761643,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205762644,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205763645,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205764646,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205765646,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205766647,
+    "price": 63638.5,
+    "equity": 1005.3915060385508,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.391506038550748
+  },
+  {
+    "timestamp": 1781205767648,
+    "price": 63625.5,
+    "equity": 1005.3291210109574,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.32912101095737
+  },
+  {
+    "timestamp": 1781205768649,
+    "price": 63623.5,
+    "equity": 1005.3195233144046,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.3195233144045435
+  },
+  {
+    "timestamp": 1781205769650,
+    "price": 63623.5,
+    "equity": 1005.3195233144046,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.3195233144045435
+  },
+  {
+    "timestamp": 1781205770651,
+    "price": 63623.5,
+    "equity": 1005.3195233144046,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.3195233144045435
+  },
+  {
+    "timestamp": 1781205771651,
+    "price": 63624.5,
+    "equity": 1005.3243221626809,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.324322162680956
+  },
+  {
+    "timestamp": 1781205772653,
+    "price": 63624.5,
+    "equity": 1005.3243221626809,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.324322162680956
+  },
+  {
+    "timestamp": 1781205773654,
+    "price": 63624.5,
+    "equity": 1005.3243221626809,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.324322162680956
+  },
+  {
+    "timestamp": 1781205774655,
+    "price": 63624.5,
+    "equity": 1005.3243221626809,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.324322162680956
+  },
+  {
+    "timestamp": 1781205775656,
+    "price": 63624.5,
+    "equity": 1005.3243221626809,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.324322162680956
+  },
+  {
+    "timestamp": 1781205776656,
+    "price": 63626,
+    "equity": 1005.3315204350956,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.331520435095577
+  },
+  {
+    "timestamp": 1781205777656,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205778658,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205779659,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205780659,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205781660,
+    "price": 63635.5,
+    "equity": 1005.3771094937215,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.377109493721507
+  },
+  {
+    "timestamp": 1781205782661,
+    "price": 63647,
+    "equity": 1005.4322962489002,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.432296248900264
+  },
+  {
+    "timestamp": 1781205783662,
+    "price": 63649.5,
+    "equity": 1005.4442933695913,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.444293369591299
+  },
+  {
+    "timestamp": 1781205784664,
+    "price": 63649.5,
+    "equity": 1005.4442933695913,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.444293369591299
+  },
+  {
+    "timestamp": 1781205785665,
+    "price": 63649.5,
+    "equity": 1005.4442933695913,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.444293369591299
+  },
+  {
+    "timestamp": 1781205786667,
+    "price": 63649.5,
+    "equity": 1005.4442933695913,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.444293369591299
+  },
+  {
+    "timestamp": 1781205787667,
+    "price": 63649.5,
+    "equity": 1005.4442933695913,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.444293369591299
+  },
+  {
+    "timestamp": 1781205788668,
+    "price": 63649.5,
+    "equity": 1005.4442933695913,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.444293369591299
+  },
+  {
+    "timestamp": 1781205789669,
+    "price": 63644.5,
+    "equity": 1005.4202991282092,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.42029912820923
+  },
+  {
+    "timestamp": 1781205790670,
+    "price": 63644.5,
+    "equity": 1005.4202991282092,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.42029912820923
+  },
+  {
+    "timestamp": 1781205791671,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205792672,
+    "price": 63659.5,
+    "equity": 1005.4922818523554,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.492281852355434
+  },
+  {
+    "timestamp": 1781205793673,
+    "price": 63662.5,
+    "equity": 1005.5066783971847,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.506678397184675
+  },
+  {
+    "timestamp": 1781205794674,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205795674,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205796676,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205797677,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205798678,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205799680,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205800681,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205801682,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205802683,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205803684,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205804685,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205805686,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205806687,
+    "price": 63677.5,
+    "equity": 1005.5786611213309,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.578661121330881
+  },
+  {
+    "timestamp": 1781205807689,
+    "price": 63677.5,
+    "equity": 1005.5786611213309,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.578661121330881
+  },
+  {
+    "timestamp": 1781205808690,
+    "price": 63677.5,
+    "equity": 1005.5786611213309,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.578661121330881
+  },
+  {
+    "timestamp": 1781205809691,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205810691,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205811692,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205812693,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205813693,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205814694,
+    "price": 63674.5,
+    "equity": 1005.5642645765016,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.56426457650164
+  },
+  {
+    "timestamp": 1781205815695,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205816695,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205817696,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205818696,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205819698,
+    "price": 63670.5,
+    "equity": 1005.545069183396,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.545069183395985
+  },
+  {
+    "timestamp": 1781205820699,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205821701,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205822703,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205823705,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205824707,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205825709,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205826710,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205827711,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205828712,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205829714,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205830716,
+    "price": 63664.5,
+    "equity": 1005.5162760937375,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.5162760937375035
+  },
+  {
+    "timestamp": 1781205831717,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205832719,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205833721,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205834722,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205835722,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205836723,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205837724,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205838726,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205839726,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205840728,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205841729,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205842731,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205843732,
+    "price": 63660.5,
+    "equity": 1005.4970807006318,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.497080700631848
+  },
+  {
+    "timestamp": 1781205844733,
+    "price": 63658.5,
+    "equity": 1005.487483004079,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.487483004079022
+  },
+  {
+    "timestamp": 1781205845733,
+    "price": 63658.5,
+    "equity": 1005.487483004079,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.487483004079022
+  },
+  {
+    "timestamp": 1781205846735,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205847736,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205848738,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205849739,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205850741,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205851742,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205852744,
+    "price": 63643.5,
+    "equity": 1005.4155002799329,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.415500279932815
+  },
+  {
+    "timestamp": 1781205853746,
+    "price": 63650.5,
+    "equity": 1005.4490922178677,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.449092217867712
+  },
+  {
+    "timestamp": 1781205854746,
+    "price": 63651,
+    "equity": 1005.4514916420059,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4514916420059185
+  },
+  {
+    "timestamp": 1781205855748,
+    "price": 63651,
+    "equity": 1005.4514916420059,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4514916420059185
+  },
+  {
+    "timestamp": 1781205856750,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205857752,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205858752,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205859753,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205860755,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205861757,
+    "price": 63655.5,
+    "equity": 1005.4730864592498,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.473086459249781
+  },
+  {
+    "timestamp": 1781205862759,
+    "price": 63661.5,
+    "equity": 1005.5018795489083,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.501879548908263
+  },
+  {
+    "timestamp": 1781205863762,
+    "price": 63672.5,
+    "equity": 1005.5546668799489,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.554666879948812
+  },
+  {
+    "timestamp": 1781205864763,
+    "price": 63674,
+    "equity": 1005.5618651523635,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.561865152363433
+  },
+  {
+    "timestamp": 1781205865765,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205866766,
+    "price": 63656.5,
+    "equity": 1005.4778853075262,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4778853075261935
+  },
+  {
+    "timestamp": 1781205867767,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205868769,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205869771,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205870772,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205871774,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205872777,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205873778,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205874779,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205875781,
+    "price": 63650.5,
+    "equity": 1005.4490922178677,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.449092217867712
+  },
+  {
+    "timestamp": 1781205876782,
+    "price": 63648.5,
+    "equity": 1005.4394945213148,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.439494521314884
+  },
+  {
+    "timestamp": 1781205877783,
+    "price": 63652.5,
+    "equity": 1005.4586899144206,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.45868991442054
+  },
+  {
+    "timestamp": 1781205878784,
+    "price": 63666.5,
+    "equity": 1005.5258737902903,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.52587379029033
+  },
+  {
+    "timestamp": 1781205879786,
+    "price": 63665.5,
+    "equity": 1005.5210749420139,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.521074942013916
+  },
+  {
+    "timestamp": 1781205880786,
+    "price": 63653.5,
+    "equity": 1005.4634887626969,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.463488762696953
+  },
+  {
+    "timestamp": 1781205881788,
+    "price": 63653.5,
+    "equity": 1005.4634887626969,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.463488762696953
+  },
+  {
+    "timestamp": 1781205882790,
+    "price": 63653.5,
+    "equity": 1005.4634887626969,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.463488762696953
+  },
+  {
+    "timestamp": 1781205883790,
+    "price": 63653.5,
+    "equity": 1005.4634887626969,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.463488762696953
+  },
+  {
+    "timestamp": 1781205884792,
+    "price": 63653.5,
+    "equity": 1005.4634887626969,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.463488762696953
+  },
+  {
+    "timestamp": 1781205885794,
+    "price": 63653.5,
+    "equity": 1005.4634887626969,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.463488762696953
+  },
+  {
+    "timestamp": 1781205886795,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205887796,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205888799,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205889800,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205890801,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205891803,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205892804,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205893805,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205894806,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205895808,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205896809,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205897811,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205898813,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205899816,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205900818,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205901819,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205902820,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205903822,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205904823,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205905826,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205906827,
+    "price": 63657.5,
+    "equity": 1005.4826841558026,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.482684155802607
+  },
+  {
+    "timestamp": 1781205907828,
+    "price": 63654.5,
+    "equity": 1005.4682876109733,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.468287610973366
+  },
+  {
+    "timestamp": 1781205908829,
+    "price": 63647.5,
+    "equity": 1005.4346956730385,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.434695673038471
+  },
+  {
+    "timestamp": 1781205909830,
+    "price": 63647.5,
+    "equity": 1005.4346956730385,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.434695673038471
+  },
+  {
+    "timestamp": 1781205910831,
+    "price": 63633.5,
+    "equity": 1005.3675117971687,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.36751179716868
+  },
+  {
+    "timestamp": 1781205911831,
+    "price": 63623.5,
+    "equity": 1005.3195233144046,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.3195233144045435
+  },
+  {
+    "timestamp": 1781205912832,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205913833,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205914834,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205915836,
+    "price": 63617.5,
+    "equity": 1005.2907302247461,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.290730224746062
+  },
+  {
+    "timestamp": 1781205916837,
+    "price": 63609.5,
+    "equity": 1005.2523394385347,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.252339438534752
+  },
+  {
+    "timestamp": 1781205917838,
+    "price": 63609.5,
+    "equity": 1005.2523394385347,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.252339438534752
+  },
+  {
+    "timestamp": 1781205918838,
+    "price": 63603.5,
+    "equity": 1005.2235463488763,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.22354634887627
+  },
+  {
+    "timestamp": 1781205919840,
+    "price": 63603.5,
+    "equity": 1005.2235463488763,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.22354634887627
+  },
+  {
+    "timestamp": 1781205920841,
+    "price": 63609.5,
+    "equity": 1005.2523394385347,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.252339438534752
+  },
+  {
+    "timestamp": 1781205921843,
+    "price": 63616,
+    "equity": 1005.2835319523315,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.28353195233144
+  },
+  {
+    "timestamp": 1781205922844,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205923844,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205924846,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205925848,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205926850,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205927851,
+    "price": 63619.5,
+    "equity": 1005.3003279212988,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.300327921298888
+  },
+  {
+    "timestamp": 1781205928851,
+    "price": 63615.5,
+    "equity": 1005.2811325281932,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.2811325281932335
+  },
+  {
+    "timestamp": 1781205929853,
+    "price": 63613.5,
+    "equity": 1005.2715348316405,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.271534831640406
+  },
+  {
+    "timestamp": 1781205930854,
+    "price": 63613.5,
+    "equity": 1005.2715348316405,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.271534831640406
+  },
+  {
+    "timestamp": 1781205931854,
+    "price": 63613.5,
+    "equity": 1005.2715348316405,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.271534831640406
+  },
+  {
+    "timestamp": 1781205932856,
+    "price": 63613.5,
+    "equity": 1005.2715348316405,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.271534831640406
+  },
+  {
+    "timestamp": 1781205933856,
+    "price": 63616.5,
+    "equity": 1005.2859313764696,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.285931376469647
+  },
+  {
+    "timestamp": 1781205934857,
+    "price": 63619,
+    "equity": 1005.2979284971607,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.297928497160681
+  },
+  {
+    "timestamp": 1781205935859,
+    "price": 63619,
+    "equity": 1005.2979284971607,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.297928497160681
+  },
+  {
+    "timestamp": 1781205936861,
+    "price": 63621.5,
+    "equity": 1005.3099256178517,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.309925617851715
+  },
+  {
+    "timestamp": 1781205937862,
+    "price": 63630.5,
+    "equity": 1005.3531152523394,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.353115252339439
+  },
+  {
+    "timestamp": 1781205938863,
+    "price": 63630.5,
+    "equity": 1005.3531152523394,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.353115252339439
+  },
+  {
+    "timestamp": 1781205939866,
+    "price": 63630.5,
+    "equity": 1005.3531152523394,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.353115252339439
+  },
+  {
+    "timestamp": 1781205940867,
+    "price": 63630.5,
+    "equity": 1005.3531152523394,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.353115252339439
+  },
+  {
+    "timestamp": 1781205941869,
+    "price": 63630.5,
+    "equity": 1005.3531152523394,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.353115252339439
+  },
+  {
+    "timestamp": 1781205942872,
+    "price": 63630.5,
+    "equity": 1005.3531152523394,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.353115252339439
+  },
+  {
+    "timestamp": 1781205943873,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205944874,
+    "price": 63631.5,
+    "equity": 1005.3579141006159,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.357914100615852
+  },
+  {
+    "timestamp": 1781205945877,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205946878,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205947879,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205948882,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205949882,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205950884,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205951886,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205952887,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205953889,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205954891,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205955893,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205956894,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205957895,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205958895,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205959896,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205960898,
+    "price": 63645.5,
+    "equity": 1005.4250979764856,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.4250979764856435
+  },
+  {
+    "timestamp": 1781205961898,
+    "price": 63639.5,
+    "equity": 1005.3963048868271,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.396304886827162
+  },
+  {
+    "timestamp": 1781205962899,
+    "price": 63639.5,
+    "equity": 1005.3963048868271,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.396304886827162
+  },
+  {
+    "timestamp": 1781205963901,
+    "price": 63639.5,
+    "equity": 1005.3963048868271,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.396304886827162
+  },
+  {
+    "timestamp": 1781205964902,
+    "price": 63639.5,
+    "equity": 1005.3963048868271,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.396304886827162
+  },
+  {
+    "timestamp": 1781205965903,
+    "price": 63639.5,
+    "equity": 1005.3963048868271,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.396304886827162
+  },
+  {
+    "timestamp": 1781205966905,
+    "price": 63639.5,
+    "equity": 1005.3963048868271,
+    "hasPosition": true,
+    "positionType": "LONG",
+    "unrealizedPnL": 5.396304886827162
   }
 ]

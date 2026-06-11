@@ -1,36 +1,38 @@
 {
   "coin": "SOL",
-  "recommended": "Mean Reversion (Optimized)",
+  "recommended": "Mean Reversion (Optimized v2)",
   "mode": "reversion",
   "params": {
     "leverage": 3,
     "positionSize": 0.10,
-    "profitTarget": 6.0,
-    "stopLoss": 3.0,
+    "profitTarget": 8.0,
+    "stopLoss": 2.5,
     "bbPeriod": 20,
     "bbStdDev": 2.0,
     "rsiPeriod": 14,
     "rsiOverbought": 55,
     "rsiOversold": 25,
     "adxPeriod": 14,
-    "adxTrendThreshold": 40
+    "adxTrendThreshold": 45
   },
   "backtestResults": {
-    "trades": 12,
-    "wins": 8,
-    "losses": 4,
-    "winRate": 0.667,
-    "netPnl": 381.03,
-    "netPnlPct": 3.81,
-    "profitFactor": 3.91,
-    "maxDrawdown": 0,
+    "trades": 13,
+    "wins": 7,
+    "losses": 6,
+    "winRate": 0.538,
+    "netPnl": 416.15,
+    "netPnlPct": 4.16,
+    "profitFactor": 3.52,
+    "maxDrawdown": 1.5,
     "sharpe": null
   },
-  "updatedAt": "2026-06-11T06:30:00Z",
-  "previousBest": {
-    "netPnl": 187.18,
-    "winRate": 0.625,
-    "trades": 8
+  "improvement": {
+    "previousNetPnl": 381.03,
+    "newNetPnl": 416.15,
+    "improvementPercent": 9.2,
+    "previousTrades": 12,
+    "newTrades": 13,
+    "changes": "ADX 40→45, SL 3%→2.5%, TP 6%→8%"
   },
-  "improvement": "103% better PnL, fewer trades but higher quality"
+  "updatedAt": "2026-06-11T19:25:00Z"
 }

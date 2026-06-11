@@ -9,8 +9,8 @@
     "leverage": 3,
     "entryTime": 1781166314786,
     "positionValue": 300,
-    "currentPnL": -6.92270638519119,
-    "currentPnLPercent": -2.30756879506373
+    "currentPnL": -7.670487127925544,
+    "currentPnLPercent": -2.5568290426418483
   },
   "params": {
     "coin": "SOL",
@@ -29,5 +29,5 @@
     "lastUpdated": "2026-06-11T06:30:00Z"
   },
   "trades": [],
-  "lastUpdated": "2026-06-11T19:19:23.589Z"
+  "lastUpdated": "2026-06-11T19:26:23.737Z"
 }
