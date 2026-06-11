@@ -333,7 +333,8 @@ class GridStrategy {
     async update(currentPrice) {
         if (!this.active) return;
 
-        // Check range bound
+        // checkRangeBound may call stopGrid() and deactivate the grid.
+    // MUST await + bail, or the reads below run against torn-down state.
         this.checkRangeBound(currentPrice);
 
         // Safely get position and PnL with fallbacks
