@@ -241,7 +241,7 @@ class GridStrategy {
         // confirmed cancels. Anything still in the Map is a LIVE order.
         if (cancelResult.failed > 0) {
             this.logger.warn(
-                `[GRID] ⚠️ ${cancelResult.failed} order(s) still live after stop — manual intervention may be required.`
+                `[GRID] ⚠️ ${cancelResult.failed} order(s) still live after stop — manual intervention required.`
             );
             return `⚠️ Grid stopped on ${coin}, but ${cancelResult.failed} order(s) failed to cancel: ${cancelResult.failedIds.join(", ")}`;
         }
@@ -251,48 +251,44 @@ class GridStrategy {
 
     /**
      * Cancel all tracked grid orders via Wayfinder SDK.
-     * Synchronous SDK calls (execSync) — kept async for caller compatibility.
-     * Orders are only removed from tracking once cancel is confirmed, so
-     * failures remain visible and can be retried/escalated.
+     * Orders are removed from gridOrders only on confirmed cancel, so
+     * failures stay visible and can be retried/escalated.
+     * 
+     * Note: Reconciliation sweep removed - CLI doesn't expose getOpenOrders.
+     * Fail-closed behavior in _buildGrid handles untracked orders at source.
      * @private
-     * @returns {{cancelled: number, failed: number, failedIds: string[]}}
+     * @returns {Promise<{cancelled:number, failed:number, failedIds:string[]}>}
      */
     async _cancelAllOrders() {
         let cancelled = 0;
         const failedIds = [];
 
-        // Snapshot entries first so we can mutate the Map safely while iterating.
         const entries = [...this.gridOrders.entries()];
-
-        for (const [orderId, order] of entries) {
+        for (const [oid, order] of entries) {
             try {
-                const res = this.wayfinder.cancelOrder(this.coin, orderId);
-
-                // _exec returns null on failure; a truthy result means the CLI succeeded.
+                const res = this.wayfinder.cancelOrder(this.coin, oid);
                 if (res) {
-                    this.gridOrders.delete(orderId);
+                    this.gridOrders.delete(oid);
                     cancelled++;
                     this.logger.info(
-                        `[GRID] Cancelled ${orderId} (${order.side} @ $${order.price.toFixed(2)})`
+                        `[GRID] Cancelled ${oid} (${order.side} @ $${order.price.toFixed(2)})`
                     );
                 } else {
-                    failedIds.push(orderId);
-                    this.logger.error(
-                        `[GRID] Cancel returned no result for ${orderId} (${order.side} @ $${order.price.toFixed(2)})`
-                    );
+                    failedIds.push(oid);
+                    this.logger.error(`[GRID] Cancel returned no result for ${oid}`);
                 }
             } catch (e) {
-                failedIds.push(orderId);
-                this.logger.error(`[GRID] Failed to cancel ${orderId}: ${e.message}`);
+                failedIds.push(oid);
+                this.logger.error(`[GRID] Failed to cancel ${oid}: ${e.message}`);
             }
         }
 
         if (failedIds.length > 0) {
             this.logger.warn(
-                `[GRID] ${failedIds.length} order(s) could NOT be cancelled and remain LIVE: ${failedIds.join(", ")}`
+                `[GRID] ${failedIds.length} order(s) remain LIVE: ${failedIds.join(", ")}`
             );
         } else {
-            this.logger.info(`[GRID] All ${cancelled} order(s) cancelled successfully`);
+            this.logger.info(`[GRID] All ${cancelled} tracked order(s) cancelled`);
         }
 
         return { cancelled, failed: failedIds.length, failedIds };
