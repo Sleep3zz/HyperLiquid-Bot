@@ -144,15 +144,17 @@ class GridStrategy {
     }
 
     /**
-     * Build the grid by placing limit orders
-     * @returns {Promise<Array>} Placed order IDs
+     * Build the grid by placing limit orders.
+     * FAIL-CLOSED: if any placeLimitOrder returns no parseable oid, we assume
+     * the order MAY be live-but-untracked, cancel everything we can, and abort.
+     * @returns {Promise<Array<string>>} Placed order ids (empty on abort/failure)
      * @private
      */
     async _buildGrid() {
         const placed = [];
 
         try {
-            // Capital guard (issue #5)
+            // Capital guard
             const totalCapital = this.gridLevels * 2 * this.baseAmount;
             if (totalCapital > this.maxGridCapital) {
                 this.logger.error(`[GRID] Capital ${totalCapital} exceeds max ${this.maxGridCapital}`);
@@ -163,6 +165,14 @@ class GridStrategy {
                 const buyPrice = this.basePrice * (1 - (i * this.gridSpacingPct / 100));
                 const sellPrice = this.basePrice * (1 + (i * this.gridSpacingPct / 100));
 
+                // Guard against nonsensical prices (e.g. spacing pushes buyPrice <= 0)
+                if (!(buyPrice > 0) || !(sellPrice > 0)) {
+                    this.logger.error(`[GRID] Invalid grid price at L${i} (buy=${buyPrice}, sell=${sellPrice}) — halting build.`);
+                    await this._cancelAllOrders();
+                    this.active = false;
+                    return [];
+                }
+
                 // --- BUY ---
                 const buyRes = this.wayfinder.placeLimitOrder({
                     coin: this.coin,
@@ -172,17 +182,14 @@ class GridStrategy {
                 });
                 const buyId = this._extractOrderId(buyRes);
                 if (buyId) {
-                    this.gridOrders.set(buyId.oid, {
-                        side: "BUY", price: buyPrice, level: i, status: buyId.status
-                    });
+                    this.gridOrders.set(buyId.oid, { side: "BUY", price: buyPrice, level: i, status: buyId.status });
                     placed.push(buyId.oid);
                     this.logger.info(`[GRID] Buy oid=${buyId.oid} @ $${buyPrice.toFixed(2)} (L${i}, ${buyId.status})`);
                 } else {
-                    // FAIL-CLOSED: a null oid may mean the order IS live but untracked
-                    this.logger.error(`[GRID] Buy L${i} returned no oid — possible untracked LIVE order. Halting build.`);
-                    await this._cancelAllOrders(); // cancel everything we CAN
+                    this.logger.error(`[GRID] Buy L${i} @ $${buyPrice.toFixed(2)} returned no oid — possible untracked LIVE order. Halting build.`);
+                    await this._cancelAllOrders();
                     this.active = false;
-                    return []; // abort → startGrid sees empty → warns
+                    return [];
                 }
 
                 // --- SELL ---
@@ -194,17 +201,14 @@ class GridStrategy {
                 });
                 const sellId = this._extractOrderId(sellRes);
                 if (sellId) {
-                    this.gridOrders.set(sellId.oid, {
-                        side: "SELL", price: sellPrice, level: i, status: sellId.status
-                    });
+                    this.gridOrders.set(sellId.oid, { side: "SELL", price: sellPrice, level: i, status: sellId.status });
                     placed.push(sellId.oid);
                     this.logger.info(`[GRID] Sell oid=${sellId.oid} @ $${sellPrice.toFixed(2)} (L${i}, ${sellId.status})`);
                 } else {
-                    // FAIL-CLOSED: a null oid may mean the order IS live but untracked
-                    this.logger.error(`[GRID] Sell L${i} returned no oid — possible untracked LIVE order. Halting build.`);
-                    await this._cancelAllOrders(); // cancel everything we CAN
+                    this.logger.error(`[GRID] Sell L${i} @ $${sellPrice.toFixed(2)} returned no oid — possible untracked LIVE order. Halting build.`);
+                    await this._cancelAllOrders();
                     this.active = false;
-                    return []; // abort → startGrid sees empty → warns
+                    return [];
                 }
             }
         } catch (e) {
@@ -246,17 +250,15 @@ class GridStrategy {
         this.logger.info(`[GRID] Grid stopped. Total orders filled: ${this.filledOrders.length}`);
         this.logger.info(`[GRID] Estimated PnL: $${this.totalPnL.toFixed(2)}`);
 
-        // Clear schedule_cancel on clean shutdown (or leave short one as final sweep)
+        // Clear schedule_cancel on clean shutdown.
+        // schedule_cancel is wallet-wide; leaving it would nuke other strategies' orders.
+        // We rely on _cancelAllOrders for this grid's orders; clear the switch for others.
         if (typeof this.wayfinder.scheduleCancel === 'function') {
             try {
-                // Option: clear immediately
-                // this.wayfinder.scheduleCancel(0);
-                
-                // Option: leave short final sweep (belt-and-suspenders for orphans)
-                this.wayfinder.scheduleCancel(Date.now() + 30_000);
-                this.logger.info(`[GRID] Set final schedule_cancel sweep in 30s`);
+                this.wayfinder.scheduleCancel(0); // clear, don't leave a wallet-wide bomb
+                this.logger.info(`[GRID] Cleared schedule_cancel (clean stop)`);
             } catch (e) {
-                this.logger.warn(`[GRID] scheduleCancel on stop failed: ${e.message}`);
+                this.logger.warn(`[GRID] scheduleCancel clear failed: ${e.message}`);
             }
         }
 
@@ -361,31 +363,30 @@ class GridStrategy {
     }
 
     /**
-     * Start automatic update loop
+     * Start automatic update loop with re-entrancy guard + dead-man's-switch.
      * @private
      */
     _startUpdateLoop() {
-        if (this.updateInterval) {
-            clearInterval(this.updateInterval);
-        }
-        
-        // Update every 30 seconds with re-entrancy guard
+        if (this.updateInterval) clearInterval(this.updateInterval);
+
+        // Prime the dead-man's-switch immediately so a crash in the first 30s
+        // is still covered (don't wait for the first tick).
+        this._refreshDeadMansSwitch();
+
         this.updateInterval = setInterval(async () => {
-            if (this._updating) return; // Skip if previous tick still running
+            if (this._updating) return; // skip overlapping ticks
             this._updating = true;
             try {
                 const price = this.wayfinder.getPrice(this.coin);
                 if (Number.isFinite(price)) {
                     await this.update(price);
                 }
-                
-                // Dead-man's-switch: refresh schedule_cancel timer
-                if (typeof this.wayfinder.scheduleCancel === 'function') {
-                    try {
-                        this.wayfinder.scheduleCancel(Date.now() + 60_000);
-                    } catch (e) {
-                        this.logger.warn(`[GRID] scheduleCancel refresh failed: ${e.message}`);
-                    }
+
+                // Only refresh the switch if the grid is still active. If update()
+                // tore the grid down (range breach), don't re-arm it here — the
+                // loop is about to be cleared anyway.
+                if (this.active) {
+                    this._refreshDeadMansSwitch();
                 }
             } catch (e) {
                 this.logger.error(`[GRID] Update loop error: ${e.message}`);
@@ -393,8 +394,24 @@ class GridStrategy {
                 this._updating = false;
             }
         }, 30000);
-        
+
         this.logger.info(`[GRID] Auto-update started (30s interval)`);
+    }
+
+    /**
+     * Refresh the HyperLiquid dead-man's-switch: schedule cancel-all 60s out.
+     * Each healthy tick pushes the deadline forward; if the process dies, the
+     * exchange auto-cancels everything (including UNTRACKED orphans) at expiry.
+     * No-op if the SDK doesn't expose scheduleCancel.
+     * @private
+     */
+    _refreshDeadMansSwitch() {
+        if (typeof this.wayfinder.scheduleCancel !== 'function') return;
+        try {
+            this.wayfinder.scheduleCancel(Date.now() + 60_000);
+        } catch (e) {
+            this.logger.warn(`[GRID] scheduleCancel refresh failed: ${e.message}`);
+        }
     }
 
     /**
