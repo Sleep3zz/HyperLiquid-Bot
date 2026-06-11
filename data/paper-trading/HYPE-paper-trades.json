@@ -1,17 +1,8 @@
 {
   "coin": "HYPE",
   "initialCapital": 1000,
-  "currentEquity": 1000,
-  "position": {
-    "type": "LONG",
-    "entryPrice": 55.8105,
-    "size": 0.1,
-    "leverage": 3,
-    "entryTime": 1781198335241,
-    "positionValue": 300,
-    "currentPnL": 10.065310291074272,
-    "currentPnLPercent": 3.355103430358091
-  },
+  "currentEquity": 1015.0321176122773,
+  "position": null,
   "params": {
     "coin": "HYPE",
     "configName": "Breakout",
@@ -28,6 +19,19 @@
     "adxTrendThreshold": 25,
     "lastUpdated": "2026-06-11T06:15:00Z"
   },
-  "trades": [],
-  "lastUpdated": "2026-06-11T17:42:03.988Z"
+  "trades": [
+    {
+      "type": "LONG",
+      "entryPrice": 55.8105,
+      "exitPrice": 58.607,
+      "entryTime": 1781198335241,
+      "exitTime": 1781200169587,
+      "size": 0.1,
+      "leverage": 3,
+      "pnl": 15.03211761227727,
+      "pnlPercent": 15.03211761227727,
+      "exitReason": "TAKE_PROFIT"
+    }
+  ],
+  "lastUpdated": "2026-06-11T19:19:36.007Z"
 }

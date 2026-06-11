@@ -9,8 +9,8 @@
     "leverage": 3,
     "entryTime": 1781181028481,
     "positionValue": 300,
-    "currentPnL": 3.956650403903063,
-    "currentPnLPercent": 1.3188834679676877
+    "currentPnL": 5.1899544109413736,
+    "currentPnLPercent": 1.7299848036471246
   },
   "params": {
     "coin": "BTC",
@@ -29,5 +29,5 @@
     "lastUpdated": "2026-06-11T06:15:00Z"
   },
   "trades": [],
-  "lastUpdated": "2026-06-11T17:42:04.901Z"
+  "lastUpdated": "2026-06-11T19:19:37.233Z"
 }
