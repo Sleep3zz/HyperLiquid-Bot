@@ -54,12 +54,12 @@ class BBRSIStrategy {
 
  // Indicators
  this.rsiPeriod = Number(indicators.rsi.period) || 14;
- this.rsiOverbought = Number(indicators.rsi.overbought) || 60;
- this.rsiOversold = Number(indicators.rsi.oversold) || 40;
+ this.rsiOverbought = Number(indicators.rsi.overbought) || 75;
+ this.rsiOversold = Number(indicators.rsi.oversold) || 25;
  this.bbPeriod = Number(indicators.bollinger.period) || 20;
  this.bbStdDev = Number(indicators.bollinger.stdDev) || 2;
  this.adxPeriod = Number(indicators.adx.period) || 14;
- this.adxThreshold = Number(indicators.adx.threshold) || 30;
+ this.adxThreshold = Number(indicators.adx.threshold) || 25;
 
  // Cooldown (timestamp-based)
  this.cooldownPeriodMs = (Number(trading.cooldownPeriod) || 1) * 60 * 1000;
