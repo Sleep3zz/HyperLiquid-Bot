@@ -17,7 +17,7 @@ let priceHistory = {}; // Store prices for 24h change calculation
 // Fetch prices every 30 seconds
 async function updatePrices() {
     try {
-        const coins = ['BTC', 'ETH', 'SOL', 'HYPE', 'ARB', 'OP', 'LINK', 'AVAX', 'NEAR', 'UNI'];
+        const coins = ['BTC', 'ETH', 'SOL', 'HYPE', 'ARB', 'OP', 'LINK', 'AVAX', 'NEAR', 'UNI', 'PUMP'];
         for (const coin of coins) {
             try {
                 // Get current price
