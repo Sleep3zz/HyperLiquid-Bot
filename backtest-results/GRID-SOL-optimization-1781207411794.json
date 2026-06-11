@@ -1,0 +1,978 @@
+{
+  "timestamp": "2026-06-11T19:50:11.794Z",
+  "coin": "SOL",
+  "candles": 5000,
+  "totalTested": 240,
+  "profitableCount": 192,
+  "bestConfig": {
+    "initialEquity": 10000,
+    "finalEquity": 10092.592158603396,
+    "netPnL": 92.59215860339646,
+    "netPnlPct": 0.9259215860339646,
+    "totalTrades": 19,
+    "buyOrders": 9,
+    "sellOrders": 9,
+    "completedPairs": 9,
+    "totalFees": 3.3263266367161064,
+    "grossProfit": 87.24756190857934,
+    "config": {
+      "gridLevels": 10,
+      "spacingPct": 0.5,
+      "rangeBoundPct": 5,
+      "baseAmount": 200,
+      "feeRate": 0.0009
+    }
+  },
+  "topResults": [
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10092.592158603396,
+      "netPnL": 92.59215860339646,
+      "netPnlPct": 0.9259215860339646,
+      "totalTrades": 19,
+      "buyOrders": 9,
+      "sellOrders": 9,
+      "completedPairs": 9,
+      "totalFees": 3.3263266367161064,
+      "grossProfit": 87.24756190857934,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10092.592158603396,
+      "netPnL": 92.59215860339646,
+      "netPnlPct": 0.9259215860339646,
+      "totalTrades": 19,
+      "buyOrders": 9,
+      "sellOrders": 9,
+      "completedPairs": 9,
+      "totalFees": 3.3263266367161064,
+      "grossProfit": 87.24756190857934,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10088.710273513507,
+      "netPnL": 88.71027351350676,
+      "netPnlPct": 0.8871027351350677,
+      "totalTrades": 20,
+      "buyOrders": 9,
+      "sellOrders": 10,
+      "completedPairs": 9,
+      "totalFees": 3.5169954579257072,
+      "grossProfit": 87.24756190857934,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10085.909448807459,
+      "netPnL": 85.90944880745883,
+      "netPnlPct": 0.8590944880745882,
+      "totalTrades": 20,
+      "buyOrders": 9,
+      "sellOrders": 10,
+      "completedPairs": 9,
+      "totalFees": 3.5195139335331023,
+      "grossProfit": 87.24756190857934,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10081.853620724114,
+      "netPnL": 81.85362072411408,
+      "netPnlPct": 0.8185362072411408,
+      "totalTrades": 22,
+      "buyOrders": 9,
+      "sellOrders": 12,
+      "completedPairs": 9,
+      "totalFees": 4.2425134792169965,
+      "grossProfit": 87.24756190857934,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10076.433907807359,
+      "netPnL": 76.43390780735899,
+      "netPnlPct": 0.7643390780735899,
+      "totalTrades": 17,
+      "buyOrders": 8,
+      "sellOrders": 8,
+      "completedPairs": 8,
+      "totalFees": 2.9514468191638743,
+      "grossProfit": 70.02268152580422,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10074.426649777772,
+      "netPnL": 74.42664977777167,
+      "netPnlPct": 0.7442664977777167,
+      "totalTrades": 17,
+      "buyOrders": 8,
+      "sellOrders": 8,
+      "completedPairs": 8,
+      "totalFees": 2.9496386595936337,
+      "grossProfit": 70.02268152580422,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10073.76845002339,
+      "netPnL": 73.76845002338996,
+      "netPnlPct": 0.7376845002338996,
+      "totalTrades": 17,
+      "buyOrders": 8,
+      "sellOrders": 8,
+      "completedPairs": 8,
+      "totalFees": 2.9490457461926285,
+      "grossProfit": 70.02268152580422,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10069.410381548563,
+      "netPnL": 69.41038154856324,
+      "netPnlPct": 0.6941038154856324,
+      "totalTrades": 13,
+      "buyOrders": 6,
+      "sellOrders": 6,
+      "completedPairs": 6,
+      "totalFees": 2.2244713676245707,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10069.410381548563,
+      "netPnL": 69.41038154856324,
+      "netPnlPct": 0.6941038154856324,
+      "totalTrades": 13,
+      "buyOrders": 6,
+      "sellOrders": 6,
+      "completedPairs": 6,
+      "totalFees": 2.2244713676245707,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10069.410381548563,
+      "netPnL": 69.41038154856324,
+      "netPnlPct": 0.6941038154856324,
+      "totalTrades": 13,
+      "buyOrders": 6,
+      "sellOrders": 6,
+      "completedPairs": 6,
+      "totalFees": 2.2244713676245707,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10068.498158446047,
+      "netPnL": 68.49815844604746,
+      "netPnlPct": 0.6849815844604746,
+      "totalTrades": 22,
+      "buyOrders": 9,
+      "sellOrders": 12,
+      "completedPairs": 9,
+      "totalFees": 4.254522587070189,
+      "grossProfit": 87.24756190857934,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10064.253581953804,
+      "netPnL": 64.25358195380431,
+      "netPnlPct": 0.6425358195380432,
+      "totalTrades": 15,
+      "buyOrders": 6,
+      "sellOrders": 8,
+      "completedPairs": 6,
+      "totalFees": 2.819634105546583,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10064.253581953804,
+      "netPnL": 64.25358195380431,
+      "netPnlPct": 0.6425358195380432,
+      "totalTrades": 15,
+      "buyOrders": 6,
+      "sellOrders": 8,
+      "completedPairs": 6,
+      "totalFees": 2.819634105546583,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10064.253581953804,
+      "netPnL": 64.25358195380431,
+      "netPnlPct": 0.6425358195380432,
+      "totalTrades": 15,
+      "buyOrders": 6,
+      "sellOrders": 8,
+      "completedPairs": 6,
+      "totalFees": 2.819634105546583,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10055.6013973718,
+      "netPnL": 55.601397371799976,
+      "netPnlPct": 0.5560139737179998,
+      "totalTrades": 15,
+      "buyOrders": 6,
+      "sellOrders": 8,
+      "completedPairs": 6,
+      "totalFees": 2.8274140697026446,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10051.079115427372,
+      "netPnL": 51.07911542737202,
+      "netPnlPct": 0.5107911542737202,
+      "totalTrades": 11,
+      "buyOrders": 5,
+      "sellOrders": 5,
+      "completedPairs": 5,
+      "totalFees": 1.847634074551734,
+      "grossProfit": 46.63653193283754,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10049.740863007673,
+      "netPnL": 49.7408630076734,
+      "netPnlPct": 0.49740863007673397,
+      "totalTrades": 11,
+      "buyOrders": 5,
+      "sellOrders": 5,
+      "completedPairs": 5,
+      "totalFees": 1.8464285624130796,
+      "grossProfit": 46.63653193283754,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10049.302036807472,
+      "netPnL": 49.30203680747218,
+      "netPnlPct": 0.49302036807472177,
+      "totalTrades": 11,
+      "buyOrders": 5,
+      "sellOrders": 5,
+      "completedPairs": 5,
+      "totalFees": 1.8460332630634833,
+      "grossProfit": 46.63653193283754,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10046.2960793017,
+      "netPnL": 46.29607930169914,
+      "netPnlPct": 0.46296079301699145,
+      "totalTrades": 19,
+      "buyOrders": 9,
+      "sellOrders": 9,
+      "completedPairs": 9,
+      "totalFees": 1.6631633183580532,
+      "grossProfit": 43.62378095428967,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10046.2960793017,
+      "netPnL": 46.29607930169914,
+      "netPnlPct": 0.46296079301699145,
+      "totalTrades": 19,
+      "buyOrders": 9,
+      "sellOrders": 9,
+      "completedPairs": 9,
+      "totalFees": 1.6631633183580532,
+      "grossProfit": 43.62378095428967,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10045.357224837428,
+      "netPnL": 45.357224837427566,
+      "netPnlPct": 0.4535722483742757,
+      "totalTrades": 17,
+      "buyOrders": 6,
+      "sellOrders": 10,
+      "completedPairs": 6,
+      "totalFees": 3.555978117340705,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10044.355136756754,
+      "netPnL": 44.35513675675429,
+      "netPnlPct": 0.44355136756754293,
+      "totalTrades": 20,
+      "buyOrders": 9,
+      "sellOrders": 10,
+      "completedPairs": 9,
+      "totalFees": 1.7584977289628536,
+      "grossProfit": 43.62378095428967,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10042.954724403731,
+      "netPnL": 42.954724403731234,
+      "netPnlPct": 0.4295472440373123,
+      "totalTrades": 20,
+      "buyOrders": 9,
+      "sellOrders": 10,
+      "completedPairs": 9,
+      "totalFees": 1.7597569667665511,
+      "grossProfit": 43.62378095428967,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 10,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10041.14673634639,
+      "netPnL": 41.14673634639075,
+      "netPnlPct": 0.4114673634639075,
+      "totalTrades": 9,
+      "buyOrders": 4,
+      "sellOrders": 4,
+      "completedPairs": 4,
+      "totalFees": 1.478362589041893,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 1,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10041.14673634639,
+      "netPnL": 41.14673634639075,
+      "netPnlPct": 0.4114673634639075,
+      "totalTrades": 9,
+      "buyOrders": 4,
+      "sellOrders": 4,
+      "completedPairs": 4,
+      "totalFees": 1.478362589041893,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 1,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10041.14673634639,
+      "netPnL": 41.14673634639075,
+      "netPnlPct": 0.4114673634639075,
+      "totalTrades": 9,
+      "buyOrders": 4,
+      "sellOrders": 4,
+      "completedPairs": 4,
+      "totalFees": 1.478362589041893,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 1,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10041.14673634639,
+      "netPnL": 41.14673634639075,
+      "netPnlPct": 0.4114673634639075,
+      "totalTrades": 9,
+      "buyOrders": 4,
+      "sellOrders": 4,
+      "completedPairs": 4,
+      "totalFees": 1.478362589041893,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 1,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10041.11884356727,
+      "netPnL": 41.11884356727023,
+      "netPnlPct": 0.41118843567270236,
+      "totalTrades": 19,
+      "buyOrders": 6,
+      "sellOrders": 12,
+      "completedPairs": 6,
+      "totalFees": 4.27914181315761,
+      "grossProfit": 64.95714261986042,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10040.92681036206,
+      "netPnL": 40.92681036205977,
+      "netPnlPct": 0.4092681036205976,
+      "totalTrades": 22,
+      "buyOrders": 9,
+      "sellOrders": 12,
+      "completedPairs": 9,
+      "totalFees": 2.1212567396084983,
+      "grossProfit": 43.62378095428967,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10038.216953903679,
+      "netPnL": 38.216953903678586,
+      "netPnlPct": 0.38216953903678585,
+      "totalTrades": 17,
+      "buyOrders": 8,
+      "sellOrders": 8,
+      "completedPairs": 8,
+      "totalFees": 1.4757234095819372,
+      "grossProfit": 35.01134076290211,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 10,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10037.261503602376,
+      "netPnL": 37.26150360237625,
+      "netPnlPct": 0.3726150360237625,
+      "totalTrades": 7,
+      "buyOrders": 3,
+      "sellOrders": 3,
+      "completedPairs": 3,
+      "totalFees": 1.1145384378361942,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10037.261503602376,
+      "netPnL": 37.26150360237625,
+      "netPnlPct": 0.3726150360237625,
+      "totalTrades": 7,
+      "buyOrders": 3,
+      "sellOrders": 3,
+      "completedPairs": 3,
+      "totalFees": 1.1145384378361942,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10037.261503602376,
+      "netPnL": 37.26150360237625,
+      "netPnlPct": 0.3726150360237625,
+      "totalTrades": 7,
+      "buyOrders": 3,
+      "sellOrders": 3,
+      "completedPairs": 3,
+      "totalFees": 1.1145384378361942,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10037.261503602376,
+      "netPnL": 37.26150360237625,
+      "netPnlPct": 0.3726150360237625,
+      "totalTrades": 7,
+      "buyOrders": 3,
+      "sellOrders": 3,
+      "completedPairs": 3,
+      "totalFees": 1.1145384378361942,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10037.213324888888,
+      "netPnL": 37.213324888887655,
+      "netPnlPct": 0.37213324888887656,
+      "totalTrades": 17,
+      "buyOrders": 8,
+      "sellOrders": 8,
+      "completedPairs": 8,
+      "totalFees": 1.4748193297968168,
+      "grossProfit": 35.01134076290211,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10036.884225011694,
+      "netPnL": 36.88422501169407,
+      "netPnlPct": 0.3688422501169407,
+      "totalTrades": 17,
+      "buyOrders": 8,
+      "sellOrders": 8,
+      "completedPairs": 8,
+      "totalFees": 1.4745228730963142,
+      "grossProfit": 35.01134076290211,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 5,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10036.710867405434,
+      "netPnL": 36.71086740543433,
+      "netPnlPct": 0.3671086740543433,
+      "totalTrades": 10,
+      "buyOrders": 4,
+      "sellOrders": 5,
+      "completedPairs": 4,
+      "totalFees": 1.7653713850885278,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 1,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.712588014307,
+      "netPnL": 34.712588014306675,
+      "netPnlPct": 0.3471258801430668,
+      "totalTrades": 8,
+      "buyOrders": 3,
+      "sellOrders": 4,
+      "completedPairs": 3,
+      "totalFees": 1.4074919280518738,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.712588014307,
+      "netPnL": 34.712588014306675,
+      "netPnlPct": 0.3471258801430668,
+      "totalTrades": 8,
+      "buyOrders": 3,
+      "sellOrders": 4,
+      "completedPairs": 3,
+      "totalFees": 1.4074919280518738,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.712588014307,
+      "netPnL": 34.712588014306675,
+      "netPnlPct": 0.3471258801430668,
+      "totalTrades": 8,
+      "buyOrders": 3,
+      "sellOrders": 4,
+      "completedPairs": 3,
+      "totalFees": 1.4074919280518738,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.712588014307,
+      "netPnL": 34.712588014306675,
+      "netPnlPct": 0.3471258801430668,
+      "totalTrades": 8,
+      "buyOrders": 3,
+      "sellOrders": 4,
+      "completedPairs": 3,
+      "totalFees": 1.4074919280518738,
+      "grossProfit": 34.786695868929435,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 1.5,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.705190774283,
+      "netPnL": 34.70519077428253,
+      "netPnlPct": 0.34705190774282524,
+      "totalTrades": 13,
+      "buyOrders": 6,
+      "sellOrders": 6,
+      "completedPairs": 6,
+      "totalFees": 1.1122356838122853,
+      "grossProfit": 32.47857130993021,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.705190774283,
+      "netPnL": 34.70519077428253,
+      "netPnlPct": 0.34705190774282524,
+      "totalTrades": 13,
+      "buyOrders": 6,
+      "sellOrders": 6,
+      "completedPairs": 6,
+      "totalFees": 1.1122356838122853,
+      "grossProfit": 32.47857130993021,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.705190774283,
+      "netPnL": 34.70519077428253,
+      "netPnlPct": 0.34705190774282524,
+      "totalTrades": 13,
+      "buyOrders": 6,
+      "sellOrders": 6,
+      "completedPairs": 6,
+      "totalFees": 1.1122356838122853,
+      "grossProfit": 32.47857130993021,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.8,
+        "rangeBoundPct": 5,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10034.249079223027,
+      "netPnL": 34.249079223027366,
+      "netPnlPct": 0.3424907922302736,
+      "totalTrades": 22,
+      "buyOrders": 9,
+      "sellOrders": 12,
+      "completedPairs": 9,
+      "totalFees": 2.1272612935350943,
+      "grossProfit": 43.62378095428967,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 0.5,
+        "rangeBoundPct": 10,
+        "baseAmount": 100,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10033.763033508125,
+      "netPnL": 33.76303350812486,
+      "netPnlPct": 0.3376303350812486,
+      "totalTrades": 11,
+      "buyOrders": 4,
+      "sellOrders": 6,
+      "completedPairs": 4,
+      "totalFees": 2.127698341335483,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 8,
+        "spacingPct": 1,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10033.763033508125,
+      "netPnL": 33.76303350812486,
+      "netPnlPct": 0.3376303350812486,
+      "totalTrades": 11,
+      "buyOrders": 4,
+      "sellOrders": 6,
+      "completedPairs": 4,
+      "totalFees": 2.127698341335483,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 10,
+        "spacingPct": 1,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10033.763033508125,
+      "netPnL": 33.76303350812486,
+      "netPnlPct": 0.3376303350812486,
+      "totalTrades": 11,
+      "buyOrders": 4,
+      "sellOrders": 6,
+      "completedPairs": 4,
+      "totalFees": 2.127698341335483,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 12,
+        "spacingPct": 1,
+        "rangeBoundPct": 7,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    },
+    {
+      "initialEquity": 10000,
+      "finalEquity": 10032.513147474878,
+      "netPnL": 32.51314747487777,
+      "netPnlPct": 0.3251314747487777,
+      "totalTrades": 10,
+      "buyOrders": 4,
+      "sellOrders": 5,
+      "completedPairs": 4,
+      "totalFees": 1.769145935930271,
+      "grossProfit": 38.838634116014575,
+      "config": {
+        "gridLevels": 5,
+        "spacingPct": 1,
+        "rangeBoundPct": 10,
+        "baseAmount": 200,
+        "feeRate": 0.0009
+      }
+    }
+  ]
+}
