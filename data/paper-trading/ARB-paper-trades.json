@@ -1,7 +1,7 @@
 {
   "coin": "ARB",
   "initialCapital": 1000,
-  "currentEquity": 1000,
+  "currentEquity": 995.984015984016,
   "position": null,
   "params": {
     "coin": "ARB",
@@ -22,6 +22,19 @@
     "expectedReturn": 0.9122077689211802,
     "expectedSharpe": 0.32779720791811645
   },
-  "trades": [],
-  "lastUpdated": "2026-06-10T06:06:10.185Z"
+  "trades": [
+    {
+      "type": "SHORT",
+      "entryPrice": 0.08008,
+      "exitPrice": 0.08075,
+      "entryTime": 1781098211441,
+      "exitTime": 1781098633940,
+      "size": 0.12,
+      "leverage": 4,
+      "pnl": -4.01598401598404,
+      "pnlPercent": -3.3466533466533672,
+      "exitReason": "STOP_LOSS"
+    }
+  ],
+  "lastUpdated": "2026-06-10T21:48:32.286Z"
 }

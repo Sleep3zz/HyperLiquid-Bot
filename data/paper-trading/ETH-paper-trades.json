@@ -1,7 +1,7 @@
 {
   "coin": "ETH",
   "initialCapital": 1000,
-  "currentEquity": 1000,
+  "currentEquity": 996.0583941605839,
   "position": null,
   "params": {
     "coin": "ETH",
@@ -22,6 +22,19 @@
     "expectedReturn": 0.15526410259783008,
     "expectedSharpe": 0.10353148065323715
   },
-  "trades": [],
-  "lastUpdated": "2026-06-10T06:06:09.195Z"
+  "trades": [
+    {
+      "type": "SHORT",
+      "entryPrice": 1644,
+      "exitPrice": 1657.5,
+      "entryTime": 1781094806391,
+      "exitTime": 1781098634967,
+      "size": 0.12,
+      "leverage": 4,
+      "pnl": -3.9416058394160585,
+      "pnlPercent": -3.2846715328467155,
+      "exitReason": "STOP_LOSS"
+    }
+  ],
+  "lastUpdated": "2026-06-10T21:48:32.281Z"
 }

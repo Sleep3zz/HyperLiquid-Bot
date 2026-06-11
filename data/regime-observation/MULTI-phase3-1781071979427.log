@@ -1,0 +1,44 @@
+[2026-06-10T06:12:59.431Z] INFO: Starting multi-coin observation for: BTC, ETH, ARB
+[2026-06-10T06:12:59.432Z] INFO: [BTC] BBRSIStrategy initialized
+[2026-06-10T06:12:59.432Z] INFO: [BTC] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T06:12:59.933Z] INFO: [BTC] [Orchestrator] Starting regime observation for BTC every 900s
+[2026-06-10T06:13:01.790Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=hold (adx=27.7 bw=0.0110 streak=1)
+[2026-06-10T06:13:01.791Z] INFO: [ETH] BBRSIStrategy initialized
+[2026-06-10T06:13:01.792Z] INFO: [ETH] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T06:13:02.293Z] INFO: [ETH] [Orchestrator] Starting regime observation for ETH every 900s
+[2026-06-10T06:13:03.805Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=hold (adx=30.8 bw=0.0125 streak=1)
+[2026-06-10T06:13:03.805Z] INFO: [ARB] BBRSIStrategy initialized
+[2026-06-10T06:13:03.806Z] INFO: [ARB] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T06:13:04.307Z] INFO: [ARB] [Orchestrator] Starting regime observation for ARB every 900s
+[2026-06-10T06:13:05.871Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=hold (adx=18.5 bw=0.0211 streak=1)
+[2026-06-10T06:13:05.871Z] INFO: All coins observing. Status reports every 5 minutes.
+[2026-06-10T06:18:05.955Z] INFO: --- STATUS REPORT ---
+[2026-06-10T06:18:05.956Z] INFO: BTC: Obs=1, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:18:05.956Z] INFO: ETH: Obs=1, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:18:05.956Z] INFO: ARB: Obs=1, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:23:06.009Z] INFO: --- STATUS REPORT ---
+[2026-06-10T06:23:06.010Z] INFO: BTC: Obs=1, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:23:06.010Z] INFO: ETH: Obs=1, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:23:06.010Z] INFO: ARB: Obs=1, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:28:03.716Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=hold (adx=27.0 bw=0.0094 streak=2)
+[2026-06-10T06:28:05.268Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=hold (adx=30.1 bw=0.0106 streak=2)
+[2026-06-10T06:28:07.341Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=hold (adx=18.6 bw=0.0181 streak=2)
+[2026-06-10T06:28:07.342Z] INFO: --- STATUS REPORT ---
+[2026-06-10T06:28:07.342Z] INFO: BTC: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:28:07.342Z] INFO: ETH: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:28:07.342Z] INFO: ARB: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:33:07.442Z] INFO: --- STATUS REPORT ---
+[2026-06-10T06:33:07.442Z] INFO: BTC: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:33:07.443Z] INFO: ETH: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:33:07.443Z] INFO: ARB: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:38:07.522Z] INFO: --- STATUS REPORT ---
+[2026-06-10T06:38:07.523Z] INFO: BTC: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:38:07.523Z] INFO: ETH: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:38:07.523Z] INFO: ARB: Obs=2, Flips=0, Rate=0.000, Regime=N/A
+[2026-06-10T06:43:03.433Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=27.3 bw=0.0088 streak=3)
+[2026-06-10T06:43:05.304Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=30.2 bw=0.0101 streak=3)
+[2026-06-10T06:43:08.546Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=19.4 bw=0.0169 streak=3)
+[2026-06-10T06:43:08.546Z] INFO: --- STATUS REPORT ---
+[2026-06-10T06:43:08.546Z] INFO: BTC: Obs=3, Flips=0, Rate=0.000, Regime=neutral
+[2026-06-10T06:43:08.547Z] INFO: ETH: Obs=3, Flips=0, Rate=0.000, Regime=neutral
+[2026-06-10T06:43:08.547Z] INFO: ARB: Obs=3, Flips=0, Rate=0.000, Regime=neutral

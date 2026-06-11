@@ -1,0 +1,255 @@
+[2026-06-10T18:25:20.963Z] INFO: Starting multi-coin observation for: BTC, ETH, ARB
+[2026-06-10T18:25:20.968Z] INFO: [BTC] BBRSIStrategy initialized
+[2026-06-10T18:25:20.969Z] INFO: [BTC] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T18:25:21.470Z] INFO: [BTC] [Orchestrator] Observing BTC every 900s
+[2026-06-10T18:25:23.332Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=hold (adx=27.3 bw=0.0135 streak=1)
+[2026-06-10T18:25:23.332Z] INFO: [BTC] [REGIME-OBSERVE] BTC = hold
+[2026-06-10T18:25:23.332Z] INFO: [ETH] BBRSIStrategy initialized
+[2026-06-10T18:25:23.332Z] INFO: [ETH] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T18:25:23.833Z] INFO: [ETH] [Orchestrator] Observing ETH every 900s
+[2026-06-10T18:25:25.418Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=hold (adx=20.1 bw=0.0257 streak=1)
+[2026-06-10T18:25:25.418Z] INFO: [ETH] [REGIME-OBSERVE] ETH = hold
+[2026-06-10T18:25:25.418Z] INFO: [ARB] BBRSIStrategy initialized
+[2026-06-10T18:25:25.418Z] INFO: [ARB] [Orchestrator] Phase 3 initialized - regime observation mode
+[2026-06-10T18:25:25.919Z] INFO: [ARB] [Orchestrator] Observing ARB every 900s
+[2026-06-10T18:25:27.434Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=hold (adx=22.2 bw=0.0385 streak=1)
+[2026-06-10T18:25:27.434Z] INFO: [ARB] [REGIME-OBSERVE] ARB = hold
+[2026-06-10T18:25:27.434Z] INFO: All coins observing. Status reports every 5 minutes.
+[2026-06-10T18:30:27.528Z] INFO: --- STATUS REPORT ---
+[2026-06-10T18:30:27.529Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:30:27.529Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:30:27.529Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:35:27.612Z] INFO: --- STATUS REPORT ---
+[2026-06-10T18:35:27.613Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:35:27.613Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:35:27.613Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:40:25.139Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=hold (adx=25.9 bw=0.0135 streak=2)
+[2026-06-10T18:40:25.139Z] INFO: [BTC] [REGIME-OBSERVE] BTC = hold
+[2026-06-10T18:40:27.084Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=hold (adx=19.4 bw=0.0228 streak=2)
+[2026-06-10T18:40:27.084Z] INFO: [ETH] [REGIME-OBSERVE] ETH = hold
+[2026-06-10T18:40:28.845Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=hold (adx=21.9 bw=0.0382 streak=2)
+[2026-06-10T18:40:28.846Z] INFO: [ARB] [REGIME-OBSERVE] ARB = hold
+[2026-06-10T18:40:28.846Z] INFO: --- STATUS REPORT ---
+[2026-06-10T18:40:28.846Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:40:28.846Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:40:28.846Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:45:28.943Z] INFO: --- STATUS REPORT ---
+[2026-06-10T18:45:28.943Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:45:28.943Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:45:28.943Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:50:29.032Z] INFO: --- STATUS REPORT ---
+[2026-06-10T18:50:29.033Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:50:29.033Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:50:29.033Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:55:25.077Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=24.0 bw=0.0141 streak=3)
+[2026-06-10T18:55:25.077Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T18:55:27.031Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=19.1 bw=0.0234 streak=3)
+[2026-06-10T18:55:27.031Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T18:55:28.975Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=21.5 bw=0.0394 streak=3)
+[2026-06-10T18:55:28.975Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T18:55:29.032Z] INFO: --- STATUS REPORT ---
+[2026-06-10T18:55:29.033Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:55:29.033Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T18:55:29.033Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:00:29.132Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:00:29.133Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:00:29.133Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:00:29.133Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:05:29.203Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:05:29.204Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:05:29.204Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:05:29.204Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:10:25.131Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=22.4 bw=0.0141 streak=4)
+[2026-06-10T19:10:25.131Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T19:10:27.598Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=18.5 bw=0.0233 streak=4)
+[2026-06-10T19:10:27.598Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T19:10:29.020Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=20.6 bw=0.0393 streak=4)
+[2026-06-10T19:10:29.021Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T19:10:29.203Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:10:29.203Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:10:29.203Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:10:29.203Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:15:29.282Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:15:29.282Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:15:29.282Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:15:29.282Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:20:29.379Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:20:29.384Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:20:29.385Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:20:29.385Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:25:25.859Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=20.9 bw=0.0153 streak=5)
+[2026-06-10T19:25:25.861Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T19:25:27.392Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=18.3 bw=0.0247 streak=5)
+[2026-06-10T19:25:27.392Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T19:25:29.094Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=20.2 bw=0.0416 streak=5)
+[2026-06-10T19:25:29.094Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T19:25:29.376Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:25:29.376Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:25:29.376Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:25:29.376Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:30:29.464Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:30:29.464Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:30:29.464Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:30:29.464Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:35:29.496Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:35:29.496Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:35:29.496Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:35:29.496Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:40:25.861Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=20.3 bw=0.0152 streak=6)
+[2026-06-10T19:40:25.862Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T19:40:27.434Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=17.4 bw=0.0247 streak=6)
+[2026-06-10T19:40:27.434Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T19:40:29.598Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=19.8 bw=0.0429 streak=6)
+[2026-06-10T19:40:29.598Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T19:40:29.599Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:40:29.600Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:40:29.600Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:40:29.600Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:45:29.692Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:45:29.693Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:45:29.693Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:45:29.693Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:50:29.770Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:50:29.771Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:50:29.771Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:50:29.771Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:55:26.102Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=19.6 bw=0.0151 streak=7)
+[2026-06-10T19:55:26.103Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T19:55:27.566Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=16.7 bw=0.0246 streak=7)
+[2026-06-10T19:55:27.566Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T19:55:29.059Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=20.3 bw=0.0442 streak=7)
+[2026-06-10T19:55:29.059Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T19:55:29.772Z] INFO: --- STATUS REPORT ---
+[2026-06-10T19:55:29.772Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:55:29.772Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T19:55:29.772Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:00:29.867Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:00:29.867Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:00:29.867Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:00:29.868Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:05:29.956Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:05:29.957Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:05:29.957Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:05:29.957Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:10:26.458Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=18.3 bw=0.0155 streak=8)
+[2026-06-10T20:10:26.458Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T20:10:28.001Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=16.4 bw=0.0254 streak=8)
+[2026-06-10T20:10:28.001Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T20:10:29.469Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=20.9 bw=0.0466 streak=8)
+[2026-06-10T20:10:29.469Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T20:10:29.956Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:10:29.956Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:10:29.956Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:10:29.956Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:15:30.052Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:15:30.053Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:15:30.053Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:15:30.053Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:20:30.143Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:20:30.144Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:20:30.144Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:20:30.144Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:25:26.736Z] INFO: [BTC] Regime BTC: raw=neutral confirmed=neutral (adx=17.0 bw=0.0152 streak=9)
+[2026-06-10T20:25:26.737Z] INFO: [BTC] [REGIME-OBSERVE] BTC = neutral
+[2026-06-10T20:25:28.369Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=15.3 bw=0.0243 streak=9)
+[2026-06-10T20:25:28.370Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T20:25:29.907Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=21.4 bw=0.0458 streak=9)
+[2026-06-10T20:25:29.908Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T20:25:30.144Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:25:30.145Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:25:30.145Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:25:30.145Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:30:30.200Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:30:30.200Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:30:30.200Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:30:30.200Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:35:30.296Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:35:30.296Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:35:30.296Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:35:30.296Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:40:26.556Z] INFO: [BTC] Regime BTC: raw=ranging confirmed=hold (adx=15.8 bw=0.0144 streak=1)
+[2026-06-10T20:40:26.556Z] INFO: [BTC] [REGIME-OBSERVE] BTC = hold
+[2026-06-10T20:40:28.283Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=14.4 bw=0.0223 streak=10)
+[2026-06-10T20:40:28.283Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T20:40:30.145Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=21.7 bw=0.0402 streak=10)
+[2026-06-10T20:40:30.145Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T20:40:30.296Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:40:30.296Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:40:30.297Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:40:30.297Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:45:30.391Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:45:30.392Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:45:30.392Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:45:30.392Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:50:30.492Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:50:30.492Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:50:30.492Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:50:30.492Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:55:26.270Z] INFO: [BTC] Regime BTC: raw=ranging confirmed=hold (adx=15.2 bw=0.0116 streak=2)
+[2026-06-10T20:55:26.272Z] INFO: [BTC] [REGIME-OBSERVE] BTC = hold
+[2026-06-10T20:55:28.468Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=13.8 bw=0.0187 streak=11)
+[2026-06-10T20:55:28.468Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T20:55:29.911Z] INFO: [ARB] Regime ARB: raw=neutral confirmed=neutral (adx=24.0 bw=0.0427 streak=11)
+[2026-06-10T20:55:29.912Z] INFO: [ARB] [REGIME-OBSERVE] ARB = neutral
+[2026-06-10T20:55:30.493Z] INFO: --- STATUS REPORT ---
+[2026-06-10T20:55:30.493Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:55:30.493Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T20:55:30.493Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:00:30.587Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:00:30.587Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:00:30.587Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:00:30.587Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:05:30.681Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:05:30.681Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:05:30.681Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:05:30.681Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:10:26.023Z] INFO: [BTC] Regime BTC: raw=ranging confirmed=ranging (adx=15.2 bw=0.0113 streak=3)
+[2026-06-10T21:10:26.025Z] WARN: [BTC] [REGIME-OBSERVE] BTC FLIP neutral -> ranging (would switch in live mode)
+[2026-06-10T21:10:28.877Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=14.2 bw=0.0172 streak=12)
+[2026-06-10T21:10:28.877Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T21:10:30.623Z] INFO: [ARB] Regime ARB: raw=trending confirmed=hold (adx=26.1 bw=0.0469 streak=1)
+[2026-06-10T21:10:30.623Z] INFO: [ARB] [REGIME-OBSERVE] ARB = hold
+[2026-06-10T21:10:30.681Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:10:30.681Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:10:30.681Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:10:30.681Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:15:30.779Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:15:30.779Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:15:30.779Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:15:30.779Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:20:30.869Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:20:30.869Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:20:30.869Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:20:30.869Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:25:26.033Z] INFO: [BTC] Regime BTC: raw=ranging confirmed=ranging (adx=15.7 bw=0.0114 streak=4)
+[2026-06-10T21:25:26.033Z] INFO: [BTC] [REGIME-OBSERVE] BTC = ranging
+[2026-06-10T21:25:29.284Z] INFO: [ETH] Regime ETH: raw=neutral confirmed=neutral (adx=15.2 bw=0.0159 streak=13)
+[2026-06-10T21:25:29.284Z] INFO: [ETH] [REGIME-OBSERVE] ETH = neutral
+[2026-06-10T21:25:30.848Z] INFO: [ARB] Regime ARB: raw=trending confirmed=hold (adx=28.1 bw=0.0471 streak=2)
+[2026-06-10T21:25:30.848Z] INFO: [ARB] [REGIME-OBSERVE] ARB = hold
+[2026-06-10T21:25:30.869Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:25:30.869Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:25:30.870Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:25:30.870Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:30:30.968Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:30:30.968Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:30:30.968Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:30:30.968Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:35:31.059Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:35:31.060Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:35:31.060Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:35:31.060Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:40:26.271Z] INFO: [BTC] Regime BTC: raw=ranging confirmed=ranging (adx=15.7 bw=0.0108 streak=5)
+[2026-06-10T21:40:26.271Z] INFO: [BTC] [REGIME-OBSERVE] BTC = ranging
+[2026-06-10T21:40:29.192Z] INFO: [ETH] Regime ETH: raw=ranging confirmed=hold (adx=15.6 bw=0.0142 streak=1)
+[2026-06-10T21:40:29.193Z] INFO: [ETH] [REGIME-OBSERVE] ETH = hold
+[2026-06-10T21:40:30.764Z] INFO: [ARB] Regime ARB: raw=trending confirmed=trending (adx=29.6 bw=0.0453 streak=3)
+[2026-06-10T21:40:30.765Z] WARN: [ARB] [REGIME-OBSERVE] ARB FLIP neutral -> trending (would switch in live mode)
+[2026-06-10T21:40:31.059Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:40:31.060Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:40:31.060Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:40:31.060Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:45:31.168Z] INFO: --- STATUS REPORT ---
+[2026-06-10T21:45:31.174Z] INFO: BTC: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:45:31.174Z] INFO: ETH: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]
+[2026-06-10T21:45:31.174Z] INFO: ARB: Obs=undefined, Flips=undefined, Rate=undefined, Regime=[object Object]

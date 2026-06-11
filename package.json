@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@dydxprotocol/v4-client-js": "^1.15.1",
+    "ccxt": "^4.5.57",
     "config": "^3.3.9",
     "dotenv": "^16.6.1",
     "ethers": "^6.9.0",

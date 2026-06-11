@@ -3,3 +3,281 @@
 [2026-06-10T05:58:09.448Z] INFO: [Orchestrator] Starting regime observation for BTC every 900s
 [2026-06-10T06:03:09.552Z] INFO: [STATUS] Observations: 1, Flips: 0, FlipRate: 0.000
 [2026-06-10T06:03:09.553Z] INFO: [STATUS] Regime distribution: {"unknown":1}
+[2026-06-10T06:08:09.648Z] INFO: [STATUS] Observations: 1, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:08:09.648Z] INFO: [STATUS] Regime distribution: {"unknown":1}
+[2026-06-10T06:13:09.658Z] INFO: [STATUS] Observations: 1, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:13:09.658Z] INFO: [STATUS] Regime distribution: {"unknown":1}
+[2026-06-10T06:18:09.743Z] INFO: [STATUS] Observations: 2, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:18:09.743Z] INFO: [STATUS] Regime distribution: {"unknown":2}
+[2026-06-10T06:23:09.800Z] INFO: [STATUS] Observations: 2, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:23:09.800Z] INFO: [STATUS] Regime distribution: {"unknown":2}
+[2026-06-10T06:28:10.014Z] INFO: [STATUS] Observations: 3, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:28:10.015Z] INFO: [STATUS] Regime distribution: {"unknown":3}
+[2026-06-10T06:33:10.107Z] INFO: [STATUS] Observations: 3, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:33:10.107Z] INFO: [STATUS] Regime distribution: {"unknown":3}
+[2026-06-10T06:38:10.206Z] INFO: [STATUS] Observations: 3, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:38:10.207Z] INFO: [STATUS] Regime distribution: {"unknown":3}
+[2026-06-10T06:43:10.207Z] INFO: [STATUS] Observations: 4, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:43:10.208Z] INFO: [STATUS] Regime distribution: {"unknown":4}
+[2026-06-10T06:48:10.297Z] INFO: [STATUS] Observations: 4, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:48:10.298Z] INFO: [STATUS] Regime distribution: {"unknown":4}
+[2026-06-10T06:53:10.376Z] INFO: [STATUS] Observations: 4, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:53:10.376Z] INFO: [STATUS] Regime distribution: {"unknown":4}
+[2026-06-10T06:58:10.376Z] INFO: [STATUS] Observations: 5, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:58:10.377Z] INFO: [STATUS] Regime distribution: {"unknown":5}
+[2026-06-10T07:03:10.456Z] INFO: [STATUS] Observations: 5, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:03:10.456Z] INFO: [STATUS] Regime distribution: {"unknown":5}
+[2026-06-10T07:08:10.521Z] INFO: [STATUS] Observations: 5, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:08:10.521Z] INFO: [STATUS] Regime distribution: {"unknown":5}
+[2026-06-10T07:13:10.521Z] INFO: [STATUS] Observations: 6, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:13:10.522Z] INFO: [STATUS] Regime distribution: {"unknown":6}
+[2026-06-10T07:18:10.600Z] INFO: [STATUS] Observations: 6, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:18:10.600Z] INFO: [STATUS] Regime distribution: {"unknown":6}
+[2026-06-10T07:23:10.678Z] INFO: [STATUS] Observations: 6, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:23:10.678Z] INFO: [STATUS] Regime distribution: {"unknown":6}
+[2026-06-10T07:28:10.679Z] INFO: [STATUS] Observations: 7, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:28:10.679Z] INFO: [STATUS] Regime distribution: {"unknown":7}
+[2026-06-10T07:33:10.720Z] INFO: [STATUS] Observations: 7, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:33:10.720Z] INFO: [STATUS] Regime distribution: {"unknown":7}
+[2026-06-10T07:38:10.792Z] INFO: [STATUS] Observations: 7, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:38:10.792Z] INFO: [STATUS] Regime distribution: {"unknown":7}
+[2026-06-10T07:43:10.792Z] INFO: [STATUS] Observations: 8, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:43:10.793Z] INFO: [STATUS] Regime distribution: {"unknown":8}
+[2026-06-10T07:48:10.892Z] INFO: [STATUS] Observations: 8, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:48:10.892Z] INFO: [STATUS] Regime distribution: {"unknown":8}
+[2026-06-10T07:53:10.992Z] INFO: [STATUS] Observations: 8, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:53:10.992Z] INFO: [STATUS] Regime distribution: {"unknown":8}
+[2026-06-10T07:58:10.993Z] INFO: [STATUS] Observations: 9, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:58:10.996Z] INFO: [STATUS] Regime distribution: {"unknown":9}
+[2026-06-10T08:03:11.094Z] INFO: [STATUS] Observations: 9, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:03:11.094Z] INFO: [STATUS] Regime distribution: {"unknown":9}
+[2026-06-10T08:08:11.194Z] INFO: [STATUS] Observations: 9, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:08:11.195Z] INFO: [STATUS] Regime distribution: {"unknown":9}
+[2026-06-10T08:13:11.194Z] INFO: [STATUS] Observations: 10, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:13:11.195Z] INFO: [STATUS] Regime distribution: {"unknown":10}
+[2026-06-10T08:18:11.283Z] INFO: [STATUS] Observations: 10, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:18:11.284Z] INFO: [STATUS] Regime distribution: {"unknown":10}
+[2026-06-10T08:23:11.382Z] INFO: [STATUS] Observations: 10, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:23:11.382Z] INFO: [STATUS] Regime distribution: {"unknown":10}
+[2026-06-10T08:28:11.383Z] INFO: [STATUS] Observations: 11, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:28:11.383Z] INFO: [STATUS] Regime distribution: {"unknown":11}
+[2026-06-10T08:33:11.479Z] INFO: [STATUS] Observations: 11, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:33:11.479Z] INFO: [STATUS] Regime distribution: {"unknown":11}
+[2026-06-10T08:38:11.573Z] INFO: [STATUS] Observations: 11, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:38:11.574Z] INFO: [STATUS] Regime distribution: {"unknown":11}
+[2026-06-10T08:43:11.573Z] INFO: [STATUS] Observations: 12, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:43:11.574Z] INFO: [STATUS] Regime distribution: {"unknown":12}
+[2026-06-10T08:48:11.669Z] INFO: [STATUS] Observations: 12, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:48:11.670Z] INFO: [STATUS] Regime distribution: {"unknown":12}
+[2026-06-10T08:53:11.737Z] INFO: [STATUS] Observations: 12, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:53:11.737Z] INFO: [STATUS] Regime distribution: {"unknown":12}
+[2026-06-10T08:58:11.738Z] INFO: [STATUS] Observations: 13, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:58:11.739Z] INFO: [STATUS] Regime distribution: {"unknown":13}
+[2026-06-10T09:03:11.828Z] INFO: [STATUS] Observations: 13, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:03:11.828Z] INFO: [STATUS] Regime distribution: {"unknown":13}
+[2026-06-10T09:08:11.928Z] INFO: [STATUS] Observations: 13, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:08:11.928Z] INFO: [STATUS] Regime distribution: {"unknown":13}
+[2026-06-10T09:13:11.929Z] INFO: [STATUS] Observations: 14, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:13:11.929Z] INFO: [STATUS] Regime distribution: {"unknown":14}
+[2026-06-10T09:18:12.024Z] INFO: [STATUS] Observations: 14, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:18:12.024Z] INFO: [STATUS] Regime distribution: {"unknown":14}
+[2026-06-10T09:23:12.104Z] INFO: [STATUS] Observations: 14, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:23:12.105Z] INFO: [STATUS] Regime distribution: {"unknown":14}
+[2026-06-10T09:28:12.105Z] INFO: [STATUS] Observations: 15, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:28:12.105Z] INFO: [STATUS] Regime distribution: {"unknown":15}
+[2026-06-10T09:33:12.196Z] INFO: [STATUS] Observations: 15, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:33:12.197Z] INFO: [STATUS] Regime distribution: {"unknown":15}
+[2026-06-10T09:38:12.263Z] INFO: [STATUS] Observations: 15, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:38:12.264Z] INFO: [STATUS] Regime distribution: {"unknown":15}
+[2026-06-10T09:43:12.265Z] INFO: [STATUS] Observations: 16, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:43:12.266Z] INFO: [STATUS] Regime distribution: {"unknown":16}
+[2026-06-10T09:48:12.328Z] INFO: [STATUS] Observations: 16, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:48:12.328Z] INFO: [STATUS] Regime distribution: {"unknown":16}
+[2026-06-10T09:53:12.423Z] INFO: [STATUS] Observations: 16, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:53:12.424Z] INFO: [STATUS] Regime distribution: {"unknown":16}
+[2026-06-10T09:58:12.425Z] INFO: [STATUS] Observations: 17, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:58:12.425Z] INFO: [STATUS] Regime distribution: {"unknown":17}
+[2026-06-10T10:03:12.524Z] INFO: [STATUS] Observations: 17, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:03:12.524Z] INFO: [STATUS] Regime distribution: {"unknown":17}
+[2026-06-10T10:08:12.617Z] INFO: [STATUS] Observations: 17, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:08:12.617Z] INFO: [STATUS] Regime distribution: {"unknown":17}
+[2026-06-10T10:13:12.618Z] INFO: [STATUS] Observations: 18, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:13:12.619Z] INFO: [STATUS] Regime distribution: {"unknown":18}
+[2026-06-10T10:18:12.623Z] INFO: [STATUS] Observations: 18, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:18:12.623Z] INFO: [STATUS] Regime distribution: {"unknown":18}
+[2026-06-10T10:23:12.711Z] INFO: [STATUS] Observations: 18, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:23:12.712Z] INFO: [STATUS] Regime distribution: {"unknown":18}
+[2026-06-10T10:28:12.713Z] INFO: [STATUS] Observations: 19, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:28:12.714Z] INFO: [STATUS] Regime distribution: {"unknown":19}
+[2026-06-10T10:33:12.814Z] INFO: [STATUS] Observations: 19, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:33:12.814Z] INFO: [STATUS] Regime distribution: {"unknown":19}
+[2026-06-10T10:38:12.903Z] INFO: [STATUS] Observations: 19, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:38:12.903Z] INFO: [STATUS] Regime distribution: {"unknown":19}
+[2026-06-10T10:43:12.903Z] INFO: [STATUS] Observations: 20, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:43:12.903Z] INFO: [STATUS] Regime distribution: {"unknown":20}
+[2026-06-10T10:48:12.991Z] INFO: [STATUS] Observations: 20, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:48:12.991Z] INFO: [STATUS] Regime distribution: {"unknown":20}
+[2026-06-10T10:53:13.071Z] INFO: [STATUS] Observations: 20, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:53:13.071Z] INFO: [STATUS] Regime distribution: {"unknown":20}
+[2026-06-10T10:58:13.072Z] INFO: [STATUS] Observations: 21, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:58:13.073Z] INFO: [STATUS] Regime distribution: {"unknown":21}
+[2026-06-10T11:03:13.155Z] INFO: [STATUS] Observations: 21, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:03:13.155Z] INFO: [STATUS] Regime distribution: {"unknown":21}
+[2026-06-10T11:08:13.255Z] INFO: [STATUS] Observations: 21, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:08:13.256Z] INFO: [STATUS] Regime distribution: {"unknown":21}
+[2026-06-10T11:13:13.256Z] INFO: [STATUS] Observations: 22, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:13:13.256Z] INFO: [STATUS] Regime distribution: {"unknown":22}
+[2026-06-10T11:18:13.352Z] INFO: [STATUS] Observations: 22, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:18:13.352Z] INFO: [STATUS] Regime distribution: {"unknown":22}
+[2026-06-10T11:23:13.384Z] INFO: [STATUS] Observations: 22, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:23:13.384Z] INFO: [STATUS] Regime distribution: {"unknown":22}
+[2026-06-10T11:28:13.386Z] INFO: [STATUS] Observations: 23, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:28:13.386Z] INFO: [STATUS] Regime distribution: {"unknown":23}
+[2026-06-10T11:33:13.448Z] INFO: [STATUS] Observations: 23, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:33:13.448Z] INFO: [STATUS] Regime distribution: {"unknown":23}
+[2026-06-10T11:38:13.481Z] INFO: [STATUS] Observations: 23, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:38:13.481Z] INFO: [STATUS] Regime distribution: {"unknown":23}
+[2026-06-10T11:43:13.483Z] INFO: [STATUS] Observations: 24, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:43:13.483Z] INFO: [STATUS] Regime distribution: {"unknown":24}
+[2026-06-10T11:48:13.544Z] INFO: [STATUS] Observations: 24, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:48:13.544Z] INFO: [STATUS] Regime distribution: {"unknown":24}
+[2026-06-10T11:53:13.642Z] INFO: [STATUS] Observations: 24, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:53:13.642Z] INFO: [STATUS] Regime distribution: {"unknown":24}
+[2026-06-10T11:58:13.645Z] INFO: [STATUS] Observations: 25, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:58:13.645Z] INFO: [STATUS] Regime distribution: {"unknown":25}
+[2026-06-10T12:03:13.736Z] INFO: [STATUS] Observations: 25, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:03:13.736Z] INFO: [STATUS] Regime distribution: {"unknown":25}
+[2026-06-10T12:08:13.825Z] INFO: [STATUS] Observations: 25, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:08:13.825Z] INFO: [STATUS] Regime distribution: {"unknown":25}
+[2026-06-10T12:13:13.827Z] INFO: [STATUS] Observations: 26, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:13:13.827Z] INFO: [STATUS] Regime distribution: {"unknown":26}
+[2026-06-10T12:18:13.926Z] INFO: [STATUS] Observations: 26, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:18:13.926Z] INFO: [STATUS] Regime distribution: {"unknown":26}
+[2026-06-10T12:23:14.024Z] INFO: [STATUS] Observations: 26, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:23:14.024Z] INFO: [STATUS] Regime distribution: {"unknown":26}
+[2026-06-10T12:28:14.026Z] INFO: [STATUS] Observations: 27, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:28:14.026Z] INFO: [STATUS] Regime distribution: {"unknown":27}
+[2026-06-10T12:33:14.125Z] INFO: [STATUS] Observations: 27, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:33:14.125Z] INFO: [STATUS] Regime distribution: {"unknown":27}
+[2026-06-10T12:38:14.216Z] INFO: [STATUS] Observations: 27, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:38:14.217Z] INFO: [STATUS] Regime distribution: {"unknown":27}
+[2026-06-10T12:43:14.218Z] INFO: [STATUS] Observations: 28, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:43:14.219Z] INFO: [STATUS] Regime distribution: {"unknown":28}
+[2026-06-10T12:48:14.314Z] INFO: [STATUS] Observations: 28, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:48:14.314Z] INFO: [STATUS] Regime distribution: {"unknown":28}
+[2026-06-10T12:53:14.392Z] INFO: [STATUS] Observations: 28, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:53:14.392Z] INFO: [STATUS] Regime distribution: {"unknown":28}
+[2026-06-10T12:58:14.394Z] INFO: [STATUS] Observations: 29, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:58:14.394Z] INFO: [STATUS] Regime distribution: {"unknown":29}
+[2026-06-10T13:03:14.439Z] INFO: [STATUS] Observations: 29, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:03:14.440Z] INFO: [STATUS] Regime distribution: {"unknown":29}
+[2026-06-10T13:08:14.504Z] INFO: [STATUS] Observations: 29, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:08:14.504Z] INFO: [STATUS] Regime distribution: {"unknown":29}
+[2026-06-10T13:13:14.506Z] INFO: [STATUS] Observations: 30, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:13:14.507Z] INFO: [STATUS] Regime distribution: {"unknown":30}
+[2026-06-10T13:18:14.587Z] INFO: [STATUS] Observations: 30, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:18:14.587Z] INFO: [STATUS] Regime distribution: {"unknown":30}
+[2026-06-10T13:23:14.662Z] INFO: [STATUS] Observations: 30, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:23:14.662Z] INFO: [STATUS] Regime distribution: {"unknown":30}
+[2026-06-10T13:28:14.664Z] INFO: [STATUS] Observations: 31, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:28:14.665Z] INFO: [STATUS] Regime distribution: {"unknown":31}
+[2026-06-10T13:33:14.765Z] INFO: [STATUS] Observations: 31, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:33:14.765Z] INFO: [STATUS] Regime distribution: {"unknown":31}
+[2026-06-10T13:38:14.862Z] INFO: [STATUS] Observations: 31, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:38:14.863Z] INFO: [STATUS] Regime distribution: {"unknown":31}
+[2026-06-10T13:43:14.865Z] INFO: [STATUS] Observations: 32, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:43:14.866Z] INFO: [STATUS] Regime distribution: {"unknown":32}
+[2026-06-10T13:48:14.951Z] INFO: [STATUS] Observations: 32, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:48:14.952Z] INFO: [STATUS] Regime distribution: {"unknown":32}
+[2026-06-10T13:53:15.048Z] INFO: [STATUS] Observations: 32, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:53:15.048Z] INFO: [STATUS] Regime distribution: {"unknown":32}
+[2026-06-10T13:58:15.050Z] INFO: [STATUS] Observations: 33, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:58:15.051Z] INFO: [STATUS] Regime distribution: {"unknown":33}
+[2026-06-10T14:03:15.136Z] INFO: [STATUS] Observations: 33, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:03:15.137Z] INFO: [STATUS] Regime distribution: {"unknown":33}
+[2026-06-10T14:08:15.235Z] INFO: [STATUS] Observations: 33, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:08:15.236Z] INFO: [STATUS] Regime distribution: {"unknown":33}
+[2026-06-10T14:13:15.238Z] INFO: [STATUS] Observations: 34, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:13:15.238Z] INFO: [STATUS] Regime distribution: {"unknown":34}
+[2026-06-10T14:18:15.320Z] INFO: [STATUS] Observations: 34, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:18:15.320Z] INFO: [STATUS] Regime distribution: {"unknown":34}
+[2026-06-10T14:23:15.416Z] INFO: [STATUS] Observations: 34, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:23:15.416Z] INFO: [STATUS] Regime distribution: {"unknown":34}
+[2026-06-10T14:28:15.419Z] INFO: [STATUS] Observations: 35, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:28:15.419Z] INFO: [STATUS] Regime distribution: {"unknown":35}
+[2026-06-10T14:33:15.496Z] INFO: [STATUS] Observations: 35, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:33:15.496Z] INFO: [STATUS] Regime distribution: {"unknown":35}
+[2026-06-10T14:38:15.591Z] INFO: [STATUS] Observations: 35, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:38:15.592Z] INFO: [STATUS] Regime distribution: {"unknown":35}
+[2026-06-10T14:43:15.594Z] INFO: [STATUS] Observations: 36, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:43:15.595Z] INFO: [STATUS] Regime distribution: {"unknown":36}
+[2026-06-10T14:48:15.689Z] INFO: [STATUS] Observations: 36, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:48:15.690Z] INFO: [STATUS] Regime distribution: {"unknown":36}
+[2026-06-10T14:53:15.768Z] INFO: [STATUS] Observations: 36, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:53:15.770Z] INFO: [STATUS] Regime distribution: {"unknown":36}
+[2026-06-10T14:58:15.770Z] INFO: [STATUS] Observations: 37, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:58:15.770Z] INFO: [STATUS] Regime distribution: {"unknown":37}
+[2026-06-10T15:03:15.870Z] INFO: [STATUS] Observations: 37, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:03:15.871Z] INFO: [STATUS] Regime distribution: {"unknown":37}
+[2026-06-10T15:08:15.948Z] INFO: [STATUS] Observations: 37, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:08:15.949Z] INFO: [STATUS] Regime distribution: {"unknown":37}
+[2026-06-10T15:13:15.952Z] INFO: [STATUS] Observations: 38, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:13:15.953Z] INFO: [STATUS] Regime distribution: {"unknown":38}
+[2026-06-10T15:18:16.040Z] INFO: [STATUS] Observations: 38, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:18:16.040Z] INFO: [STATUS] Regime distribution: {"unknown":38}
+[2026-06-10T15:23:16.140Z] INFO: [STATUS] Observations: 38, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:23:16.141Z] INFO: [STATUS] Regime distribution: {"unknown":38}
+[2026-06-10T15:28:16.144Z] INFO: [STATUS] Observations: 39, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:28:16.144Z] INFO: [STATUS] Regime distribution: {"unknown":39}
+[2026-06-10T15:33:16.244Z] INFO: [STATUS] Observations: 39, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:33:16.245Z] INFO: [STATUS] Regime distribution: {"unknown":39}
+[2026-06-10T15:38:16.328Z] INFO: [STATUS] Observations: 39, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:38:16.328Z] INFO: [STATUS] Regime distribution: {"unknown":39}
+[2026-06-10T15:43:16.330Z] INFO: [STATUS] Observations: 40, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:43:16.331Z] INFO: [STATUS] Regime distribution: {"unknown":40}
+[2026-06-10T15:48:16.430Z] INFO: [STATUS] Observations: 40, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:48:16.430Z] INFO: [STATUS] Regime distribution: {"unknown":40}
+[2026-06-10T15:53:16.520Z] INFO: [STATUS] Observations: 40, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:53:16.520Z] INFO: [STATUS] Regime distribution: {"unknown":40}
+[2026-06-10T15:58:16.522Z] INFO: [STATUS] Observations: 41, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:58:16.523Z] INFO: [STATUS] Regime distribution: {"unknown":41}
+[2026-06-10T16:03:16.574Z] INFO: [STATUS] Observations: 41, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:03:16.575Z] INFO: [STATUS] Regime distribution: {"unknown":41}
+[2026-06-10T16:08:16.676Z] INFO: [STATUS] Observations: 41, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:08:16.677Z] INFO: [STATUS] Regime distribution: {"unknown":41}
+[2026-06-10T16:13:16.680Z] INFO: [STATUS] Observations: 42, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:13:16.681Z] INFO: [STATUS] Regime distribution: {"unknown":42}
+[2026-06-10T16:18:16.780Z] INFO: [STATUS] Observations: 42, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:18:16.781Z] INFO: [STATUS] Regime distribution: {"unknown":42}
+[2026-06-10T16:23:16.880Z] INFO: [STATUS] Observations: 42, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:23:16.881Z] INFO: [STATUS] Regime distribution: {"unknown":42}
+[2026-06-10T16:28:16.885Z] INFO: [STATUS] Observations: 43, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:28:16.886Z] INFO: [STATUS] Regime distribution: {"unknown":43}
+[2026-06-10T16:33:16.986Z] INFO: [STATUS] Observations: 43, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:33:16.987Z] INFO: [STATUS] Regime distribution: {"unknown":43}
+[2026-06-10T16:38:17.086Z] INFO: [STATUS] Observations: 43, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:38:17.087Z] INFO: [STATUS] Regime distribution: {"unknown":43}
+[2026-06-10T16:43:17.090Z] INFO: [STATUS] Observations: 44, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:43:17.091Z] INFO: [STATUS] Regime distribution: {"unknown":44}
+[2026-06-10T16:48:17.190Z] INFO: [STATUS] Observations: 44, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:48:17.191Z] INFO: [STATUS] Regime distribution: {"unknown":44}
+[2026-06-10T16:53:17.291Z] INFO: [STATUS] Observations: 44, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:53:17.292Z] INFO: [STATUS] Regime distribution: {"unknown":44}
+[2026-06-10T16:58:17.296Z] INFO: [STATUS] Observations: 45, Flips: 0, FlipRate: 0.000
+[2026-06-10T16:58:17.296Z] INFO: [STATUS] Regime distribution: {"unknown":45}
+[2026-06-10T17:03:17.380Z] INFO: [STATUS] Observations: 45, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:03:17.380Z] INFO: [STATUS] Regime distribution: {"unknown":45}
+[2026-06-10T17:08:17.478Z] INFO: [STATUS] Observations: 45, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:08:17.478Z] INFO: [STATUS] Regime distribution: {"unknown":45}
+[2026-06-10T17:13:17.482Z] INFO: [STATUS] Observations: 46, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:13:17.483Z] INFO: [STATUS] Regime distribution: {"unknown":46}
+[2026-06-10T17:18:17.576Z] INFO: [STATUS] Observations: 46, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:18:17.576Z] INFO: [STATUS] Regime distribution: {"unknown":46}
+[2026-06-10T17:23:17.676Z] INFO: [STATUS] Observations: 46, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:23:17.676Z] INFO: [STATUS] Regime distribution: {"unknown":46}
+[2026-06-10T17:28:17.680Z] INFO: [STATUS] Observations: 47, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:28:17.680Z] INFO: [STATUS] Regime distribution: {"unknown":47}
+[2026-06-10T17:33:17.773Z] INFO: [STATUS] Observations: 47, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:33:17.773Z] INFO: [STATUS] Regime distribution: {"unknown":47}
+[2026-06-10T17:38:17.871Z] INFO: [STATUS] Observations: 47, Flips: 0, FlipRate: 0.000
+[2026-06-10T17:38:17.871Z] INFO: [STATUS] Regime distribution: {"unknown":47}

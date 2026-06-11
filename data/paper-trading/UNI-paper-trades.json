@@ -1,7 +1,7 @@
 {
   "coin": "UNI",
   "initialCapital": 1000,
-  "currentEquity": 1000,
+  "currentEquity": 996.1272364201142,
   "position": null,
   "params": {
     "coin": "UNI",
@@ -22,6 +22,19 @@
     "expectedReturn": 0.1531001127554373,
     "expectedSharpe": 0.09631913636354353
   },
-  "trades": [],
-  "lastUpdated": "2026-06-10T06:06:12.173Z"
+  "trades": [
+    {
+      "type": "SHORT",
+      "entryPrice": 2.47885,
+      "exitPrice": 2.49885,
+      "entryTime": 1781094807082,
+      "exitTime": 1781098612561,
+      "size": 0.12,
+      "leverage": 4,
+      "pnl": -3.872763579885837,
+      "pnlPercent": -3.227302983238198,
+      "exitReason": "STOP_LOSS"
+    }
+  ],
+  "lastUpdated": "2026-06-10T21:48:32.279Z"
 }

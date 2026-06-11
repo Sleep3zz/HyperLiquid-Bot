@@ -4,3 +4,329 @@
 [2026-06-10T06:00:34.819Z] INFO: Regime BTC: raw=neutral confirmed=hold (adx=28.2 bw=0.0110 streak=1)
 [2026-06-10T06:05:34.879Z] INFO: [STATUS] Observations: 1, Flips: 0, FlipRate: 0.000
 [2026-06-10T06:05:34.879Z] INFO: [STATUS] Regime distribution: {}
+[2026-06-10T06:10:34.974Z] INFO: [STATUS] Observations: 1, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:10:34.974Z] INFO: [STATUS] Regime distribution: {}
+[2026-06-10T06:15:35.429Z] INFO: Regime BTC: raw=neutral confirmed=hold (adx=27.8 bw=0.0093 streak=2)
+[2026-06-10T06:15:35.430Z] INFO: [STATUS] Observations: 2, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:15:35.431Z] INFO: [STATUS] Regime distribution: {}
+[2026-06-10T06:20:35.515Z] INFO: [STATUS] Observations: 2, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:20:35.515Z] INFO: [STATUS] Regime distribution: {}
+[2026-06-10T06:25:35.612Z] INFO: [STATUS] Observations: 2, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:25:35.612Z] INFO: [STATUS] Regime distribution: {}
+[2026-06-10T06:30:35.378Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=26.7 bw=0.0089 streak=3)
+[2026-06-10T06:30:35.613Z] INFO: [STATUS] Observations: 3, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:30:35.613Z] INFO: [STATUS] Regime distribution: {"neutral":1}
+[2026-06-10T06:35:35.707Z] INFO: [STATUS] Observations: 3, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:35:35.707Z] INFO: [STATUS] Regime distribution: {"neutral":1}
+[2026-06-10T06:40:35.798Z] INFO: [STATUS] Observations: 3, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:40:35.800Z] INFO: [STATUS] Regime distribution: {"neutral":1}
+[2026-06-10T06:45:35.474Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=27.9 bw=0.0076 streak=4)
+[2026-06-10T06:45:35.798Z] INFO: [STATUS] Observations: 4, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:45:35.799Z] INFO: [STATUS] Regime distribution: {"neutral":2}
+[2026-06-10T06:50:35.880Z] INFO: [STATUS] Observations: 4, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:50:35.880Z] INFO: [STATUS] Regime distribution: {"neutral":2}
+[2026-06-10T06:55:35.976Z] INFO: [STATUS] Observations: 4, Flips: 0, FlipRate: 0.000
+[2026-06-10T06:55:35.976Z] INFO: [STATUS] Regime distribution: {"neutral":2}
+[2026-06-10T07:00:35.576Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=27.2 bw=0.0073 streak=5)
+[2026-06-10T07:00:35.976Z] INFO: [STATUS] Observations: 5, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:00:35.976Z] INFO: [STATUS] Regime distribution: {"neutral":3}
+[2026-06-10T07:05:36.074Z] INFO: [STATUS] Observations: 5, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:05:36.074Z] INFO: [STATUS] Regime distribution: {"neutral":3}
+[2026-06-10T07:10:36.174Z] INFO: [STATUS] Observations: 5, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:10:36.174Z] INFO: [STATUS] Regime distribution: {"neutral":3}
+[2026-06-10T07:15:35.693Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=25.7 bw=0.0080 streak=6)
+[2026-06-10T07:15:36.175Z] INFO: [STATUS] Observations: 6, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:15:36.175Z] INFO: [STATUS] Regime distribution: {"neutral":4}
+[2026-06-10T07:20:36.252Z] INFO: [STATUS] Observations: 6, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:20:36.253Z] INFO: [STATUS] Regime distribution: {"neutral":4}
+[2026-06-10T07:25:36.353Z] INFO: [STATUS] Observations: 6, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:25:36.353Z] INFO: [STATUS] Regime distribution: {"neutral":4}
+[2026-06-10T07:30:35.752Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=23.2 bw=0.0089 streak=7)
+[2026-06-10T07:30:36.353Z] INFO: [STATUS] Observations: 7, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:30:36.353Z] INFO: [STATUS] Regime distribution: {"neutral":5}
+[2026-06-10T07:35:36.426Z] INFO: [STATUS] Observations: 7, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:35:36.427Z] INFO: [STATUS] Regime distribution: {"neutral":5}
+[2026-06-10T07:40:36.521Z] INFO: [STATUS] Observations: 7, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:40:36.522Z] INFO: [STATUS] Regime distribution: {"neutral":5}
+[2026-06-10T07:45:36.056Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=22.3 bw=0.0104 streak=8)
+[2026-06-10T07:45:36.523Z] INFO: [STATUS] Observations: 8, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:45:36.523Z] INFO: [STATUS] Regime distribution: {"neutral":6}
+[2026-06-10T07:50:36.600Z] INFO: [STATUS] Observations: 8, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:50:36.601Z] INFO: [STATUS] Regime distribution: {"neutral":6}
+[2026-06-10T07:55:36.697Z] INFO: [STATUS] Observations: 8, Flips: 0, FlipRate: 0.000
+[2026-06-10T07:55:36.698Z] INFO: [STATUS] Regime distribution: {"neutral":6}
+[2026-06-10T08:00:36.178Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=21.1 bw=0.0106 streak=9)
+[2026-06-10T08:00:36.699Z] INFO: [STATUS] Observations: 9, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:00:36.700Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:05:36.798Z] INFO: [STATUS] Observations: 9, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:05:36.799Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:10:36.897Z] INFO: [STATUS] Observations: 9, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:10:36.897Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:15:36.020Z] INFO: Regime BTC: raw=ranging confirmed=hold (adx=19.9 bw=0.0105 streak=1)
+[2026-06-10T08:15:36.898Z] INFO: [STATUS] Observations: 10, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:15:36.898Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:20:36.992Z] INFO: [STATUS] Observations: 10, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:20:36.992Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:25:37.084Z] INFO: [STATUS] Observations: 10, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:25:37.084Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:30:36.298Z] INFO: Regime BTC: raw=ranging confirmed=hold (adx=19.5 bw=0.0104 streak=2)
+[2026-06-10T08:30:37.085Z] INFO: [STATUS] Observations: 11, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:30:37.085Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:35:37.165Z] INFO: [STATUS] Observations: 11, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:35:37.165Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:40:37.257Z] INFO: [STATUS] Observations: 11, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:40:37.258Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:45:36.208Z] INFO: Regime BTC: raw=neutral confirmed=hold (adx=21.5 bw=0.0110 streak=1)
+[2026-06-10T08:45:37.259Z] INFO: [STATUS] Observations: 12, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:45:37.259Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:50:37.288Z] INFO: [STATUS] Observations: 12, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:50:37.288Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T08:55:37.376Z] INFO: [STATUS] Observations: 12, Flips: 0, FlipRate: 0.000
+[2026-06-10T08:55:37.376Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T09:00:36.323Z] INFO: Regime BTC: raw=neutral confirmed=hold (adx=22.4 bw=0.0110 streak=2)
+[2026-06-10T09:00:37.377Z] INFO: [STATUS] Observations: 13, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:00:37.377Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T09:05:37.468Z] INFO: [STATUS] Observations: 13, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:05:37.468Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T09:10:37.531Z] INFO: [STATUS] Observations: 13, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:10:37.531Z] INFO: [STATUS] Regime distribution: {"neutral":7}
+[2026-06-10T09:15:36.361Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=24.0 bw=0.0127 streak=3)
+[2026-06-10T09:15:37.532Z] INFO: [STATUS] Observations: 14, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:15:37.533Z] INFO: [STATUS] Regime distribution: {"neutral":8}
+[2026-06-10T09:20:37.629Z] INFO: [STATUS] Observations: 14, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:20:37.630Z] INFO: [STATUS] Regime distribution: {"neutral":8}
+[2026-06-10T09:25:37.720Z] INFO: [STATUS] Observations: 14, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:25:37.721Z] INFO: [STATUS] Regime distribution: {"neutral":8}
+[2026-06-10T09:30:36.482Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=26.7 bw=0.0122 streak=4)
+[2026-06-10T09:30:37.723Z] INFO: [STATUS] Observations: 15, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:30:37.723Z] INFO: [STATUS] Regime distribution: {"neutral":9}
+[2026-06-10T09:35:37.803Z] INFO: [STATUS] Observations: 15, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:35:37.803Z] INFO: [STATUS] Regime distribution: {"neutral":9}
+[2026-06-10T09:40:37.897Z] INFO: [STATUS] Observations: 15, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:40:37.897Z] INFO: [STATUS] Regime distribution: {"neutral":9}
+[2026-06-10T09:45:36.595Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=25.9 bw=0.0121 streak=5)
+[2026-06-10T09:45:37.898Z] INFO: [STATUS] Observations: 16, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:45:37.899Z] INFO: [STATUS] Regime distribution: {"neutral":10}
+[2026-06-10T09:50:37.992Z] INFO: [STATUS] Observations: 16, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:50:37.992Z] INFO: [STATUS] Regime distribution: {"neutral":10}
+[2026-06-10T09:55:38.072Z] INFO: [STATUS] Observations: 16, Flips: 0, FlipRate: 0.000
+[2026-06-10T09:55:38.072Z] INFO: [STATUS] Regime distribution: {"neutral":10}
+[2026-06-10T10:00:36.651Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=26.7 bw=0.0116 streak=6)
+[2026-06-10T10:00:38.073Z] INFO: [STATUS] Observations: 17, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:00:38.073Z] INFO: [STATUS] Regime distribution: {"neutral":11}
+[2026-06-10T10:05:38.163Z] INFO: [STATUS] Observations: 17, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:05:38.163Z] INFO: [STATUS] Regime distribution: {"neutral":11}
+[2026-06-10T10:10:38.253Z] INFO: [STATUS] Observations: 17, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:10:38.253Z] INFO: [STATUS] Regime distribution: {"neutral":11}
+[2026-06-10T10:15:36.727Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=27.2 bw=0.0118 streak=7)
+[2026-06-10T10:15:38.255Z] INFO: [STATUS] Observations: 18, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:15:38.255Z] INFO: [STATUS] Regime distribution: {"neutral":12}
+[2026-06-10T10:20:38.354Z] INFO: [STATUS] Observations: 18, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:20:38.355Z] INFO: [STATUS] Regime distribution: {"neutral":12}
+[2026-06-10T10:25:38.368Z] INFO: [STATUS] Observations: 18, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:25:38.369Z] INFO: [STATUS] Regime distribution: {"neutral":12}
+[2026-06-10T10:30:36.836Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=27.2 bw=0.0115 streak=8)
+[2026-06-10T10:30:38.371Z] INFO: [STATUS] Observations: 19, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:30:38.371Z] INFO: [STATUS] Regime distribution: {"neutral":13}
+[2026-06-10T10:35:38.468Z] INFO: [STATUS] Observations: 19, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:35:38.468Z] INFO: [STATUS] Regime distribution: {"neutral":13}
+[2026-06-10T10:40:38.564Z] INFO: [STATUS] Observations: 19, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:40:38.565Z] INFO: [STATUS] Regime distribution: {"neutral":13}
+[2026-06-10T10:45:36.850Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=26.5 bw=0.0116 streak=9)
+[2026-06-10T10:45:38.566Z] INFO: [STATUS] Observations: 20, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:45:38.566Z] INFO: [STATUS] Regime distribution: {"neutral":14}
+[2026-06-10T10:50:38.632Z] INFO: [STATUS] Observations: 20, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:50:38.632Z] INFO: [STATUS] Regime distribution: {"neutral":14}
+[2026-06-10T10:55:38.728Z] INFO: [STATUS] Observations: 20, Flips: 0, FlipRate: 0.000
+[2026-06-10T10:55:38.728Z] INFO: [STATUS] Regime distribution: {"neutral":14}
+[2026-06-10T11:00:37.111Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=26.2 bw=0.0115 streak=10)
+[2026-06-10T11:00:38.730Z] INFO: [STATUS] Observations: 21, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:00:38.730Z] INFO: [STATUS] Regime distribution: {"neutral":15}
+[2026-06-10T11:05:38.790Z] INFO: [STATUS] Observations: 21, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:05:38.791Z] INFO: [STATUS] Regime distribution: {"neutral":15}
+[2026-06-10T11:10:38.888Z] INFO: [STATUS] Observations: 21, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:10:38.888Z] INFO: [STATUS] Regime distribution: {"neutral":15}
+[2026-06-10T11:15:37.041Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=28.9 bw=0.0126 streak=11)
+[2026-06-10T11:15:38.890Z] INFO: [STATUS] Observations: 22, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:15:38.890Z] INFO: [STATUS] Regime distribution: {"neutral":16}
+[2026-06-10T11:20:38.972Z] INFO: [STATUS] Observations: 22, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:20:38.973Z] INFO: [STATUS] Regime distribution: {"neutral":16}
+[2026-06-10T11:25:39.052Z] INFO: [STATUS] Observations: 22, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:25:39.053Z] INFO: [STATUS] Regime distribution: {"neutral":16}
+[2026-06-10T11:30:37.153Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=30.0 bw=0.0143 streak=12)
+[2026-06-10T11:30:39.054Z] INFO: [STATUS] Observations: 23, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:30:39.055Z] INFO: [STATUS] Regime distribution: {"neutral":17}
+[2026-06-10T11:35:39.125Z] INFO: [STATUS] Observations: 23, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:35:39.125Z] INFO: [STATUS] Regime distribution: {"neutral":17}
+[2026-06-10T11:40:39.224Z] INFO: [STATUS] Observations: 23, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:40:39.224Z] INFO: [STATUS] Regime distribution: {"neutral":17}
+[2026-06-10T11:45:37.252Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=31.0 bw=0.0150 streak=13)
+[2026-06-10T11:45:39.225Z] INFO: [STATUS] Observations: 24, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:45:39.226Z] INFO: [STATUS] Regime distribution: {"neutral":18}
+[2026-06-10T11:50:39.320Z] INFO: [STATUS] Observations: 24, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:50:39.320Z] INFO: [STATUS] Regime distribution: {"neutral":18}
+[2026-06-10T11:55:39.399Z] INFO: [STATUS] Observations: 24, Flips: 0, FlipRate: 0.000
+[2026-06-10T11:55:39.400Z] INFO: [STATUS] Regime distribution: {"neutral":18}
+[2026-06-10T12:00:37.324Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=31.2 bw=0.0152 streak=14)
+[2026-06-10T12:00:39.402Z] INFO: [STATUS] Observations: 25, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:00:39.402Z] INFO: [STATUS] Regime distribution: {"neutral":19}
+[2026-06-10T12:05:39.500Z] INFO: [STATUS] Observations: 25, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:05:39.500Z] INFO: [STATUS] Regime distribution: {"neutral":19}
+[2026-06-10T12:10:39.591Z] INFO: [STATUS] Observations: 25, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:10:39.592Z] INFO: [STATUS] Regime distribution: {"neutral":19}
+[2026-06-10T12:15:37.481Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=30.0 bw=0.0139 streak=15)
+[2026-06-10T12:15:39.594Z] INFO: [STATUS] Observations: 26, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:15:39.595Z] INFO: [STATUS] Regime distribution: {"neutral":20}
+[2026-06-10T12:20:39.670Z] INFO: [STATUS] Observations: 26, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:20:39.671Z] INFO: [STATUS] Regime distribution: {"neutral":20}
+[2026-06-10T12:25:39.723Z] INFO: [STATUS] Observations: 26, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:25:39.724Z] INFO: [STATUS] Regime distribution: {"neutral":20}
+[2026-06-10T12:30:37.653Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=28.8 bw=0.0129 streak=16)
+[2026-06-10T12:30:39.726Z] INFO: [STATUS] Observations: 27, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:30:39.727Z] INFO: [STATUS] Regime distribution: {"neutral":21}
+[2026-06-10T12:35:39.827Z] INFO: [STATUS] Observations: 27, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:35:39.827Z] INFO: [STATUS] Regime distribution: {"neutral":21}
+[2026-06-10T12:40:39.912Z] INFO: [STATUS] Observations: 27, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:40:39.912Z] INFO: [STATUS] Regime distribution: {"neutral":21}
+[2026-06-10T12:45:38.040Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=29.2 bw=0.0133 streak=17)
+[2026-06-10T12:45:39.914Z] INFO: [STATUS] Observations: 28, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:45:39.914Z] INFO: [STATUS] Regime distribution: {"neutral":22}
+[2026-06-10T12:50:39.992Z] INFO: [STATUS] Observations: 28, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:50:39.992Z] INFO: [STATUS] Regime distribution: {"neutral":22}
+[2026-06-10T12:55:40.080Z] INFO: [STATUS] Observations: 28, Flips: 0, FlipRate: 0.000
+[2026-06-10T12:55:40.080Z] INFO: [STATUS] Regime distribution: {"neutral":22}
+[2026-06-10T13:00:37.730Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=28.7 bw=0.0128 streak=18)
+[2026-06-10T13:00:40.084Z] INFO: [STATUS] Observations: 29, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:00:40.084Z] INFO: [STATUS] Regime distribution: {"neutral":23}
+[2026-06-10T13:05:40.178Z] INFO: [STATUS] Observations: 29, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:05:40.178Z] INFO: [STATUS] Regime distribution: {"neutral":23}
+[2026-06-10T13:10:40.277Z] INFO: [STATUS] Observations: 29, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:10:40.277Z] INFO: [STATUS] Regime distribution: {"neutral":23}
+[2026-06-10T13:15:37.833Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=27.6 bw=0.0123 streak=19)
+[2026-06-10T13:15:40.279Z] INFO: [STATUS] Observations: 30, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:15:40.279Z] INFO: [STATUS] Regime distribution: {"neutral":24}
+[2026-06-10T13:20:40.374Z] INFO: [STATUS] Observations: 30, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:20:40.375Z] INFO: [STATUS] Regime distribution: {"neutral":24}
+[2026-06-10T13:25:40.473Z] INFO: [STATUS] Observations: 30, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:25:40.473Z] INFO: [STATUS] Regime distribution: {"neutral":24}
+[2026-06-10T13:30:37.972Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=26.8 bw=0.0140 streak=20)
+[2026-06-10T13:30:40.475Z] INFO: [STATUS] Observations: 31, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:30:40.475Z] INFO: [STATUS] Regime distribution: {"neutral":25}
+[2026-06-10T13:35:40.536Z] INFO: [STATUS] Observations: 31, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:35:40.536Z] INFO: [STATUS] Regime distribution: {"neutral":25}
+[2026-06-10T13:40:40.635Z] INFO: [STATUS] Observations: 31, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:40:40.635Z] INFO: [STATUS] Regime distribution: {"neutral":25}
+[2026-06-10T13:45:38.373Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=29.7 bw=0.0241 streak=21)
+[2026-06-10T13:45:40.637Z] INFO: [STATUS] Observations: 32, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:45:40.637Z] INFO: [STATUS] Regime distribution: {"neutral":26}
+[2026-06-10T13:50:40.719Z] INFO: [STATUS] Observations: 32, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:50:40.720Z] INFO: [STATUS] Regime distribution: {"neutral":26}
+[2026-06-10T13:55:40.816Z] INFO: [STATUS] Observations: 32, Flips: 0, FlipRate: 0.000
+[2026-06-10T13:55:40.817Z] INFO: [STATUS] Regime distribution: {"neutral":26}
+[2026-06-10T14:00:38.298Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=30.9 bw=0.0251 streak=22)
+[2026-06-10T14:00:40.820Z] INFO: [STATUS] Observations: 33, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:00:40.820Z] INFO: [STATUS] Regime distribution: {"neutral":27}
+[2026-06-10T14:05:40.920Z] INFO: [STATUS] Observations: 33, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:05:40.921Z] INFO: [STATUS] Regime distribution: {"neutral":27}
+[2026-06-10T14:10:41.018Z] INFO: [STATUS] Observations: 33, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:10:41.018Z] INFO: [STATUS] Regime distribution: {"neutral":27}
+[2026-06-10T14:15:38.282Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=31.0 bw=0.0251 streak=23)
+[2026-06-10T14:15:41.021Z] INFO: [STATUS] Observations: 34, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:15:41.021Z] INFO: [STATUS] Regime distribution: {"neutral":28}
+[2026-06-10T14:20:41.034Z] INFO: [STATUS] Observations: 34, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:20:41.034Z] INFO: [STATUS] Regime distribution: {"neutral":28}
+[2026-06-10T14:25:41.128Z] INFO: [STATUS] Observations: 34, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:25:41.129Z] INFO: [STATUS] Regime distribution: {"neutral":28}
+[2026-06-10T14:30:38.229Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=30.7 bw=0.0265 streak=24)
+[2026-06-10T14:30:41.131Z] INFO: [STATUS] Observations: 35, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:30:41.131Z] INFO: [STATUS] Regime distribution: {"neutral":29}
+[2026-06-10T14:35:41.198Z] INFO: [STATUS] Observations: 35, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:35:41.198Z] INFO: [STATUS] Regime distribution: {"neutral":29}
+[2026-06-10T14:40:41.289Z] INFO: [STATUS] Observations: 35, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:40:41.290Z] INFO: [STATUS] Regime distribution: {"neutral":29}
+[2026-06-10T14:45:38.366Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=30.2 bw=0.0268 streak=25)
+[2026-06-10T14:45:41.290Z] INFO: [STATUS] Observations: 36, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:45:41.291Z] INFO: [STATUS] Regime distribution: {"neutral":30}
+[2026-06-10T14:50:41.387Z] INFO: [STATUS] Observations: 36, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:50:41.391Z] INFO: [STATUS] Regime distribution: {"neutral":30}
+[2026-06-10T14:55:41.416Z] INFO: [STATUS] Observations: 36, Flips: 0, FlipRate: 0.000
+[2026-06-10T14:55:41.416Z] INFO: [STATUS] Regime distribution: {"neutral":30}
+[2026-06-10T15:00:38.485Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=30.4 bw=0.0292 streak=26)
+[2026-06-10T15:00:41.419Z] INFO: [STATUS] Observations: 37, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:00:41.419Z] INFO: [STATUS] Regime distribution: {"neutral":31}
+[2026-06-10T15:05:41.504Z] INFO: [STATUS] Observations: 37, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:05:41.504Z] INFO: [STATUS] Regime distribution: {"neutral":31}
+[2026-06-10T15:10:41.595Z] INFO: [STATUS] Observations: 37, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:10:41.596Z] INFO: [STATUS] Regime distribution: {"neutral":31}
+[2026-06-10T15:15:38.553Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=31.4 bw=0.0282 streak=27)
+[2026-06-10T15:15:41.599Z] INFO: [STATUS] Observations: 38, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:15:41.599Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:20:41.693Z] INFO: [STATUS] Observations: 38, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:20:41.693Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:25:41.757Z] INFO: [STATUS] Observations: 38, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:25:41.757Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:30:38.621Z] INFO: Regime BTC: raw=trending confirmed=hold (adx=32.0 bw=0.0305 streak=1)
+[2026-06-10T15:30:41.760Z] INFO: [STATUS] Observations: 39, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:30:41.760Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:35:41.799Z] INFO: [STATUS] Observations: 39, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:35:41.800Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:40:41.894Z] INFO: [STATUS] Observations: 39, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:40:41.894Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:45:38.711Z] INFO: Regime BTC: raw=trending confirmed=hold (adx=32.8 bw=0.0319 streak=2)
+[2026-06-10T15:45:41.898Z] INFO: [STATUS] Observations: 40, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:45:41.898Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:50:41.978Z] INFO: [STATUS] Observations: 40, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:50:41.979Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T15:55:42.056Z] INFO: [STATUS] Observations: 40, Flips: 0, FlipRate: 0.000
+[2026-06-10T15:55:42.056Z] INFO: [STATUS] Regime distribution: {"neutral":32}
+[2026-06-10T16:00:38.752Z] INFO: Regime BTC: raw=trending confirmed=trending (adx=35.0 bw=0.0344 streak=3)
+[2026-06-10T16:00:38.755Z] WARN: [REGIME-OBSERVE] BTC FLIP neutral -> trending (would switch strategy in live mode)
+[2026-06-10T16:00:42.058Z] INFO: [STATUS] Observations: 41, Flips: 1, FlipRate: 0.024
+[2026-06-10T16:00:42.059Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":1}
+[2026-06-10T16:05:42.133Z] INFO: [STATUS] Observations: 41, Flips: 1, FlipRate: 0.024
+[2026-06-10T16:05:42.133Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":1}
+[2026-06-10T16:10:42.216Z] INFO: [STATUS] Observations: 41, Flips: 1, FlipRate: 0.024
+[2026-06-10T16:10:42.216Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":1}
+[2026-06-10T16:15:38.847Z] INFO: Regime BTC: raw=trending confirmed=trending (adx=36.3 bw=0.0316 streak=4)
+[2026-06-10T16:15:42.219Z] INFO: [STATUS] Observations: 42, Flips: 1, FlipRate: 0.024
+[2026-06-10T16:15:42.219Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:20:42.296Z] INFO: [STATUS] Observations: 42, Flips: 1, FlipRate: 0.024
+[2026-06-10T16:20:42.296Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:25:42.377Z] INFO: [STATUS] Observations: 42, Flips: 1, FlipRate: 0.024
+[2026-06-10T16:25:42.377Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:30:39.650Z] INFO: Regime BTC: raw=neutral confirmed=hold (adx=35.2 bw=0.0290 streak=1)
+[2026-06-10T16:30:42.380Z] INFO: [STATUS] Observations: 43, Flips: 1, FlipRate: 0.023
+[2026-06-10T16:30:42.380Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:35:42.456Z] INFO: [STATUS] Observations: 43, Flips: 1, FlipRate: 0.023
+[2026-06-10T16:35:42.456Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:40:42.556Z] INFO: [STATUS] Observations: 43, Flips: 1, FlipRate: 0.023
+[2026-06-10T16:40:42.556Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:45:38.976Z] INFO: Regime BTC: raw=neutral confirmed=hold (adx=35.3 bw=0.0257 streak=2)
+[2026-06-10T16:45:42.559Z] INFO: [STATUS] Observations: 44, Flips: 1, FlipRate: 0.023
+[2026-06-10T16:45:42.559Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:50:42.650Z] INFO: [STATUS] Observations: 44, Flips: 1, FlipRate: 0.023
+[2026-06-10T16:50:42.651Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T16:55:42.731Z] INFO: [STATUS] Observations: 44, Flips: 1, FlipRate: 0.023
+[2026-06-10T16:55:42.731Z] INFO: [STATUS] Regime distribution: {"neutral":32,"trending":2}
+[2026-06-10T17:00:39.200Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=33.3 bw=0.0231 streak=3)
+[2026-06-10T17:00:39.200Z] WARN: [REGIME-OBSERVE] BTC FLIP trending -> neutral (would switch strategy in live mode)
+[2026-06-10T17:00:42.736Z] INFO: [STATUS] Observations: 45, Flips: 2, FlipRate: 0.044
+[2026-06-10T17:00:42.736Z] INFO: [STATUS] Regime distribution: {"neutral":33,"trending":2}
+[2026-06-10T17:05:42.824Z] INFO: [STATUS] Observations: 45, Flips: 2, FlipRate: 0.044
+[2026-06-10T17:05:42.824Z] INFO: [STATUS] Regime distribution: {"neutral":33,"trending":2}
+[2026-06-10T17:10:42.920Z] INFO: [STATUS] Observations: 45, Flips: 2, FlipRate: 0.044
+[2026-06-10T17:10:42.920Z] INFO: [STATUS] Regime distribution: {"neutral":33,"trending":2}
+[2026-06-10T17:15:39.261Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=33.1 bw=0.0190 streak=4)
+[2026-06-10T17:15:42.924Z] INFO: [STATUS] Observations: 46, Flips: 2, FlipRate: 0.043
+[2026-06-10T17:15:42.924Z] INFO: [STATUS] Regime distribution: {"neutral":34,"trending":2}
+[2026-06-10T17:20:43.022Z] INFO: [STATUS] Observations: 46, Flips: 2, FlipRate: 0.043
+[2026-06-10T17:20:43.022Z] INFO: [STATUS] Regime distribution: {"neutral":34,"trending":2}
+[2026-06-10T17:25:43.110Z] INFO: [STATUS] Observations: 46, Flips: 2, FlipRate: 0.043
+[2026-06-10T17:25:43.110Z] INFO: [STATUS] Regime distribution: {"neutral":34,"trending":2}
+[2026-06-10T17:30:39.284Z] INFO: Regime BTC: raw=neutral confirmed=neutral (adx=31.5 bw=0.0187 streak=5)
+[2026-06-10T17:30:43.113Z] INFO: [STATUS] Observations: 47, Flips: 2, FlipRate: 0.043
+[2026-06-10T17:30:43.114Z] INFO: [STATUS] Regime distribution: {"neutral":35,"trending":2}
+[2026-06-10T17:35:43.208Z] INFO: [STATUS] Observations: 47, Flips: 2, FlipRate: 0.043
+[2026-06-10T17:35:43.209Z] INFO: [STATUS] Regime distribution: {"neutral":35,"trending":2}
+[2026-06-10T17:40:43.291Z] INFO: [STATUS] Observations: 47, Flips: 2, FlipRate: 0.043
+[2026-06-10T17:40:43.291Z] INFO: [STATUS] Regime distribution: {"neutral":35,"trending":2}
