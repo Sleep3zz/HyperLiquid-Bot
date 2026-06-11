@@ -1,0 +1,24 @@
+{
+  "coin": "PUMP",
+  "initialCapital": 1000,
+  "currentEquity": 1000,
+  "position": null,
+  "params": {
+    "coin": "PUMP",
+    "configName": "Breakout (Optimized)",
+    "leverage": 3,
+    "positionSize": 0.1,
+    "profitTarget": 5,
+    "stopLoss": 3,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 35,
+    "rsiOversold": 65,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 20,
+    "lastUpdated": "2026-06-11T17:40:00Z"
+  },
+  "trades": [],
+  "lastUpdated": "2026-06-11T18:55:19.996Z"
+}
