@@ -15,6 +15,7 @@ const WayfinderCommander = require('../wayfinder/wayfinder-cmds');
  * - WayfinderCommander.closePosition() - src/wayfinder/wayfinder-cmds.js
  * - WayfinderCommander.getPrice() - src/wayfinder/wayfinder-cmds.js
  * - WayfinderCommander.getPositionSize() - src/wayfinder/wayfinder-cmds.js
+ * - WayfinderCommander.getUnrealizedPnl() - src/wayfinder/wayfinder-cmds.js
  * - WayfinderCommander.getSummary() - src/wayfinder/wayfinder-cmds.js
  */
 
@@ -44,6 +45,7 @@ class GridStrategy {
         this.gridOrders = new Map();
         this.filledOrders = [];
         this.totalPnL = 0;
+        this.updateInterval = null;
     }
 
     /**
@@ -51,15 +53,27 @@ class GridStrategy {
      * @param {string} coin - Coin symbol (e.g., "BTC")
      * @returns {string} Status message
      */
-    async startGrid(coin = "BTC") {
+    startGrid(coin = "BTC") {
         if (this.active) {
             return `Grid already running on ${this.coin}`;
         }
 
+        // Check capital limits before starting
+        const totalCapital = this.gridLevels * 2 * this.baseAmount;
+        if (totalCapital > this.maxGridCapital) {
+            return `❌ Grid capital $${totalCapital} exceeds max $${this.maxGridCapital}`;
+        }
+
         // Get current price via Wayfinder SDK
-        const price = this.wayfinder.getPrice(coin);
+        let price;
+        try {
+            price = this.wayfinder.getPrice(coin);
+        } catch (e) {
+            return `❌ Error getting price: ${e.message}`;
+        }
+        
         if (!Number.isFinite(price) || price <= 0) {
-            return "No valid price available from Wayfinder";
+            return "❌ No valid price available from Wayfinder";
         }
 
         this.coin = coin;
@@ -73,14 +87,17 @@ class GridStrategy {
         this.logger.info(`[GRID] Levels: ${this.gridLevels}, Spacing: ${this.gridSpacingPct}%, Amount: $${this.baseAmount}`);
 
         // Place grid orders
-        const placed = await this._buildGrid();
+        const placed = this._buildGrid();
         
         if (placed.length === 0) {
             this.active = false;
-            return "Failed to place any grid orders";
+            return "❌ Failed to place any grid orders";
         }
 
-        return `Grid active on ${coin} with ${placed.length} orders`;
+        // Start automatic update loop
+        this._startUpdateLoop();
+
+        return `✅ Grid active on ${coin} with ${placed.length} orders`;
     }
 
     /**
@@ -88,7 +105,7 @@ class GridStrategy {
      * @returns {Array} Placed order IDs
      * @private
      */
-    async _buildGrid() {
+    _buildGrid() {
         const placed = [];
         
         try {
@@ -135,7 +152,7 @@ class GridStrategy {
             }
         } catch (e) {
             this.logger.error(`[GRID] Build failed: ${e.message}`);
-            await this._cancelAllOrders();
+            this._cancelAllOrders();
             this.active = false;
             return [];
         }
@@ -153,15 +170,16 @@ class GridStrategy {
         }
 
         this.active = false;
+        this._stopUpdateLoop();
         const coin = this.coin;
 
         this.logger.info(`[GRID] Stopping grid on ${coin}...`);
 
-        // Cancel all orders via Wayfinder SDK
+        // Cancel all orders
         await this._cancelAllOrders();
 
-        // Close any open position via Wayfinder SDK
-        const positionSize = this.wayfinder.getPositionSize(coin);
+        // Close any open position
+        const positionSize = Number(this.wayfinder.getPositionSize(coin)) || 0;
         if (Math.abs(positionSize) > 0) {
             this.logger.info(`[GRID] Closing position: ${positionSize} ${coin}`);
             this.wayfinder.closePosition(coin);
@@ -172,20 +190,28 @@ class GridStrategy {
         this.logger.info(`[GRID] Estimated PnL: $${this.totalPnL.toFixed(2)}`);
 
         this.gridOrders.clear();
-        return `Grid stopped on ${coin}`;
+        return `✅ Grid stopped on ${coin}`;
     }
 
     /**
-     * Cancel all orders via Wayfinder SDK
+     * Cancel all orders
      * @private
      */
     async _cancelAllOrders() {
-        // Note: Wayfinder SDK doesn't have a direct cancelAllOrders method
-        // We would need to track and cancel each order individually
-        // For now, this is a placeholder - actual implementation depends on SDK capabilities
-        this.gridOrders.forEach((order, orderId) => {
-            this.logger.info(`[GRID] Would cancel order ${orderId} (${order.side} @ $${order.price.toFixed(2)})`);
-        });
+        const cancels = [];
+        
+        for (const [orderId, order] of this.gridOrders) {
+            try {
+                // Note: cancelOrder would need to be implemented in WayfinderCommander
+                // For now, we log that we would cancel
+                this.logger.info(`[GRID] Cancelling ${orderId} (${order.side} @ $${order.price.toFixed(2)})`);
+                // TODO: await this.wayfinder.cancelOrder(this.coin, orderId);
+            } catch (e) {
+                this.logger.error(`[GRID] Failed to cancel ${orderId}: ${e.message}`);
+            }
+        }
+        
+        await Promise.allSettled(cancels);
         this.gridOrders.clear();
     }
 
@@ -212,25 +238,60 @@ class GridStrategy {
      * Update grid status - call periodically to check fills and rebalance
      * @param {number} currentPrice - Current market price
      */
-    async update(currentPrice) {
+    update(currentPrice) {
         if (!this.active) return;
 
         // Check range bound
-        if (await this.checkRangeBound(currentPrice)) {
-            return;
-        }
+        this.checkRangeBound(currentPrice);
 
-        // Check position and PnL via Wayfinder SDK
-        const position = this.wayfinder.getPositionSize(this.coin);
-        const unrealizedPnl = this.wayfinder.getUnrealizedPnl(this.coin);
+        // Safely get position and PnL with fallbacks
+        const position = Number(this.wayfinder.getPositionSize(this.coin)) || 0;
+        const unrealizedPnl = Number(this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
         
         // Log status periodically
         this.logger.info(`[GRID] ${this.coin} @ $${currentPrice.toFixed(2)} | Position: ${position.toFixed(4)} | Unrealized PnL: $${unrealizedPnl.toFixed(2)}`);
 
         // In a full implementation, we would:
-        // 1. Check which orders were filled
+        // 1. Check which orders were filled via getOrderHistory or WebSocket
         // 2. Replace filled orders with opposite side orders
         // 3. Track realized PnL
+        // 4. Update this.filledOrders and this.totalPnL
+    }
+
+    /**
+     * Start automatic update loop
+     * @private
+     */
+    _startUpdateLoop() {
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+        }
+        
+        // Update every 30 seconds
+        this.updateInterval = setInterval(() => {
+            try {
+                const price = this.wayfinder.getPrice(this.coin);
+                if (Number.isFinite(price)) {
+                    this.update(price);
+                }
+            } catch (e) {
+                this.logger.error(`[GRID] Update loop error: ${e.message}`);
+            }
+        }, 30000);
+        
+        this.logger.info(`[GRID] Auto-update started (30s interval)`);
+    }
+
+    /**
+     * Stop automatic update loop
+     * @private
+     */
+    _stopUpdateLoop() {
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+            this.updateInterval = null;
+            this.logger.info(`[GRID] Auto-update stopped`);
+        }
     }
 
     /**

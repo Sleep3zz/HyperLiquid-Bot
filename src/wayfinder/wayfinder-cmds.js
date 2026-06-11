@@ -157,6 +157,14 @@ class WayfinderCommander {
     }
 
     /**
+     * Cancel an order
+     */
+    cancelOrder(coin, orderId) {
+        const cmd = `wayfinder hyperliquid_execute --action cancel_order --wallet_label ${this.walletLabel} --coin ${coin} --order_id ${orderId}`;
+        return this._exec(cmd);
+    }
+
+    /**
      * Close position
      */
     closePosition(coin) {
