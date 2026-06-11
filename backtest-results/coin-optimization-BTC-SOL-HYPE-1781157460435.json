@@ -1,0 +1,419 @@
+{
+  "timestamp": "2026-06-11T05:57:40.435Z",
+  "allResults": {
+    "BTC": [
+      {
+        "params": {
+          "name": "Trend-Following",
+          "rsiLong": 40,
+          "rsiShort": 60,
+          "adx": 20,
+          "sl": 3,
+          "tp": 5
+        },
+        "trades": 4,
+        "wins": 4,
+        "winRate": 1,
+        "netPnl": 206.6652238518309,
+        "netPnlPct": 2.066652238518309,
+        "maxDrawdown": 0,
+        "profitFactor": null
+      },
+      {
+        "params": {
+          "name": "Aggressive",
+          "rsiLong": 40,
+          "rsiShort": 60,
+          "adx": 35,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 18,
+        "wins": 9,
+        "winRate": 0.5,
+        "netPnl": 73.76469219421051,
+        "netPnlPct": 0.7376469219421051,
+        "maxDrawdown": 0.9655639303483726,
+        "profitFactor": 1.3591367633205664
+      },
+      {
+        "params": {
+          "name": "Very-Aggressive",
+          "rsiLong": 45,
+          "rsiShort": 55,
+          "adx": 40,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 25,
+        "wins": 12,
+        "winRate": 0.48,
+        "netPnl": 70.6203864679319,
+        "netPnlPct": 0.706203864679319,
+        "maxDrawdown": 1.6576190035207237,
+        "profitFactor": 1.2347075028968004
+      },
+      {
+        "params": {
+          "name": "Conservative",
+          "rsiLong": 30,
+          "rsiShort": 70,
+          "adx": 30,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 2,
+        "wins": 1,
+        "winRate": 0.5,
+        "netPnl": 9.35794297069333,
+        "netPnlPct": 0.0935794297069333,
+        "maxDrawdown": 0.21762525299704066,
+        "profitFactor": 1.4300026234005183
+      },
+      {
+        "params": {
+          "name": "Ultra-Conservative",
+          "rsiLong": 25,
+          "rsiShort": 75,
+          "adx": 25,
+          "sl": 1.5,
+          "tp": 2.5
+        },
+        "trades": 0,
+        "wins": 0,
+        "winRate": 0,
+        "netPnl": 0,
+        "netPnlPct": 0,
+        "maxDrawdown": 0,
+        "profitFactor": 0
+      },
+      {
+        "params": {
+          "name": "Moderate",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 30,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 6,
+        "wins": 2,
+        "winRate": 0.3333333333333333,
+        "netPnl": -27.423407082795165,
+        "netPnlPct": -0.27423407082795165,
+        "maxDrawdown": 0.5889886103226099,
+        "profitFactor": 0.6960989168975465
+      },
+      {
+        "params": {
+          "name": "Moderate-Tight",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 25,
+          "sl": 1.5,
+          "tp": 2.5
+        },
+        "trades": 3,
+        "wins": 0,
+        "winRate": 0,
+        "netPnl": -51.9459167887926,
+        "netPnlPct": -0.519459167887926,
+        "maxDrawdown": 0.519459167887926,
+        "profitFactor": 0
+      },
+      {
+        "params": {
+          "name": "High-Frequency",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 35,
+          "sl": 1.5,
+          "tp": 2
+        },
+        "trades": 14,
+        "wins": 5,
+        "winRate": 0.35714285714285715,
+        "netPnl": -57.482810313529626,
+        "netPnlPct": -0.5748281031352963,
+        "maxDrawdown": 1.1862535097310596,
+        "profitFactor": 0.6384242866409936
+      }
+    ],
+    "SOL": [
+      {
+        "params": {
+          "name": "Trend-Following",
+          "rsiLong": 40,
+          "rsiShort": 60,
+          "adx": 20,
+          "sl": 3,
+          "tp": 5
+        },
+        "trades": 8,
+        "wins": 5,
+        "winRate": 0.625,
+        "netPnl": 187.17579296951772,
+        "netPnlPct": 1.871757929695177,
+        "maxDrawdown": 0.6652440628586223,
+        "profitFactor": 2.8935700316161412
+      },
+      {
+        "params": {
+          "name": "Aggressive",
+          "rsiLong": 40,
+          "rsiShort": 60,
+          "adx": 35,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 26,
+        "wins": 14,
+        "winRate": 0.5384615384615384,
+        "netPnl": 172.03847940439482,
+        "netPnlPct": 1.720384794043948,
+        "maxDrawdown": 1.0077945460026465,
+        "profitFactor": 1.5781240049622618
+      },
+      {
+        "params": {
+          "name": "Conservative",
+          "rsiLong": 30,
+          "rsiShort": 70,
+          "adx": 30,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 2,
+        "wins": 1,
+        "winRate": 0.5,
+        "netPnl": 9.696279811942077,
+        "netPnlPct": 0.09696279811942077,
+        "maxDrawdown": 0.21009013274811877,
+        "profitFactor": 1.4615295199783533
+      },
+      {
+        "params": {
+          "name": "Ultra-Conservative",
+          "rsiLong": 25,
+          "rsiShort": 75,
+          "adx": 25,
+          "sl": 1.5,
+          "tp": 2.5
+        },
+        "trades": 0,
+        "wins": 0,
+        "winRate": 0,
+        "netPnl": 0,
+        "netPnlPct": 0,
+        "maxDrawdown": 0,
+        "profitFactor": 0
+      },
+      {
+        "params": {
+          "name": "High-Frequency",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 35,
+          "sl": 1.5,
+          "tp": 2
+        },
+        "trades": 12,
+        "wins": 5,
+        "winRate": 0.4166666666666667,
+        "netPnl": -4.380342017197108,
+        "netPnlPct": -0.043803420171971086,
+        "maxDrawdown": 0.9920097384397583,
+        "profitFactor": 0.9691312676316476
+      },
+      {
+        "params": {
+          "name": "Very-Aggressive",
+          "rsiLong": 45,
+          "rsiShort": 55,
+          "adx": 40,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 36,
+        "wins": 15,
+        "winRate": 0.4166666666666667,
+        "netPnl": -25.803293096088964,
+        "netPnlPct": -0.25803293096088964,
+        "maxDrawdown": 2.5691927088485844,
+        "profitFactor": 0.9498290474368465
+      },
+      {
+        "params": {
+          "name": "Moderate",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 30,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 9,
+        "wins": 3,
+        "winRate": 0.3333333333333333,
+        "netPnl": -28.30034119195807,
+        "netPnlPct": -0.28300341191958067,
+        "maxDrawdown": 0.8735162405049507,
+        "profitFactor": 0.8024144221232543
+      },
+      {
+        "params": {
+          "name": "Moderate-Tight",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 25,
+          "sl": 1.5,
+          "tp": 2.5
+        },
+        "trades": 7,
+        "wins": 2,
+        "winRate": 0.2857142857142857,
+        "netPnl": -30.430969876950257,
+        "netPnlPct": -0.3043096987695026,
+        "maxDrawdown": 1.0804773500890041,
+        "profitFactor": 0.7183562443540119
+      }
+    ],
+    "HYPE": [
+      {
+        "params": {
+          "name": "Ultra-Conservative",
+          "rsiLong": 25,
+          "rsiShort": 75,
+          "adx": 25,
+          "sl": 1.5,
+          "tp": 2.5
+        },
+        "trades": 0,
+        "wins": 0,
+        "winRate": 0,
+        "netPnl": 0,
+        "netPnlPct": 0,
+        "maxDrawdown": 0,
+        "profitFactor": 0
+      },
+      {
+        "params": {
+          "name": "Trend-Following",
+          "rsiLong": 40,
+          "rsiShort": 60,
+          "adx": 20,
+          "sl": 3,
+          "tp": 5
+        },
+        "trades": 11,
+        "wins": 4,
+        "winRate": 0.36363636363636365,
+        "netPnl": -33.78298984185312,
+        "netPnlPct": -0.3378298984185312,
+        "maxDrawdown": 1.071023990477527,
+        "profitFactor": 0.8577660872316815
+      },
+      {
+        "params": {
+          "name": "Conservative",
+          "rsiLong": 30,
+          "rsiShort": 70,
+          "adx": 30,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 4,
+        "wins": 1,
+        "winRate": 0.25,
+        "netPnl": -39.039820014972065,
+        "netPnlPct": -0.39039820014972065,
+        "maxDrawdown": 0.4814532827057426,
+        "profitFactor": 0.4370611242707581
+      },
+      {
+        "params": {
+          "name": "Moderate-Tight",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 25,
+          "sl": 1.5,
+          "tp": 2.5
+        },
+        "trades": 9,
+        "wins": 2,
+        "winRate": 0.2222222222222222,
+        "netPnl": -68.58590995579289,
+        "netPnlPct": -0.6858590995579289,
+        "maxDrawdown": 0.6858590995579289,
+        "profitFactor": 0.4762645601325753
+      },
+      {
+        "params": {
+          "name": "Moderate",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 30,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 17,
+        "wins": 6,
+        "winRate": 0.35294117647058826,
+        "netPnl": -72.28295941245597,
+        "netPnlPct": -0.7228295941245596,
+        "maxDrawdown": 0.8079596441182548,
+        "profitFactor": 0.7275327847372194
+      },
+      {
+        "params": {
+          "name": "High-Frequency",
+          "rsiLong": 35,
+          "rsiShort": 65,
+          "adx": 35,
+          "sl": 1.5,
+          "tp": 2
+        },
+        "trades": 24,
+        "wins": 8,
+        "winRate": 0.3333333333333333,
+        "netPnl": -127.87074485960511,
+        "netPnlPct": -1.278707448596051,
+        "maxDrawdown": 1.3922213495234432,
+        "profitFactor": 0.5773618006819974
+      },
+      {
+        "params": {
+          "name": "Aggressive",
+          "rsiLong": 40,
+          "rsiShort": 60,
+          "adx": 35,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 48,
+        "wins": 17,
+        "winRate": 0.3541666666666667,
+        "netPnl": -211.359300246766,
+        "netPnlPct": -2.1135930024676597,
+        "maxDrawdown": 3.2091171272403582,
+        "profitFactor": 0.723733499906448
+      },
+      {
+        "params": {
+          "name": "Very-Aggressive",
+          "rsiLong": 45,
+          "rsiShort": 55,
+          "adx": 40,
+          "sl": 2,
+          "tp": 3
+        },
+        "trades": 69,
+        "wins": 25,
+        "winRate": 0.36231884057971014,
+        "netPnl": -260.88079132493476,
+        "netPnlPct": -2.6088079132493474,
+        "maxDrawdown": 2.7843208420547034,
+        "profitFactor": 0.7601777258580356
+      }
+    ]
+  }
+}

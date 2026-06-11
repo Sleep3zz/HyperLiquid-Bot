@@ -1,21 +1,36 @@
 {
   "coin": "SOL",
-  "updatedAt": "2026-06-09T21:28:06.137Z",
-  "recommended": "Aggressive",
+  "recommended": "Mean Reversion (Optimized)",
+  "mode": "reversion",
   "params": {
-    "name": "Aggressive",
-    "leverage": 5,
-    "positionSize": 0.15,
-    "profitTarget": 2.5,
-    "stopLoss": 1.5,
+    "leverage": 3,
+    "positionSize": 0.10,
+    "profitTarget": 6.0,
+    "stopLoss": 3.0,
     "bbPeriod": 20,
-    "bbStdDev": 2.5,
+    "bbStdDev": 2.0,
     "rsiPeriod": 14,
-    "rsiOverbought": 75,
+    "rsiOverbought": 55,
     "rsiOversold": 25,
     "adxPeriod": 14,
-    "adxTrendThreshold": 30
+    "adxTrendThreshold": 40
   },
-  "expectedReturn": 0,
-  "expectedSharpe": 0
+  "backtestResults": {
+    "trades": 12,
+    "wins": 8,
+    "losses": 4,
+    "winRate": 0.667,
+    "netPnl": 381.03,
+    "netPnlPct": 3.81,
+    "profitFactor": 3.91,
+    "maxDrawdown": 0,
+    "sharpe": null
+  },
+  "updatedAt": "2026-06-11T06:30:00Z",
+  "previousBest": {
+    "netPnl": 187.18,
+    "winRate": 0.625,
+    "trades": 8
+  },
+  "improvement": "103% better PnL, fewer trades but higher quality"
 }

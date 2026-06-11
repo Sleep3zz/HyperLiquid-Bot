@@ -1,0 +1,24 @@
+{
+  "coin": "SOL",
+  "initialCapital": 1000,
+  "currentEquity": 1000,
+  "position": null,
+  "params": {
+    "coin": "SOL",
+    "configName": "Mean Reversion (Optimized)",
+    "leverage": 3,
+    "positionSize": 0.1,
+    "profitTarget": 6,
+    "stopLoss": 3,
+    "bbPeriod": 20,
+    "bbStdDev": 2,
+    "rsiPeriod": 14,
+    "rsiOverbought": 55,
+    "rsiOversold": 25,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 40,
+    "lastUpdated": "2026-06-11T06:30:00Z"
+  },
+  "trades": [],
+  "lastUpdated": "2026-06-11T06:38:27.578Z"
+}

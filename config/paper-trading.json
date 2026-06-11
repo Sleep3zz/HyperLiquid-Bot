@@ -3,54 +3,63 @@
     "enabled": true,
     "initialCapital": 1000,
     "mode": "dry_run",
-    "description": "Paper trading using native BBRSI strategy with ML optimization"
+    "description": "Paper trading using optimized BBRSI strategy per coin"
   },
   
   "trading": {
-    "symbols": ["BTC-PERP", "ETH-PERP"],
+    "symbols": ["BTC-PERP", "SOL-PERP", "HYPE-PERP"],
     "timeframe": "15m",
     "checkInterval": 60000,
     "maxPositions": 3,
-    "maxLeverage": 3,
+    "defaultLeverage": 3,
     "maxPositionSize": 0.1
+  },
+
+  "coins": {
+    "BTC": {
+      "mode": "reversion",
+      "rsiLong": 40,
+      "rsiShort": 60,
+      "adxThreshold": 20,
+      "stopLoss": 3.0,
+      "takeProfit": 5.0,
+      "leverage": 3,
+      "positionSize": 0.10
+    },
+    "SOL": {
+      "mode": "reversion",
+      "rsiLong": 40,
+      "rsiShort": 60,
+      "adxThreshold": 20,
+      "stopLoss": 3.0,
+      "takeProfit": 5.0,
+      "leverage": 3,
+      "positionSize": 0.10
+    },
+    "HYPE": {
+      "mode": "breakout",
+      "rsiLong": 50,
+      "rsiShort": 40,
+      "adxThreshold": 25,
+      "stopLoss": 2.0,
+      "takeProfit": 5.0,
+      "leverage": 3,
+      "positionSize": 0.10
+    }
   },
 
   "strategy": {
     "name": "BBRSI",
     "type": "native",
     "indicators": {
-      "rsi": { "period": 14, "overbought": 70, "oversold": 30 },
+      "rsi": { "period": 14 },
       "bollinger": { "period": 20, "stdDev": 2 },
-      "adx": { "period": 14, "threshold": 25 }
-    }
-  },
-
-  "mlOptimization": {
-    "enabled": true,
-    "description": "ML-enhanced parameter optimization using native optimizer",
-    "models": {
-      "primary": "xgboost",
-      "fallback": "randomforest"
-    },
-    "features": [
-      "rsi",
-      "bollinger_bands",
-      "adx",
-      "macd",
-      "ema",
-      "atr"
-    ],
-    "optimization": {
-      "datasetSize": 1000,
-      "targetMetric": "sharpe_ratio",
-      "retrainInterval": 86400
+      "adx": { "period": 14 }
     }
   },
 
   "riskManagement": {
     "enabled": true,
-    "stopLoss": 0.02,
-    "takeProfit": 0.03,
     "maxDrawdown": 0.1,
     "dailyLossLimit": 50,
     "maxPositionSize": 0.1

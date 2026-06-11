@@ -1,21 +1,30 @@
 {
   "coin": "BTC",
-  "updatedAt": "2026-06-09T21:35:43.379Z",
-  "recommended": "Mean-Reversion",
+  "recommended": "Trend-Following (Mean Reversion)",
+  "mode": "reversion",
   "params": {
-    "name": "Mean-Reversion",
-    "leverage": 4,
-    "positionSize": 0.12,
-    "profitTarget": 1.2,
-    "stopLoss": 0.8,
+    "leverage": 3,
+    "positionSize": 0.10,
+    "profitTarget": 5.0,
+    "stopLoss": 3.0,
     "bbPeriod": 20,
-    "bbStdDev": 2,
+    "bbStdDev": 2.0,
     "rsiPeriod": 14,
-    "rsiOverbought": 65,
-    "rsiOversold": 35,
+    "rsiOverbought": 60,
+    "rsiOversold": 40,
     "adxPeriod": 14,
     "adxTrendThreshold": 20
   },
-  "expectedReturn": 0.040680926132572494,
-  "expectedSharpe": 0.03717194357831216
+  "backtestResults": {
+    "trades": 4,
+    "wins": 4,
+    "losses": 0,
+    "winRate": 1.0,
+    "netPnl": 206.67,
+    "netPnlPct": 2.07,
+    "profitFactor": null,
+    "maxDrawdown": 0.0,
+    "sharpe": null
+  },
+  "updatedAt": "2026-06-11T06:15:00Z"
 }

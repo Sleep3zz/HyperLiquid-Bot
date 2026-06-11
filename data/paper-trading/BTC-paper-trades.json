@@ -5,23 +5,20 @@
   "position": null,
   "params": {
     "coin": "BTC",
-    "configName": "Mean-Reversion",
-    "name": "Mean-Reversion",
-    "leverage": 4,
-    "positionSize": 0.12,
-    "profitTarget": 1.2,
-    "stopLoss": 0.8,
+    "configName": "Trend-Following (Mean Reversion)",
+    "leverage": 3,
+    "positionSize": 0.1,
+    "profitTarget": 5,
+    "stopLoss": 3,
     "bbPeriod": 20,
     "bbStdDev": 2,
     "rsiPeriod": 14,
-    "rsiOverbought": 65,
-    "rsiOversold": 35,
+    "rsiOverbought": 60,
+    "rsiOversold": 40,
     "adxPeriod": 14,
     "adxTrendThreshold": 20,
-    "lastUpdated": "2026-06-09T21:35:43.379Z",
-    "expectedReturn": 0.040680926132572494,
-    "expectedSharpe": 0.03717194357831216
+    "lastUpdated": "2026-06-11T06:15:00Z"
   },
   "trades": [],
-  "lastUpdated": "2026-06-10T21:48:32.289Z"
+  "lastUpdated": "2026-06-11T06:38:12.394Z"
 }

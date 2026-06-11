@@ -1,21 +1,30 @@
 {
   "coin": "HYPE",
-  "updatedAt": "2026-06-09T21:28:10.979Z",
-  "recommended": "Mean-Reversion",
+  "recommended": "Breakout",
+  "mode": "breakout",
   "params": {
-    "name": "Mean-Reversion",
-    "leverage": 4,
-    "positionSize": 0.12,
-    "profitTarget": 1.2,
-    "stopLoss": 0.8,
+    "leverage": 3,
+    "positionSize": 0.10,
+    "profitTarget": 5.0,
+    "stopLoss": 2.0,
     "bbPeriod": 20,
-    "bbStdDev": 2,
+    "bbStdDev": 2.0,
     "rsiPeriod": 14,
-    "rsiOverbought": 65,
-    "rsiOversold": 35,
+    "rsiOverbought": 40,
+    "rsiOversold": 50,
     "adxPeriod": 14,
-    "adxTrendThreshold": 20
+    "adxTrendThreshold": 25
   },
-  "expectedReturn": 0.5648816871810778,
-  "expectedSharpe": 0.2845540565788353
+  "backtestResults": {
+    "trades": 42,
+    "wins": 20,
+    "losses": 22,
+    "winRate": 0.476,
+    "netPnl": 503.87,
+    "netPnlPct": 5.04,
+    "profitFactor": 1.86,
+    "maxDrawdown": 1.48,
+    "sharpe": null
+  },
+  "updatedAt": "2026-06-11T06:15:00Z"
 }

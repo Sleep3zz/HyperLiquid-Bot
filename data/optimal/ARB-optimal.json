@@ -1,21 +1,30 @@
 {
   "coin": "ARB",
-  "updatedAt": "2026-06-09T21:28:15.807Z",
-  "recommended": "Mean-Reversion",
+  "recommended": "Mean Reversion (Optimized)",
+  "mode": "reversion",
   "params": {
-    "name": "Mean-Reversion",
-    "leverage": 4,
-    "positionSize": 0.12,
-    "profitTarget": 1.2,
-    "stopLoss": 0.8,
+    "leverage": 3,
+    "positionSize": 0.10,
+    "profitTarget": 6.0,
+    "stopLoss": 2.0,
     "bbPeriod": 20,
-    "bbStdDev": 2,
+    "bbStdDev": 2.0,
     "rsiPeriod": 14,
-    "rsiOverbought": 65,
+    "rsiOverbought": 60,
     "rsiOversold": 35,
     "adxPeriod": 14,
-    "adxTrendThreshold": 20
+    "adxTrendThreshold": 25
   },
-  "expectedReturn": 0.9122077689211802,
-  "expectedSharpe": 0.32779720791811645
+  "backtestResults": {
+    "trades": 10,
+    "wins": 8,
+    "losses": 2,
+    "winRate": 0.80,
+    "netPnl": 458.67,
+    "netPnlPct": 4.59,
+    "profitFactor": 10.82,
+    "maxDrawdown": 0,
+    "sharpe": null
+  },
+  "updatedAt": "2026-06-11T06:35:00Z"
 }

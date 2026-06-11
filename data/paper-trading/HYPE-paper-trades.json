@@ -5,23 +5,20 @@
   "position": null,
   "params": {
     "coin": "HYPE",
-    "configName": "Mean-Reversion",
-    "name": "Mean-Reversion",
-    "leverage": 4,
-    "positionSize": 0.12,
-    "profitTarget": 1.2,
-    "stopLoss": 0.8,
+    "configName": "Breakout",
+    "leverage": 3,
+    "positionSize": 0.1,
+    "profitTarget": 5,
+    "stopLoss": 2,
     "bbPeriod": 20,
     "bbStdDev": 2,
     "rsiPeriod": 14,
-    "rsiOverbought": 65,
-    "rsiOversold": 35,
+    "rsiOverbought": 40,
+    "rsiOversold": 50,
     "adxPeriod": 14,
-    "adxTrendThreshold": 20,
-    "lastUpdated": "2026-06-09T21:28:10.979Z",
-    "expectedReturn": 0.5648816871810778,
-    "expectedSharpe": 0.2845540565788353
+    "adxTrendThreshold": 25,
+    "lastUpdated": "2026-06-11T06:15:00Z"
   },
   "trades": [],
-  "lastUpdated": "2026-06-10T21:48:32.275Z"
+  "lastUpdated": "2026-06-11T06:38:12.166Z"
 }

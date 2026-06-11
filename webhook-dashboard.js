@@ -7,7 +7,7 @@ const WayfinderAgent = require('./../model-router/src/agents/wayfinder-agent');
 const DATA_DIR = path.join(__dirname, 'data', 'paper-trading');
 const app = express();
 const PORT = process.argv.find(arg => arg.startsWith('--port'))?.split('=')[1] || 3456;
-const PASSWORD = 'sleep3zz';
+const PASSWORD = '4EsJ9QU$7ATNWjm';
 
 // Initialize price feed
 const priceAgent = new WayfinderAgent({ autoConnect: false });

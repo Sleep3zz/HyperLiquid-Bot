@@ -1,0 +1,230 @@
+{
+  "timestamp": "2026-06-11T05:54:07.387Z",
+  "config": {
+    "name": "Conservative",
+    "rsiLong": 30,
+    "rsiShort": 70,
+    "adxThreshold": 30,
+    "stopLoss": 2,
+    "takeProfit": 3,
+    "positionSize": 0.1
+  },
+  "summary": {
+    "totalPnl": 121.04397356885238,
+    "totalTrades": 14,
+    "totalWins": 8,
+    "avgWinRate": 57.14285714285714,
+    "maxDD": 0.4814532827057426,
+    "avgPF": 0.8301118371164685
+  },
+  "results": [
+    {
+      "coin": "ARB",
+      "trades": [
+        {
+          "side": "LONG",
+          "entry": 0.1257,
+          "exit": 0.12987,
+          "pnl": 3.2274224343675475,
+          "realized": 32.27422434367548,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 0.12396,
+          "exit": 0.12017,
+          "pnl": 2.9674378831881265,
+          "realized": 29.7701505878492,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 2,
+      "wins": 2,
+      "losses": 0,
+      "winRate": 1,
+      "netPnl": 62.044374931523635,
+      "netPnlPct": 0.6204437493152364,
+      "maxDrawdown": 0,
+      "profitFactor": null,
+      "avgWin": 31.02218746576234,
+      "avgLoss": 0,
+      "sharpe": 24.777375182006846
+    },
+    {
+      "coin": "BTC",
+      "trades": [
+        {
+          "side": "SHORT",
+          "entry": 77076,
+          "exit": 78684,
+          "pnl": -2.1762525299704185,
+          "realized": -21.762525299704187,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 80777,
+          "exit": 78185,
+          "pnl": 3.11883419785335,
+          "realized": 31.120468270397136,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRate": 0.5,
+      "netPnl": 9.35794297069333,
+      "netPnlPct": 0.0935794297069333,
+      "maxDrawdown": 0.21762525299704066,
+      "profitFactor": 1.4300026234005183,
+      "avgWin": 31.120468270397136,
+      "avgLoss": 21.762525299704187,
+      "sharpe": 0.17695562105969143
+    },
+    {
+      "coin": "ETH",
+      "trades": [
+        {
+          "side": "SHORT",
+          "entry": 2281.7,
+          "exit": 2327.6,
+          "pnl": -2.1016579743173986,
+          "realized": -21.016579743173992,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 2305.7,
+          "exit": 2223.4,
+          "pnl": 3.4794149282213533,
+          "realized": 34.72102388091498,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRate": 0.5,
+      "netPnl": 13.70444413774021,
+      "netPnlPct": 0.1370444413774021,
+      "maxDrawdown": 0.2101657974317459,
+      "profitFactor": 1.6520777550491808,
+      "avgWin": 34.72102388091498,
+      "avgLoss": 21.016579743173992,
+      "sharpe": 0.24587429754188656
+    },
+    {
+      "coin": "HYPE",
+      "trades": [
+        {
+          "side": "SHORT",
+          "entry": 39.979,
+          "exit": 40.789,
+          "pnl": -2.1160636834338082,
+          "realized": -21.16063683433808,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 42.143,
+          "exit": 40.825,
+          "pnl": 3.037447025603298,
+          "realized": 30.31019594262065,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 39.497,
+          "exit": 38.704,
+          "pnl": -2.0977474238549743,
+          "realized": -20.99666770259855,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 40.152,
+          "exit": 41.209,
+          "pnl": -2.7224965132496566,
+          "realized": -27.19271142065645,
+          "reason": "stop-loss"
+        }
+      ],
+      "tradeCount": 4,
+      "wins": 1,
+      "losses": 3,
+      "winRate": 0.25,
+      "netPnl": -39.039820014972065,
+      "netPnlPct": -0.39039820014972065,
+      "maxDrawdown": 0.4814532827057426,
+      "profitFactor": 0.4370611242707581,
+      "avgWin": 30.31019594262065,
+      "avgLoss": 23.11667198586436,
+      "sharpe": -0.41944297252943746
+    },
+    {
+      "coin": "SOL",
+      "trades": [
+        {
+          "side": "SHORT",
+          "entry": 83.843,
+          "exit": 85.529,
+          "pnl": -2.100901327481117,
+          "realized": -21.009013274811167,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 93.243,
+          "exit": 90.29,
+          "pnl": 3.0769937689692406,
+          "realized": 30.70529308675362,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRate": 0.5,
+      "netPnl": 9.696279811942077,
+      "netPnlPct": 0.09696279811942077,
+      "maxDrawdown": 0.21009013274811877,
+      "profitFactor": 1.4615295199783533,
+      "avgWin": 30.70529308675362,
+      "avgLoss": 21.009013274811167,
+      "sharpe": 0.1874970485758839
+    },
+    {
+      "coin": "UNI",
+      "trades": [
+        {
+          "side": "SHORT",
+          "entry": 3.5568,
+          "exit": 3.4278,
+          "pnl": 3.5368556005398113,
+          "realized": 35.36855600539811,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 3.6702,
+          "exit": 3.5575,
+          "pnl": 2.9806773472835215,
+          "realized": 29.912195726526633,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 2,
+      "wins": 2,
+      "losses": 0,
+      "winRate": 1,
+      "netPnl": 65.28075173192519,
+      "netPnlPct": 0.6528075173192519,
+      "maxDrawdown": 0,
+      "profitFactor": null,
+      "avgWin": 32.64037586596237,
+      "avgLoss": 0,
+      "sharpe": 11.964157129563034
+    }
+  ]
+}

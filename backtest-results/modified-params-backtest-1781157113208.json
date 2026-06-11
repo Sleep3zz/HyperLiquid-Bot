@@ -1,0 +1,93 @@
+{
+  "results": [
+    {
+      "coin": "ARB",
+      "candles": 5014,
+      "trades": 40,
+      "entrySignals": 41,
+      "wins": 20,
+      "losses": 20,
+      "winRate": 0.5,
+      "netPnl": 137.5096148188204,
+      "netPnlPct": 1.375096148188204,
+      "maxDrawdown": 1.7770010436782144,
+      "profitFactor": 1.2645267890954117
+    },
+    {
+      "coin": "BTC",
+      "candles": 5001,
+      "trades": 18,
+      "entrySignals": 18,
+      "wins": 9,
+      "losses": 9,
+      "winRate": 0.5,
+      "netPnl": 73.76469219421051,
+      "netPnlPct": 0.7376469219421051,
+      "maxDrawdown": 0.9655639303483726,
+      "profitFactor": 1.3591367633205664
+    },
+    {
+      "coin": "ETH",
+      "candles": 5000,
+      "trades": 22,
+      "entrySignals": 22,
+      "wins": 7,
+      "losses": 15,
+      "winRate": 0.3181818181818182,
+      "netPnl": -120.57396294333557,
+      "netPnlPct": -1.2057396294333558,
+      "maxDrawdown": 2.373627734411275,
+      "profitFactor": 0.6696040919190223
+    },
+    {
+      "coin": "HYPE",
+      "candles": 5007,
+      "trades": 48,
+      "entrySignals": 48,
+      "wins": 17,
+      "losses": 31,
+      "winRate": 0.3541666666666667,
+      "netPnl": -211.359300246766,
+      "netPnlPct": -2.1135930024676597,
+      "maxDrawdown": 3.2091171272403582,
+      "profitFactor": 0.723733499906448
+    },
+    {
+      "coin": "SOL",
+      "candles": 5000,
+      "trades": 26,
+      "entrySignals": 26,
+      "wins": 14,
+      "losses": 12,
+      "winRate": 0.5384615384615384,
+      "netPnl": 172.03847940439482,
+      "netPnlPct": 1.720384794043948,
+      "maxDrawdown": 1.0077945460026465,
+      "profitFactor": 1.5781240049622618
+    },
+    {
+      "coin": "UNI",
+      "candles": 5010,
+      "trades": 43,
+      "entrySignals": 44,
+      "wins": 16,
+      "losses": 27,
+      "winRate": 0.37209302325581395,
+      "netPnl": -199.06919402882704,
+      "netPnlPct": -1.9906919402882706,
+      "maxDrawdown": 3.8572687715027714,
+      "profitFactor": 0.7176694771961895
+    }
+  ],
+  "totalPnl": -147.68967080150287,
+  "totalTrades": 197,
+  "totalWins": 83,
+  "config": {
+    "rsiLong": 40,
+    "rsiShort": 60,
+    "adxThreshold": 35,
+    "stopLoss": 2,
+    "takeProfit": 3,
+    "positionSize": 0.1
+  }
+}

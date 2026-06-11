@@ -1,0 +1,513 @@
+{
+  "results": [
+    {
+      "coin": "BTC",
+      "cfg": {
+        "name": "Trend-Following (Reversion)",
+        "mode": "reversion",
+        "rsiLong": 40,
+        "rsiShort": 60,
+        "adx": 20,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": [
+        {
+          "side": "LONG",
+          "entry": 77349,
+          "exit": 81290,
+          "pnl": 5.005088495003167,
+          "realized": 50.05088495003167,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 81783,
+          "exit": 77220,
+          "pnl": 5.489399141630901,
+          "realized": 55.16874070119158,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 77199,
+          "exit": 73234,
+          "pnl": 5.046076892187723,
+          "realized": 50.99171524348051,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 73807,
+          "exit": 70074,
+          "pnl": 4.967785846870893,
+          "realized": 50.45388295712636,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 4,
+      "wins": 4,
+      "losses": 0,
+      "winRate": 1,
+      "netPnl": 206.6652238518309,
+      "netPnlPct": 2.066652238518309,
+      "maxDrawdown": 0,
+      "profitFactor": null,
+      "avgWin": 51.66630596295753,
+      "avgLoss": 0,
+      "finalEquity": 10206.66522385183
+    },
+    {
+      "coin": "SOL",
+      "cfg": {
+        "name": "Trend-Following (Reversion)",
+        "mode": "reversion",
+        "rsiLong": 40,
+        "rsiShort": 60,
+        "adx": 20,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": [
+        {
+          "side": "LONG",
+          "entry": 84.514,
+          "exit": 88.945,
+          "pnl": 5.152918333057242,
+          "realized": 51.529183330572415,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 86.214,
+          "exit": 81.711,
+          "pnl": 5.133049620711254,
+          "realized": 51.5949980620631,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 84.328,
+          "exit": 87.003,
+          "pnl": -3.2621373683711186,
+          "realized": -32.957778929414786,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 89.358,
+          "exit": 92.317,
+          "pnl": -3.4013990912956746,
+          "realized": -34.25265485053463,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 92.756,
+          "exit": 97.955,
+          "pnl": 5.515028246151191,
+          "realized": 55.34834779402103,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 90.8,
+          "exit": 88.035,
+          "pnl": -3.135154185022027,
+          "realized": -31.637662590568496,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 87.7,
+          "exit": 82.18,
+          "pnl": 6.204184720638536,
+          "realized": 62.41176820144,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 82.6,
+          "exit": 77.21,
+          "pnl": 6.435423728813561,
+          "realized": 65.13959195193841,
+          "reason": "take-profit"
+        }
+      ],
+      "tradeCount": 8,
+      "wins": 5,
+      "losses": 3,
+      "winRate": 0.625,
+      "netPnl": 187.17579296951772,
+      "netPnlPct": 1.871757929695177,
+      "maxDrawdown": 0.6652440628586223,
+      "profitFactor": 2.8935700316161412,
+      "avgWin": 57.204777868006985,
+      "avgLoss": 32.94936545683931,
+      "finalEquity": 10187.175792969518
+    },
+    {
+      "coin": "HYPE",
+      "cfg": {
+        "name": "Breakout",
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": [
+        {
+          "side": "SHORT",
+          "entry": 43.68,
+          "exit": 41.437,
+          "pnl": 5.045073260073265,
+          "realized": 50.45073260073265,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 38.923,
+          "exit": 39.722,
+          "pnl": -2.1427708552783686,
+          "realized": -21.535812912227982,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 40.577,
+          "exit": 42.695,
+          "pnl": 5.1297057446336645,
+          "realized": 51.44538247596839,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 42.811,
+          "exit": 41.913,
+          "pnl": -2.1875917404405483,
+          "realized": -22.051712937679792,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 41.312,
+          "exit": 39.184,
+          "pnl": 5.061045701006972,
+          "realized": 50.90555944490775,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 39.142,
+          "exit": 40.137,
+          "pnl": -2.632026467732863,
+          "realized": -26.607719207283452,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 40.342,
+          "exit": 42.47,
+          "pnl": 5.18489960834862,
+          "realized": 52.27730212726333,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 42.422,
+          "exit": 44.667,
+          "pnl": 5.202065437744578,
+          "realized": 52.72232837567287,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 42.459,
+          "exit": 43.342,
+          "pnl": -2.1696533126074455,
+          "realized": -22.103573235547856,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 43.463,
+          "exit": 42.471,
+          "pnl": -2.372401122794111,
+          "realized": -24.116649513288863,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 41.767,
+          "exit": 39.532,
+          "pnl": 5.261114516244898,
+          "realized": 53.35499224303075,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 38.964,
+          "exit": 39.874,
+          "pnl": -2.425489169489795,
+          "realized": -24.727233467614386,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 40.779,
+          "exit": 42.862,
+          "pnl": 5.018021285465554,
+          "realized": 51.03334469817163,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 45.084,
+          "exit": 43.493,
+          "pnl": -3.6189681483453127,
+          "realized": -36.98964332110702,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 43.101,
+          "exit": 44.035,
+          "pnl": -2.257003085775266,
+          "realized": -22.985448745878458,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 42.114,
+          "exit": 42.963,
+          "pnl": -2.105956688987044,
+          "realized": -21.398777226890015,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 43.303,
+          "exit": 45.516,
+          "pnl": 5.020500427222135,
+          "realized": 50.906232986847584,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 47.411,
+          "exit": 50.135,
+          "pnl": 5.6555020986690785,
+          "realized": 57.632842642603464,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 50.501,
+          "exit": 53.84,
+          "pnl": 6.521750262371054,
+          "realized": 66.836280258712,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 55.392,
+          "exit": 58.334,
+          "pnl": 5.221236279607163,
+          "realized": 53.85730507445253,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 58.597,
+          "exit": 57.414,
+          "pnl": -2.108874686417393,
+          "realized": -21.866722824823984,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 60.909,
+          "exit": 58.944,
+          "pnl": -3.3161242180958417,
+          "realized": -34.312066645104814,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 61.621,
+          "exit": 60.279,
+          "pnl": -2.2678289868713564,
+          "realized": -23.38750109477725,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 57.889,
+          "exit": 54.641,
+          "pnl": 5.520737791290236,
+          "realized": 56.80474510373712,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 55.93,
+          "exit": 58.747,
+          "pnl": 4.946652959055963,
+          "realized": 51.17878475694792,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 59.617,
+          "exit": 58.217,
+          "pnl": -2.4383234647835326,
+          "realized": -25.352036572723684,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 60.623,
+          "exit": 63.867,
+          "pnl": 5.261104366329611,
+          "realized": 54.56802157401478,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 61.219,
+          "exit": 63.031,
+          "pnl": -3.0498654012643094,
+          "realized": -31.799540418846057,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 63.584,
+          "exit": 62.241,
+          "pnl": -2.202166582788128,
+          "realized": -22.89094777923269,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 60.358,
+          "exit": 57.057,
+          "pnl": 5.3790347592696826,
+          "realized": 55.790533429724555,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 56.898,
+          "exit": 58.046,
+          "pnl": -2.107645611445035,
+          "realized": -21.97776758006604,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 60.328,
+          "exit": 63.47,
+          "pnl": 5.118195199575646,
+          "realized": 53.25820537785427,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 66.894,
+          "exit": 71.04,
+          "pnl": 6.107865279397257,
+          "realized": 63.881670905680586,
+          "reason": "take-profit"
+        },
+        {
+          "side": "LONG",
+          "entry": 71.402,
+          "exit": 75.146,
+          "pnl": 5.153550600823506,
+          "realized": 54.229787985844,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 69.408,
+          "exit": 65.76,
+          "pnl": 5.165878284923923,
+          "realized": 54.639654237939,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 63.249,
+          "exit": 64.579,
+          "pnl": -2.19280004426946,
+          "realized": -23.31312765887546,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 62.178,
+          "exit": 59,
+          "pnl": 5.021132554922959,
+          "realized": 53.26596882172021,
+          "reason": "take-profit"
+        },
+        {
+          "side": "SHORT",
+          "entry": 56.068,
+          "exit": 58.02,
+          "pnl": -3.571486766069782,
+          "realized": -38.07784685641905,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 59.79,
+          "exit": 57.59,
+          "pnl": -3.7695450744271546,
+          "realized": -40.04593379011169,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "SHORT",
+          "entry": 57.575,
+          "exit": 58.799,
+          "pnl": -2.2159227095093295,
+          "realized": -23.452217139268527,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 61.561,
+          "exit": 59.813,
+          "pnl": -2.929460047757505,
+          "realized": -30.93523694957616,
+          "reason": "stop-loss"
+        },
+        {
+          "side": "LONG",
+          "entry": 62.483,
+          "exit": 61.041,
+          "pnl": -2.397827729142327,
+          "realized": -25.24699709868606,
+          "reason": "stop-loss"
+        }
+      ],
+      "tradeCount": 42,
+      "wins": 20,
+      "losses": 22,
+      "winRate": 0.47619047619047616,
+      "netPnl": 503.8651621457957,
+      "netPnlPct": 5.038651621457957,
+      "maxDrawdown": 1.4796830276629358,
+      "profitFactor": 1.8610511069309612,
+      "avgWin": 54.45198375609127,
+      "avgLoss": 26.59884149891042,
+      "finalEquity": 10503.865162145796
+    }
+  ],
+  "totalPnl": 897.7061789671443,
+  "totalTrades": 54
+}

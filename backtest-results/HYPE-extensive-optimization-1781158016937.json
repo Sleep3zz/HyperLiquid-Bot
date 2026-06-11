@@ -1,0 +1,857 @@
+{
+  "timestamp": "2026-06-11T06:06:56.937Z",
+  "totalTested": 6642,
+  "profitableCount": 1300,
+  "topResults": [
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 42,
+      "wins": 20,
+      "winRate": 0.47619047619047616,
+      "netPnl": 503.8651621457957,
+      "netPnlPct": 5.038651621457957,
+      "maxDrawdown": 1.4796830276629358,
+      "profitFactor": 1.8610511069309612
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 42,
+      "wins": 20,
+      "winRate": 0.47619047619047616,
+      "netPnl": 503.8651621457957,
+      "netPnlPct": 5.038651621457957,
+      "maxDrawdown": 1.4796830276629358,
+      "profitFactor": 1.8610511069309612
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 33,
+      "wins": 20,
+      "winRate": 0.6060606060606061,
+      "netPnl": 500.4317464845699,
+      "netPnlPct": 5.004317464845698,
+      "maxDrawdown": 1.01314567012728,
+      "profitFactor": 2.3359821518910304
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 33,
+      "wins": 20,
+      "winRate": 0.6060606060606061,
+      "netPnl": 500.4317464845699,
+      "netPnlPct": 5.004317464845698,
+      "maxDrawdown": 1.01314567012728,
+      "profitFactor": 2.3359821518910304
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 33,
+      "wins": 20,
+      "winRate": 0.6060606060606061,
+      "netPnl": 500.4317464845699,
+      "netPnlPct": 5.004317464845698,
+      "maxDrawdown": 1.01314567012728,
+      "profitFactor": 2.3359821518910304
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 41,
+      "wins": 19,
+      "winRate": 0.4634146341463415,
+      "netPnl": 452.16194433531564,
+      "netPnlPct": 4.521619443353156,
+      "maxDrawdown": 1.4796830276629371,
+      "profitFactor": 1.7745402912481587
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 35,
+      "wins": 20,
+      "winRate": 0.5714285714285714,
+      "netPnl": 450.4953921246215,
+      "netPnlPct": 4.504953921246215,
+      "maxDrawdown": 1.2420782666564576,
+      "profitFactor": 2.0658227072666113
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 35,
+      "wins": 20,
+      "winRate": 0.5714285714285714,
+      "netPnl": 450.4953921246215,
+      "netPnlPct": 4.504953921246215,
+      "maxDrawdown": 1.2420782666564576,
+      "profitFactor": 2.0658227072666113
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 35,
+      "wins": 20,
+      "winRate": 0.5714285714285714,
+      "netPnl": 450.4953921246215,
+      "netPnlPct": 4.504953921246215,
+      "maxDrawdown": 1.2420782666564576,
+      "profitFactor": 2.0658227072666113
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 35,
+      "wins": 20,
+      "winRate": 0.5714285714285714,
+      "netPnl": 450.4953921246215,
+      "netPnlPct": 4.504953921246215,
+      "maxDrawdown": 1.2420782666564576,
+      "profitFactor": 2.0658227072666113
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 35,
+      "wins": 20,
+      "winRate": 0.5714285714285714,
+      "netPnl": 450.4953921246215,
+      "netPnlPct": 4.504953921246215,
+      "maxDrawdown": 1.2420782666564576,
+      "profitFactor": 2.0658227072666113
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 35,
+      "wins": 20,
+      "winRate": 0.5714285714285714,
+      "netPnl": 450.4953921246215,
+      "netPnlPct": 4.504953921246215,
+      "maxDrawdown": 1.2420782666564576,
+      "profitFactor": 2.0658227072666113
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 45,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 44,
+      "wins": 20,
+      "winRate": 0.45454545454545453,
+      "netPnl": 447.7851771782571,
+      "netPnlPct": 4.4778517717825705,
+      "maxDrawdown": 1.479683027662946,
+      "profitFactor": 1.6953671266183483
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 50,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 44,
+      "wins": 20,
+      "winRate": 0.45454545454545453,
+      "netPnl": 447.7851771782571,
+      "netPnlPct": 4.4778517717825705,
+      "maxDrawdown": 1.479683027662946,
+      "profitFactor": 1.6953671266183483
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 45,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 44,
+      "wins": 20,
+      "winRate": 0.45454545454545453,
+      "netPnl": 447.7851771782571,
+      "netPnlPct": 4.4778517717825705,
+      "maxDrawdown": 1.479683027662946,
+      "profitFactor": 1.6953671266183483
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 50,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 44,
+      "wins": 20,
+      "winRate": 0.45454545454545453,
+      "netPnl": 447.7851771782571,
+      "netPnlPct": 4.4778517717825705,
+      "maxDrawdown": 1.479683027662946,
+      "profitFactor": 1.6953671266183483
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 31,
+      "wins": 16,
+      "winRate": 0.5161290322580645,
+      "netPnl": 444.43096760079607,
+      "netPnlPct": 4.44430967600796,
+      "maxDrawdown": 1.8987849482562915,
+      "profitFactor": 2.05476447298454
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 31,
+      "wins": 16,
+      "winRate": 0.5161290322580645,
+      "netPnl": 444.43096760079607,
+      "netPnlPct": 4.44430967600796,
+      "maxDrawdown": 1.8987849482562915,
+      "profitFactor": 2.05476447298454
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 31,
+      "wins": 16,
+      "winRate": 0.5161290322580645,
+      "netPnl": 444.43096760079607,
+      "netPnlPct": 4.44430967600796,
+      "maxDrawdown": 1.8987849482562915,
+      "profitFactor": 2.05476447298454
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 32,
+      "wins": 16,
+      "winRate": 0.5,
+      "netPnl": 418.85722411736606,
+      "netPnlPct": 4.18857224117366,
+      "maxDrawdown": 1.8987849482562948,
+      "profitFactor": 1.9398114874561105
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 32,
+      "wins": 16,
+      "winRate": 0.5,
+      "netPnl": 418.85722411736606,
+      "netPnlPct": 4.18857224117366,
+      "maxDrawdown": 1.8987849482562948,
+      "profitFactor": 1.9398114874561105
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 32,
+      "wins": 16,
+      "winRate": 0.5,
+      "netPnl": 418.85722411736606,
+      "netPnlPct": 4.18857224117366,
+      "maxDrawdown": 1.8987849482562948,
+      "profitFactor": 1.9398114874561105
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 32,
+      "wins": 16,
+      "winRate": 0.5,
+      "netPnl": 418.85722411736606,
+      "netPnlPct": 4.18857224117366,
+      "maxDrawdown": 1.8987849482562948,
+      "profitFactor": 1.9398114874561105
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 32,
+      "wins": 16,
+      "winRate": 0.5,
+      "netPnl": 418.85722411736606,
+      "netPnlPct": 4.18857224117366,
+      "maxDrawdown": 1.8987849482562948,
+      "profitFactor": 1.9398114874561105
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 32,
+      "wins": 16,
+      "winRate": 0.5,
+      "netPnl": 418.85722411736606,
+      "netPnlPct": 4.18857224117366,
+      "maxDrawdown": 1.8987849482562948,
+      "profitFactor": 1.9398114874561105
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 45,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 43,
+      "wins": 19,
+      "winRate": 0.4418604651162791,
+      "netPnl": 396.35800210374873,
+      "netPnlPct": 3.9635800210374876,
+      "maxDrawdown": 1.4796830276629314,
+      "profitFactor": 1.6170012915260314
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 50,
+        "adx": 25,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 43,
+      "wins": 19,
+      "winRate": 0.4418604651162791,
+      "netPnl": 396.35800210374873,
+      "netPnlPct": 3.9635800210374876,
+      "maxDrawdown": 1.4796830276629314,
+      "profitFactor": 1.6170012915260314
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 38,
+      "wins": 24,
+      "winRate": 0.631578947368421,
+      "netPnl": 386.71205417435704,
+      "netPnlPct": 3.8671205417435703,
+      "maxDrawdown": 1.3558602402454722,
+      "profitFactor": 1.9547008378547372
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 50,
+        "adx": 25,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 45,
+      "wins": 22,
+      "winRate": 0.4888888888888889,
+      "netPnl": 371.6039134479033,
+      "netPnlPct": 3.716039134479033,
+      "maxDrawdown": 1.803093888967135,
+      "profitFactor": 1.4554060088500793
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 50,
+        "adx": 25,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 45,
+      "wins": 22,
+      "winRate": 0.4888888888888889,
+      "netPnl": 371.6039134479033,
+      "netPnlPct": 3.716039134479033,
+      "maxDrawdown": 1.803093888967135,
+      "profitFactor": 1.4554060088500793
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 45,
+        "adx": 25,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 45,
+      "wins": 22,
+      "winRate": 0.4888888888888889,
+      "netPnl": 369.77343225471304,
+      "netPnlPct": 3.6977343225471304,
+      "maxDrawdown": 1.8030938889671377,
+      "profitFactor": 1.4522494778515131
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 45,
+        "adx": 25,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 45,
+      "wins": 22,
+      "winRate": 0.4888888888888889,
+      "netPnl": 369.77343225471304,
+      "netPnlPct": 3.6977343225471304,
+      "maxDrawdown": 1.8030938889671377,
+      "profitFactor": 1.4522494778515131
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 55,
+      "wins": 30,
+      "winRate": 0.5454545454545454,
+      "netPnl": 363.2935554988835,
+      "netPnlPct": 3.632935554988835,
+      "maxDrawdown": 1.6437841578143086,
+      "profitFactor": 1.5504501188979691
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 55,
+      "wins": 30,
+      "winRate": 0.5454545454545454,
+      "netPnl": 363.2935554988835,
+      "netPnlPct": 3.632935554988835,
+      "maxDrawdown": 1.6437841578143086,
+      "profitFactor": 1.5504501188979691
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 39,
+      "wins": 24,
+      "winRate": 0.6153846153846154,
+      "netPnl": 363.1979818637901,
+      "netPnlPct": 3.631979818637901,
+      "maxDrawdown": 1.355860240245481,
+      "profitFactor": 1.8501412878653116
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 39,
+      "wins": 24,
+      "winRate": 0.6153846153846154,
+      "netPnl": 363.1979818637901,
+      "netPnlPct": 3.631979818637901,
+      "maxDrawdown": 1.355860240245481,
+      "profitFactor": 1.8501412878653116
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 39,
+      "wins": 24,
+      "winRate": 0.6153846153846154,
+      "netPnl": 361.2796385134552,
+      "netPnlPct": 3.612796385134552,
+      "maxDrawdown": 1.3558602402454636,
+      "profitFactor": 1.8411591569300245
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 39,
+      "wins": 24,
+      "winRate": 0.6153846153846154,
+      "netPnl": 361.2796385134552,
+      "netPnlPct": 3.612796385134552,
+      "maxDrawdown": 1.3558602402454636,
+      "profitFactor": 1.8411591569300245
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 40,
+        "adx": 20,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 49,
+      "wins": 20,
+      "winRate": 0.40816326530612246,
+      "netPnl": 357.5666692897612,
+      "netPnlPct": 3.5756666928976117,
+      "maxDrawdown": 1.9026739172740923,
+      "profitFactor": 1.4762467306589437
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 40,
+      "wins": 24,
+      "winRate": 0.6,
+      "netPnl": 337.8231416567651,
+      "netPnlPct": 3.378231416567651,
+      "maxDrawdown": 1.3558602402454993,
+      "profitFactor": 1.7480474985625998
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 40,
+      "wins": 24,
+      "winRate": 0.6,
+      "netPnl": 337.8231416567651,
+      "netPnlPct": 3.378231416567651,
+      "maxDrawdown": 1.3558602402454993,
+      "profitFactor": 1.7480474985625998
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 45,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 40,
+      "wins": 24,
+      "winRate": 0.6,
+      "netPnl": 337.8231416567651,
+      "netPnlPct": 3.378231416567651,
+      "maxDrawdown": 1.3558602402454993,
+      "profitFactor": 1.7480474985625998
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 50,
+        "adx": 30,
+        "sl": 2,
+        "tp": 3
+      },
+      "trades": 40,
+      "wins": 24,
+      "winRate": 0.6,
+      "netPnl": 337.8231416567651,
+      "netPnlPct": 3.378231416567651,
+      "maxDrawdown": 1.3558602402454993,
+      "profitFactor": 1.7480474985625998
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 45,
+        "adx": 20,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 50,
+      "wins": 20,
+      "winRate": 0.4,
+      "netPnl": 335.75620350472127,
+      "netPnlPct": 3.3575620350472124,
+      "maxDrawdown": 1.902673917274119,
+      "profitFactor": 1.433004700483063
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 50,
+        "adx": 20,
+        "sl": 2,
+        "tp": 5
+      },
+      "trades": 50,
+      "wins": 20,
+      "winRate": 0.4,
+      "netPnl": 335.75620350472127,
+      "netPnlPct": 3.3575620350472124,
+      "maxDrawdown": 1.902673917274119,
+      "profitFactor": 1.433004700483063
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 49,
+      "wins": 23,
+      "winRate": 0.46938775510204084,
+      "netPnl": 334.4662847774889,
+      "netPnlPct": 3.344662847774889,
+      "maxDrawdown": 1.242880467998864,
+      "profitFactor": 1.5009406591637846
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 25,
+        "sl": 2,
+        "tp": 4
+      },
+      "trades": 49,
+      "wins": 23,
+      "winRate": 0.46938775510204084,
+      "netPnl": 334.4662847774889,
+      "netPnlPct": 3.344662847774889,
+      "maxDrawdown": 1.242880467998864,
+      "profitFactor": 1.5009406591637846
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 50,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 31,
+      "wins": 16,
+      "winRate": 0.5161290322580645,
+      "netPnl": 329.98648310333374,
+      "netPnlPct": 3.2998648310333376,
+      "maxDrawdown": 2.0681920088658936,
+      "profitFactor": 1.619182170873161
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 55,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 31,
+      "wins": 16,
+      "winRate": 0.5161290322580645,
+      "netPnl": 329.98648310333374,
+      "netPnlPct": 3.2998648310333376,
+      "maxDrawdown": 2.0681920088658936,
+      "profitFactor": 1.619182170873161
+    },
+    {
+      "cfg": {
+        "mode": "breakout",
+        "rsiLong": 60,
+        "rsiShort": 40,
+        "adx": 30,
+        "sl": 3,
+        "tp": 5
+      },
+      "trades": 31,
+      "wins": 16,
+      "winRate": 0.5161290322580645,
+      "netPnl": 329.98648310333374,
+      "netPnlPct": 3.2998648310333376,
+      "maxDrawdown": 2.0681920088658936,
+      "profitFactor": 1.619182170873161
+    }
+  ]
+}
