@@ -2,7 +2,16 @@
   "coin": "HYPE",
   "initialCapital": 1000,
   "currentEquity": 1000,
-  "position": null,
+  "position": {
+    "type": "LONG",
+    "entryPrice": 55.8105,
+    "size": 0.1,
+    "leverage": 3,
+    "entryTime": 1781198335241,
+    "positionValue": 300,
+    "currentPnL": 10.065310291074272,
+    "currentPnLPercent": 3.355103430358091
+  },
   "params": {
     "coin": "HYPE",
     "configName": "Breakout",
@@ -20,5 +29,5 @@
     "lastUpdated": "2026-06-11T06:15:00Z"
   },
   "trades": [],
-  "lastUpdated": "2026-06-11T07:10:13.588Z"
+  "lastUpdated": "2026-06-11T17:42:03.988Z"
 }

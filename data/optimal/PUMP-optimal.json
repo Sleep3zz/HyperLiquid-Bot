@@ -1,7 +1,7 @@
 {
   "coin": "PUMP",
-  "recommended": "Mean Reversion (Limited Profitability)",
-  "mode": "reversion",
+  "recommended": "Breakout (Optimized)",
+  "mode": "breakout",
   "params": {
     "leverage": 3,
     "positionSize": 0.10,
@@ -10,22 +10,37 @@
     "bbPeriod": 20,
     "bbStdDev": 2.0,
     "rsiPeriod": 14,
-    "rsiOverbought": 55,
-    "rsiOversold": 25,
+    "rsiOverbought": 35,
+    "rsiOversold": 65,
     "adxPeriod": 14,
-    "adxTrendThreshold": 30
+    "adxTrendThreshold": 20
   },
   "backtestResults": {
-    "trades": 33,
-    "wins": 15,
-    "losses": 18,
-    "winRate": 0.455,
-    "netPnl": 133.87,
-    "netPnlPct": 1.34,
-    "profitFactor": 1.20,
-    "maxDrawdown": 2.5,
+    "trades": 44,
+    "wins": 21,
+    "losses": 23,
+    "winRate": 0.477,
+    "netPnl": 385.75,
+    "netPnlPct": 3.86,
+    "profitFactor": 1.49,
+    "maxDrawdown": 2.02,
     "sharpe": null
   },
-  "note": "PUMP showed limited profitability in backtest (only 2.1% of configs profitable). Consider lower position size or skip this coin.",
-  "updatedAt": "2026-06-11T06:55:00Z"
+  "testComparison": {
+    "testsRun": 2,
+    "configsTested": 9209,
+    "previousBest": {
+      "mode": "reversion",
+      "rsi": "25/55",
+      "netPnl": 133.87
+    },
+    "currentBest": {
+      "mode": "breakout",
+      "rsi": "65/35",
+      "netPnl": 385.75
+    },
+    "improvement": "188% better PnL with breakout strategy"
+  },
+  "note": "PUMP works best with breakout strategy (unlike BTC/SOL/ARB). Buy strength (RSI>65 + break above BB), sell weakness (RSI<35 + break below BB).",
+  "updatedAt": "2026-06-11T17:40:00Z"
 }
