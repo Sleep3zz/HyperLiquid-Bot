@@ -167,8 +167,29 @@ class WayfinderCommander {
             this.logger.error(`cancelOrder: missing coin or oid (coin=${coin}, oid=${oid})`);
             return null;
         }
-        const cmd = `wayfinder hyperliquid_execute --action cancel_order --wallet_label ${this.walletLabel} --coin ${coin} --oid ${oid}`;
+        // Note: CLI flag is --order_id (not --oid), but variable is still oid
+        const cmd = `wayfinder hyperliquid_execute --action cancel_order --wallet_label ${this.walletLabel} --coin ${coin} --order_id ${oid}`;
         return this._exec(cmd);
+    }
+
+    /**
+     * Fetch all currently-open (resting) orders for this wallet from the exchange.
+     * ⚠️ VERIFY the resource path + response shape against the actual wayfinder CLI.
+     * Assumed shape (HyperLiquid-style): array of objects each containing { coin, oid, side, limitPx, sz }.
+     * @returns {Array<Object>} open orders, or [] on failure
+     */
+    getOpenOrders() {
+        const res = this._exec(
+            `wayfinder resource wayfinder://hyperliquid/${this.walletLabel}/open_orders`
+        );
+
+        // Tolerate a few plausible shapes without committing to one:
+        // 1. a bare array
+        // 2. { open_orders: [...] } or { orders: [...] }
+        if (Array.isArray(res)) return res;
+        if (Array.isArray(res?.open_orders)) return res.open_orders;
+        if (Array.isArray(res?.orders)) return res.orders;
+        return [];
     }
 
     /**
