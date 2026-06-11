@@ -1,0 +1,31 @@
+{
+  "coin": "PUMP",
+  "recommended": "Mean Reversion (Limited Profitability)",
+  "mode": "reversion",
+  "params": {
+    "leverage": 3,
+    "positionSize": 0.10,
+    "profitTarget": 5.0,
+    "stopLoss": 3.0,
+    "bbPeriod": 20,
+    "bbStdDev": 2.0,
+    "rsiPeriod": 14,
+    "rsiOverbought": 55,
+    "rsiOversold": 25,
+    "adxPeriod": 14,
+    "adxTrendThreshold": 30
+  },
+  "backtestResults": {
+    "trades": 33,
+    "wins": 15,
+    "losses": 18,
+    "winRate": 0.455,
+    "netPnl": 133.87,
+    "netPnlPct": 1.34,
+    "profitFactor": 1.20,
+    "maxDrawdown": 2.5,
+    "sharpe": null
+  },
+  "note": "PUMP showed limited profitability in backtest (only 2.1% of configs profitable). Consider lower position size or skip this coin.",
+  "updatedAt": "2026-06-11T06:55:00Z"
+}
