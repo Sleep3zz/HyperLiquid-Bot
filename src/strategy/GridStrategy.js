@@ -42,6 +42,9 @@ class GridStrategy {
         this.maxFilledHistory = userConfig.maxFilledHistory || fileConfig.maxFilledHistory || 500;
         this.verboseLogging = userConfig.verboseLogging ?? fileConfig.verboseLogging ?? true;
 
+        // Debug Mode Toggle (one line) — set to true for extra logging during testing
+        this.debugMode = Boolean(userConfig.debugMode ?? fileConfig.debugMode ?? false);
+
         // State
         this.active = false;
         this.basePrice = null;
@@ -51,7 +54,6 @@ class GridStrategy {
         this.updateInterval = null;
         this._updating = false;
         this._stopping = false;
-        this.debugMode = userConfig.debugMode ?? fileConfig.debugMode ?? true; // ← Set to false to disable extra logging
     }
 
     _extractOrderId(res) {
