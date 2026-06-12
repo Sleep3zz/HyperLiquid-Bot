@@ -321,6 +321,11 @@ class GridStrategy {
         try {
             openOrders = await this._withRetry(() => this.wayfinder.getOpenOrders(this.coin));
             recentFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin));
+
+            // DEBUG: Log sample fill to confirm field names (remove after testing)
+            if (recentFills?.length > 0) {
+                this.logger.debug("[DEBUG] Sample fill:", JSON.stringify(recentFills[0]));
+            }
         } catch (e) {
             this.logger?.warn?.(`[GRID] Reconciliation skipped — API error: ${e.message}`);
             return;
