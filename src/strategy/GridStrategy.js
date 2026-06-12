@@ -220,56 +220,51 @@ class GridStrategy {
 
             if (Math.abs(position) > 0.0001) {
                 try {
-                    // Get fills before closing
+                    // Snapshot fills before closing
                     const beforeFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
-                    const beforeIds = new Set(
-                        beforeFills.map(f => String(f.tid ?? f.oid))
-                    );
+                    const beforeIds = new Set(beforeFills.map(f => String(f.tid ?? f.oid)));
 
                     const closeRes = await this.wayfinder.closePosition(this.coin);
 
-                    // Validate response
                     if (closeRes && (closeRes.status === 'ok' || closeRes.success === true)) {
-                        this.logger?.info?.(`[GRID] Closed remaining position: ${position}`);
+                        this.logger.info(`[GRID] Closed remaining position: ${position}`);
 
-                        // Try to get new fills (with short retry in case of eventual consistency)
-                        let afterFills = [];
-                        let attempts = 0;
-                        const maxAttempts = 3;
+                        // === More robust PnL capture ===
+                        let closePnL = 0;
                         let captured = false;
+                        const maxAttempts = 5; // Increased from 3
+                        const delayMs = 1200; // Slightly longer delay
 
-                        while (attempts < maxAttempts) {
-                            afterFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
+                        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+                            const afterFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
                             const newFills = afterFills.filter(f => !beforeIds.has(String(f.tid ?? f.oid)));
 
                             if (newFills.length > 0) {
-                                let closePnL = 0;
                                 for (const f of newFills) {
                                     closePnL += Number(f.closedPnl ?? 0) - Number(f.fee ?? 0);
                                 }
-
                                 this.totalPnL += closePnL;
-                                this.logger?.info?.(
-                                    `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total: $${this.totalPnL.toFixed(2)}`
+                                this.logger.info(
+                                    `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
                                 );
                                 captured = true;
                                 break;
                             }
 
-                            attempts++;
-                            if (attempts < maxAttempts) {
-                                await new Promise(r => setTimeout(r, 800)); // short delay
+                            if (attempt < maxAttempts - 1) {
+                                await new Promise(r => setTimeout(r, delayMs));
                             }
                         }
 
                         if (!captured) {
-                            this.logger?.warn?.(`[GRID] Could not capture close PnL after ${maxAttempts} attempts`);
+                            this.logger.warn(`[GRID] Could not capture close PnL after ${maxAttempts} attempts. ` +
+                                `Position was closed but PnL may be missing.`);
                         }
                     } else {
-                        this.logger?.warn?.(`[GRID] closePosition did not confirm success`, closeRes);
+                        this.logger.warn(`[GRID] closePosition response invalid`, closeRes);
                     }
                 } catch (err) {
-                    this.logger?.error?.(`[GRID] Error closing position: ${err.message}`);
+                    this.logger.error(`[GRID] Error during position close: ${err.message}`);
                 }
             }
 
