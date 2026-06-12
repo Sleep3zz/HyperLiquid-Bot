@@ -61,6 +61,23 @@ function calculateRSI(data, period) {
     return parseFloat(result.valueOf()) // Convert to actual number
 }
 
+// Simple ATR calculation using Wilder's smoothing
+function calculateATR(highs, lows, closes, period) {
+    if (highs.length < period + 1) return 0;
+    
+    let trValues = [];
+    for (let i = 1; i < highs.length; i++) {
+        const tr1 = highs[i] - lows[i];
+        const tr2 = Math.abs(highs[i] - closes[i - 1]);
+        const tr3 = Math.abs(lows[i] - closes[i - 1]);
+        trValues.push(Math.max(tr1, tr2, tr3));
+    }
+    
+    // Simple moving average of true ranges
+    const sum = trValues.slice(-period).reduce((a, b) => a + b, 0);
+    return sum / period;
+}
+
 // Test function to verify outputs
 async function testIndicators(data) {
     const indicators = require("config").get("indicators")
@@ -89,4 +106,5 @@ module.exports = {
     calculateBollingerBands,
     calculateADX,
     calculateRSI,
+    calculateATR,
 }

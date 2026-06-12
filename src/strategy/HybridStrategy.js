@@ -1,4 +1,4 @@
-const BBRSIStrategy = require("./BBRSIStrategy");
+const { BBRSIStrategy } = require("./BBRSIStrategy");
 const GridStrategy = require("./GridStrategy");
 const RegimeDetector = require("./RegimeDetector");
 const FileStateStore = require("./FileStateStore"); // adjust path if needed
@@ -14,6 +14,7 @@ class HybridStrategy {
 
         // Per-coin state
         this.coins = new Map(); // coin => { activeStrategy, lastRegimeChange, regimeConfirmation, ... }
+        this.baseStatePath = baseStatePath;
 
         this.regimeDetector = new RegimeDetector(logger);
 
@@ -26,7 +27,7 @@ class HybridStrategy {
     // ==================== PER-COIN INITIALIZATION ====================
     _getOrCreateCoinState(coin) {
         if (!this.coins.has(coin)) {
-            const stateStore = new FileStateStore(`${baseStatePath}/${coin}_hybrid.json`);
+            const stateStore = new FileStateStore(`${this.baseStatePath}/${coin}_hybrid.json`);
 
             const state = {
                 coin,

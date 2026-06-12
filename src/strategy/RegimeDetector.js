@@ -17,13 +17,12 @@ class RegimeDetector {
         const highs = ohlcv.map(c => c.h);
         const lows = ohlcv.map(c => c.l);
 
-        // Calculate indicators
-        const adx = calculateADX(highs, lows, closes, 14);
-        const atr = calculateATR(highs, lows, closes, 14);
-        const bb = calculateBollingerBands(closes, 20, 2);
+        // Calculate indicators - use proper API
+        const currentAdx = calculateADX(ohlcv, 14);
+        const currentAtr = calculateATR(highs, lows, closes, 14);
+        const bb = calculateBollingerBands(ohlcv, 20, 2);
 
-        const currentAdx = adx[adx.length - 1];
-        const currentAtrPct = (atr[atr.length - 1] / closes[closes.length - 1]) * 100;
+        const currentAtrPct = (currentAtr / closes[closes.length - 1]) * 100;
         const bbWidth = ((bb.upper - bb.lower) / bb.middle) * 100;
 
         let regime = 'RANGING';
