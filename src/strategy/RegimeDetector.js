@@ -43,9 +43,10 @@ class RegimeDetector {
         // === Calculate indicators with defensive extraction ===
         let adxRaw, atrRaw, bbRaw;
         try {
-            adxRaw = calculateADX(highs, lows, closes, 14);
+            // ADX expects array of objects with h/l/c properties
+            adxRaw = calculateADX(ohlcv, 14);
             atrRaw = calculateATR(highs, lows, closes, 14);
-            bbRaw = calculateBollingerBands(closes, 20, 2);
+            bbRaw = calculateBollingerBands(ohlcv, 20, 2);
         } catch (e) {
             this.logger?.warn?.(`[RegimeDetector] Indicator calculation failed: ${e.message}`);
             return { type: 'UNKNOWN', confidence: 0, reason: 'Indicator error' };
