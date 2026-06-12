@@ -289,36 +289,50 @@ class GridStrategy {
                 const enriched = {
                     ...order,
                     price: Number(fill.px) || order.price,
-                    fillSize: Number(fill.sz),
+                    fillSize: Number(fill.sz) || Number(fill.filledSize), // use real size
                     fee: Number(fill.fee) || 0
                 };
                 this._handleFilledOrder(oid, enriched);
-            } else {
-                // Gone from book but not in fills → treat as cancelled
-                this.logger?.warn?.(`[GRID] Order ${oid} disappeared without fill — treating as cancelled`);
-                this.gridOrders.delete(oid);
+            } else if (!openOids.has(oid)) {
+                // Order is missing from both book and recent fills.
+                // Give it one more cycle before treating it as cancelled.
+                if (!order.missingSince) {
+                    order.missingSince = Date.now();
+                    continue; // skip this cycle
+                }
+
+                // If it's been missing for more than 2 cycles (~30s), treat as cancelled
+                if (Date.now() - order.missingSince > 30000) {
+                    this.logger.warn(`[GRID] Order ${oid} missing for too long — treating as cancelled`);
+                    this.gridOrders.delete(oid);
+                }
             }
         }
 
-        // === Partial Fill Detection (H4) ===
+        // === Partial Fill Handling ===
         for (const [oid, order] of this.gridOrders) {
             if (order.status === "filled") continue;
 
             const openOrder = openOrders.find(o => String(o.oid) === oid);
-            if (!openOrder) continue;
+            if (openOrder) {
+                const filledSoFar = Number(openOrder.filledSize || openOrder.sz || 0);
+                const remainingSize = Number(openOrder.remainingSize || 0);
+                const totalSize = filledSoFar + remainingSize;
 
-            const originalSize = this.baseAmount / order.price;
-            const filledSoFar = Number(openOrder.filledSize || 0);
-            const fillRatio = filledSoFar / originalSize;
+                if (filledSoFar > 0 && remainingSize > 0) {
+                    const fillRatio = filledSoFar / totalSize;
 
-            if (fillRatio > 0.05 && fillRatio < 0.95) {
-                this.logger?.info?.(
-                    `[GRID] Partial fill on order ${oid} ` +
-                    `(${ (fillRatio * 100).toFixed(1)}% filled)`
-                );
+                    // Store partial fill info on the order
+                    order.partialFilled = fillRatio;
+                    order.filledSize = filledSoFar;
 
-                // Optional: You can store partial fill info if needed later
-                // order.partialFill = fillRatio;
+                    if (fillRatio > 0.1) {
+                        this.logger.info(
+                            `[GRID] Partial fill detected on ${oid} ` +
+                            `(${(fillRatio * 100).toFixed(1)}% filled)`
+                        );
+                    }
+                }
             }
         }
     }
@@ -327,9 +341,9 @@ class GridStrategy {
         this.gridOrders.delete(oid);
 
         const fillPrice = Number(orderInfo.price) || 0;
-        const size = this.baseAmount / fillPrice;
+        const size = Number(orderInfo.fillSize) || (this.baseAmount / fillPrice);
+        const fee = Number(orderInfo.fee) || 0;
 
-        // Calculate realized PnL only on closing legs
         let realized = 0;
         if (orderInfo.entryPrice && orderInfo.entryPrice > 0) {
             if (orderInfo.side === "SELL") {
@@ -339,6 +353,9 @@ class GridStrategy {
             }
         }
 
+        // Subtract fees from realized PnL
+        realized -= fee;
+
         this.totalPnL += realized;
 
         this.filledOrders.push({
@@ -346,6 +363,7 @@ class GridStrategy {
             oid,
             fillPrice,
             size,
+            fee,
             realizedPnl: realized,
             filledAt: Date.now()
         });
@@ -355,14 +373,13 @@ class GridStrategy {
             this.filledOrders = this.filledOrders.slice(-Math.floor(this.maxFilledHistory * 0.6)); // keep last 60%
         }
 
-        this.logger?.info?.(
-            `[GRID] Fill: ${orderInfo.side} @ $${fillPrice.toFixed(2)} (L${orderInfo.level}) | ` +
-            `Realized: $${realized.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
+        this.logger.info(
+            `[GRID] Fill: ${orderInfo.side} @ $${fillPrice.toFixed(2)} | ` +
+            `Realized: $${realized.toFixed(2)} (after fee) | Total: $${this.totalPnL.toFixed(2)}`
         );
 
-        // Rebalance safely (fire-and-forget with error handling)
         this._rebalanceGrid(orderInfo).catch(e =>
-            this.logger?.error?.(`[GRID] Rebalance error after fill: ${e.message}`)
+            this.logger.error(`[GRID] Rebalance error: ${e.message}`)
         );
     }
 
@@ -530,14 +547,21 @@ class GridStrategy {
      * @returns {number} Total capital currently used by grid orders
      */
     getCurrentCapitalUsage() {
-        let totalCapital = 0;
+        let total = 0;
 
         for (const order of this.gridOrders.values()) {
-            // Approximate capital used per order
-            totalCapital += this.baseAmount;
+            // Use actual order price if available, otherwise fall back to baseAmount
+            const price = order.price || 0;
+            const size = order.size || (this.baseAmount / price);
+
+            if (price > 0 && size > 0) {
+                total += size * price;
+            } else {
+                total += this.baseAmount;
+            }
         }
 
-        return totalCapital;
+        return total;
     }
 }
 
