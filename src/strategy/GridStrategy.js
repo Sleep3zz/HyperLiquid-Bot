@@ -51,6 +51,7 @@ class GridStrategy {
         this.updateInterval = null;
         this._updating = false;
         this._stopping = false;
+        this.debugMode = userConfig.debugMode ?? fileConfig.debugMode ?? true; // ← Set to false to disable extra logging
     }
 
     _extractOrderId(res) {
@@ -212,14 +213,19 @@ class GridStrategy {
         this.active = false;
 
         try {
-            this._stopUpdateLoop(); // Stop the update loop first
+            this._stopUpdateLoop();
+
             await this._cancelAllOrders();
 
-            // === Close remaining position and capture realized PnL ===
+            // === Position Close + PnL Capture with Debug ===
             const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
 
             if (Math.abs(position) > 0.0001) {
                 try {
+                    const unrealizedBeforeClose = Number(
+                        await this._withRetry(() => this.wayfinder.getUnrealizedPnl(this.coin))
+                    ) || 0;
+
                     const beforeFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
                     const beforeIds = new Set(beforeFills.map(f => String(f.tid ?? f.oid)));
 
@@ -241,11 +247,8 @@ class GridStrategy {
                                 for (const f of newFills) {
                                     closePnL += Number(f.closedPnl ?? 0) - Number(f.fee ?? 0);
                                 }
-
                                 this.totalPnL += closePnL;
-                                this.logger.info(
-                                    `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
-                                );
+                                this.logger.info(`[GRID] Position close realized: $${closePnL.toFixed(2)}`);
                                 captured = true;
                                 break;
                             }
@@ -256,25 +259,32 @@ class GridStrategy {
                         }
 
                         if (!captured) {
-                            this.logger.warn(`[GRID] Could not capture close PnL after ${maxAttempts} attempts`);
+                            this.logger.warn(`[GRID] Could not capture close PnL after ${maxAttempts} attempts — using fallback`);
 
-                            // === Debug logging for eventual consistency issues ===
-                            await new Promise(r => setTimeout(r, 2000));
-                            const lateFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
-                            const reallyNew = lateFills.filter(f => !beforeIds.has(String(f.tid ?? f.oid)));
+                            // Fallback: use unrealized PnL minus estimated fee
+                            const estimatedFee = Math.abs(position) * 0.0005;
+                            closePnL = unrealizedBeforeClose - estimatedFee;
+                            this.totalPnL += closePnL;
 
-                            this.logger.debug(`[DEBUG] Late fills found after loop: ${reallyNew.length}`, reallyNew);
+                            this.logger.info(`[GRID] Position close (fallback): $${closePnL.toFixed(2)}`);
+
+                            // Extra debug
+                            if (this.debugMode) {
+                                await new Promise(r => setTimeout(r, 2000));
+                                const lateFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
+                                const reallyNew = lateFills.filter(f => !beforeIds.has(String(f.tid ?? f.oid)));
+                                this.logger.debug(`[DEBUG] Late fills found: ${reallyNew.length}`, reallyNew);
+                            }
                         }
-                    } else {
-                        this.logger.warn(`[GRID] closePosition response was not successful`, closeRes);
                     }
-                } catch (err) {
-                    this.logger.error(`[GRID] Error closing position and capturing PnL: ${err.message}`);
+                } catch (closeErr) {
+                    this.logger.error(`[GRID] Error closing position: ${closeErr.message}`);
                 }
             }
 
             this.gridOrders.clear();
             this.logger?.info?.('[GRID] Grid stopped cleanly');
+
         } catch (e) {
             this.logger?.error?.(`[GRID] Error stopping grid: ${e.message}`);
         } finally {
@@ -327,52 +337,52 @@ class GridStrategy {
                 this.logger.debug("[DEBUG] Sample fill:", JSON.stringify(recentFills[0]));
             }
         } catch (e) {
-            this.logger?.warn?.(`[GRID] Reconciliation skipped — API error: ${e.message}`);
+            this.logger?.warn?.(`[GRID] Reconciliation skipped due to API error: ${e.message}`);
             return;
         }
 
         if (!Array.isArray(openOrders)) {
-            this.logger?.warn?.(`[GRID] Open orders response invalid — skipping reconciliation`);
+            this.logger?.warn?.(`[GRID] Invalid open orders response — skipping`);
             return;
         }
 
         const openOids = new Set(openOrders.map(o => String(o.oid)));
         const filledByOid = new Map(
-            (Array.isArray(recentFills) ? recentFills : [])
-                .map(f => [String(f.oid), f])
+            Array.isArray(recentFills) ? recentFills.map(f => [String(f.oid), f]) : []
         );
-
-        const gracePeriodMs = (this.updateIntervalMs || 15000) * 2;
 
         for (const [oid, order] of this.gridOrders) {
             if (order.status === "filled") continue;
 
+            // Clear missing timestamp if order reappears
             if (openOids.has(oid)) {
-                // Order is back on the book → clear any missing timestamp
                 if (order.missingSince) delete order.missingSince;
                 continue;
+            }
+
+            // === DEBUG ===
+            if (this.debugMode) {
+                this.logger.debug(`[DEBUG] Order ${oid} missing from open orders`);
             }
 
             const fill = filledByOid.get(oid);
 
             if (fill) {
-                // Confirmed fill with real data
                 const enriched = {
                     ...order,
                     price: Number(fill.px) || order.price,
-                    fillSize: Number(fill.sz) || Number(fill.filledSize), // use real size
+                    fillSize: Number(fill.sz),
                     fee: Number(fill.fee) || 0
                 };
                 this._handleFilledOrder(oid, enriched);
             } else {
-                // Order is missing from both book and recent fills.
-                // Give it one more cycle before treating it as cancelled.
+                // Grace period logic
                 if (!order.missingSince) {
                     order.missingSince = Date.now();
-                    continue; // skip this cycle
+                    continue;
                 }
 
-                // If it's been missing for more than grace period (~2 cycles), treat as cancelled
+                const gracePeriodMs = (this.updateIntervalMs || 15000) * 2;
                 if (Date.now() - order.missingSince > gracePeriodMs) {
                     this.logger.warn(`[GRID] Order ${oid} missing too long — treating as cancelled`);
                     this.gridOrders.delete(oid);
@@ -380,29 +390,11 @@ class GridStrategy {
             }
         }
 
-        // === Partial Fill Handling ===
-        for (const [oid, order] of this.gridOrders) {
-            if (order.status === "filled") continue;
-
-            const openOrder = openOrders.find(o => String(o.oid) === oid);
-            if (openOrder) {
-                const filledSoFar = Number(openOrder.filledSize || openOrder.sz || 0);
-                const remainingSize = Number(openOrder.remainingSize || 0);
-                const totalSize = filledSoFar + remainingSize;
-
-                if (filledSoFar > 0 && remainingSize > 0) {
-                    const fillRatio = filledSoFar / totalSize;
-
-                    // Store partial fill info on the order
-                    order.partialFilled = fillRatio;
-                    order.filledSize = filledSoFar;
-
-                    if (fillRatio > 0.1) {
-                        this.logger.info(
-                            `[GRID] Partial fill detected on ${oid} ` +
-                            `(${(fillRatio * 100).toFixed(1)}% filled)`
-                        );
-                    }
+        // === Partial Fill Debug ===
+        if (this.debugMode) {
+            for (const [oid, order] of this.gridOrders) {
+                if (order.partialFilled) {
+                    this.logger.debug(`[DEBUG] Partial fill on ${oid}: ${(order.partialFilled * 100).toFixed(1)}%`);
                 }
             }
         }
