@@ -1,3 +1,7 @@
 .env
 node_modules
 bot.log
+webhook-dashboard.js
+*.log
+data/paper-trading/
+backtest-results/
