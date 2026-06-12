@@ -152,14 +152,15 @@ class GridStrategy {
                 }
 
                 // BUY
+                const buySize = this.baseAmount / buyPrice;
                 const buyRes = await this.wayfinder.placeLimitOrder({
-                    coin: this.coin, isBuy: true, size: this.baseAmount / buyPrice, price: buyPrice
+                    coin: this.coin, isBuy: true, size: buySize, price: buyPrice
                 });
                 placedOrders.push(buyRes);
                 
                 const buyId = this._extractOrderId(buyRes);
                 if (buyId) {
-                    this.gridOrders.set(buyId.oid, { side: "BUY", price: buyPrice, level: i, status: buyId.status });
+                    this.gridOrders.set(buyId.oid, { side: "BUY", price: buyPrice, level: i, size: buySize, status: buyId.status });
                     placed.push(buyId.oid);
                 } else {
                     this.logger.error(`[GRID] Buy L${i} failed to return OID — aborting`);
@@ -167,14 +168,15 @@ class GridStrategy {
                 }
 
                 // SELL
+                const sellSize = this.baseAmount / sellPrice;
                 const sellRes = await this.wayfinder.placeLimitOrder({
-                    coin: this.coin, isBuy: false, size: this.baseAmount / sellPrice, price: sellPrice
+                    coin: this.coin, isBuy: false, size: sellSize, price: sellPrice
                 });
                 placedOrders.push(sellRes);
                 
                 const sellId = this._extractOrderId(sellRes);
                 if (sellId) {
-                    this.gridOrders.set(sellId.oid, { side: "SELL", price: sellPrice, level: i, status: sellId.status });
+                    this.gridOrders.set(sellId.oid, { side: "SELL", price: sellPrice, level: i, size: sellSize, status: sellId.status });
                     placed.push(sellId.oid);
                 } else {
                     this.logger.error(`[GRID] Sell L${i} failed to return OID — aborting`);
@@ -211,10 +213,21 @@ class GridStrategy {
         this.active = false;
 
         try {
-            // No need for long wait loop anymore because we release _updating before calling this
+            this._stopUpdateLoop(); // Stop the update loop first
             await this._cancelAllOrders();
-            this.gridOrders.clear();
 
+            // Close any remaining position and realize PnL
+            const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
+            if (Math.abs(position) > 0.0001) {
+                try {
+                    const closeRes = await this.wayfinder.closePosition(this.coin);
+                    this.logger?.info?.(`[GRID] Closed remaining position: ${position}`);
+                } catch (closeErr) {
+                    this.logger?.error?.(`[GRID] Failed to close position: ${closeErr.message}`);
+                }
+            }
+
+            this.gridOrders.clear();
             this.logger?.info?.('[GRID] Grid stopped cleanly');
         } catch (e) {
             this.logger?.error?.(`[GRID] Error stopping grid: ${e.message}`);
@@ -415,6 +428,16 @@ class GridStrategy {
 
         const size = this.baseAmount / newPrice;
 
+        // Enforce capital limit
+        const projectedCapital = this.getCurrentCapitalUsage() + (size * newPrice);
+        if (projectedCapital > this.maxGridCapital) {
+            this.logger?.warn?.(
+                `[GRID] Skipping rebalance — would exceed max capital ` +
+                `($${projectedCapital.toFixed(2)} > $${this.maxGridCapital})`
+            );
+            return;
+        }
+
         try {
             const res = await this.wayfinder.placeLimitOrder({
                 coin: this.coin,
@@ -429,6 +452,7 @@ class GridStrategy {
                     side: isBuy ? "BUY" : "SELL",
                     price: newPrice,
                     level,
+                    size, // ← Store size for accurate capital tracking
                     entryPrice: fillPrice, // ← Important for PnL tracking
                     status: newId.status || "open"
                 });
