@@ -216,14 +216,39 @@ class GridStrategy {
             this._stopUpdateLoop(); // Stop the update loop first
             await this._cancelAllOrders();
 
-            // Close any remaining position and realize PnL
-            const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
+            // Close any remaining position and capture realized PnL
+            const position = Number(await this._withRetry(() => this.wayfinder.getPositionSize(this.coin))) || 0;
+
             if (Math.abs(position) > 0.0001) {
                 try {
+                    // Get fills before closing
+                    const beforeFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
+                    const beforeOids = new Set(beforeFills.map(f => String(f.oid)));
+
                     const closeRes = await this.wayfinder.closePosition(this.coin);
-                    this.logger?.info?.(`[GRID] Closed remaining position: ${position}`);
-                } catch (closeErr) {
-                    this.logger?.error?.(`[GRID] Failed to close position: ${closeErr.message}`);
+
+                    // Validate response
+                    if (closeRes && (closeRes.status === 'ok' || closeRes.success === true)) {
+                        this.logger?.info?.(`[GRID] Closed remaining position: ${position}`);
+
+                        // Get new fills after close
+                        const afterFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
+                        const newFills = afterFills.filter(f => !beforeOids.has(String(f.oid)));
+
+                        let closePnL = 0;
+                        for (const f of newFills) {
+                            closePnL += Number(f.closedPnl ?? 0) - Number(f.fee ?? 0);
+                        }
+
+                        this.totalPnL += closePnL;
+                        this.logger?.info?.(
+                            `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
+                        );
+                    } else {
+                        this.logger?.warn?.(`[GRID] closePosition response not successful`, closeRes);
+                    }
+                } catch (err) {
+                    this.logger?.error?.(`[GRID] Error closing position: ${err.message}`);
                 }
             }
 
@@ -242,7 +267,7 @@ class GridStrategy {
 
         for (const [oid, order] of this.gridOrders) {
             try {
-                const res = await this.wayfinder.cancelOrder(this.coin, oid);
+                const res = await this._withRetry(() => this.wayfinder.cancelOrder(this.coin, oid));
 
                 if (res && (res.status === 'ok' || res.success === true)) {
                     this.logger?.info?.(`[GRID] Order ${oid} cancelled successfully`);
@@ -273,8 +298,8 @@ class GridStrategy {
         let openOrders, recentFills;
 
         try {
-            openOrders = await this.wayfinder.getOpenOrders(this.coin);
-            recentFills = await this.wayfinder.getUserFills(this.coin);
+            openOrders = await this._withRetry(() => this.wayfinder.getOpenOrders(this.coin));
+            recentFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin));
         } catch (e) {
             this.logger?.warn?.(`[GRID] Reconciliation skipped — API error: ${e.message}`);
             return;
@@ -488,8 +513,8 @@ class GridStrategy {
             if (!breached) {
                 await this.reconcileOrders();
 
-                const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
-                const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
+                const position = Number(await this._withRetry(() => this.wayfinder.getPositionSize(this.coin))) || 0;
+                const unrealizedPnl = Number(await this._withRetry(() => this.wayfinder.getUnrealizedPnl(this.coin))) || 0;
 
                 const logFn = this.verboseLogging ? this.logger.info : this.logger.debug;
 
@@ -533,7 +558,7 @@ class GridStrategy {
 
         this.updateInterval = setInterval(async () => {
             try {
-                const price = await this.wayfinder.getPrice(this.coin);
+                const price = await this._withRetry(() => this.wayfinder.getPrice(this.coin));
                 if (price) {
                     await this.update(price); // Let update() own the _updating lock
                 }
@@ -555,8 +580,8 @@ class GridStrategy {
      * @returns {Promise<Object>} Grid status
      */
     async getStatus() {
-        const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
-        const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
+        const position = Number(await this._withRetry(() => this.wayfinder.getPositionSize(this.coin))) || 0;
+        const unrealizedPnl = Number(await this._withRetry(() => this.wayfinder.getUnrealizedPnl(this.coin))) || 0;
 
         return {
             active: this.active,
