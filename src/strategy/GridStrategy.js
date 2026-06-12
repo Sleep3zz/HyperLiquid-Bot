@@ -211,20 +211,13 @@ class GridStrategy {
         this.active = false;
 
         try {
-            // Wait for any in-progress update/reconciliation to finish
-            let waitCount = 0;
-            while (this._updating && waitCount < 50) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                waitCount++;
-            }
-
+            // No need for long wait loop anymore because we release _updating before calling this
             await this._cancelAllOrders();
             this.gridOrders.clear();
-            this.filledOrders = []; // optional cleanup
 
             this.logger?.info?.('[GRID] Grid stopped cleanly');
         } catch (e) {
-            this.logger?.error?.(`[GRID] Error while stopping: ${e.message}`);
+            this.logger?.error?.(`[GRID] Error stopping grid: ${e.message}`);
         } finally {
             this._stopping = false;
         }
@@ -439,45 +432,37 @@ class GridStrategy {
         if (!this.active || this._updating || this._stopping) return;
 
         this._updating = true;
-        this.updateCount = (this.updateCount ?? 0) + 1;
+        let breached = false;
 
         try {
-            // 1. Check if price breached the grid range first
-            const breached = await this.checkRangeBound(currentPrice);
-            if (breached) {
-                if (this.autoReCenter) {
-                    this.logger?.info?.('[GRID] Range breached — re-centering grid...');
-                    await this.stopGrid();
-                    // Re-initialize grid around current price
-                    await this.startGrid(this.coin, currentPrice);
-                }
-                return;
+            breached = await this.checkRangeBound(currentPrice);
+
+            if (!breached) {
+                await this.reconcileOrders();
+
+                const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
+                const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
+
+                this.logger.info(
+                    `[GRID] ${this.coin} @ $${currentPrice.toFixed(2)} | ` +
+                    `Pos: ${position.toFixed(4)} | Unrealized: $${unrealizedPnl.toFixed(2)} | ` +
+                    `Realized: $${this.totalPnL.toFixed(2)}`
+                );
             }
-
-            // 2. Always run reconciliation (deterministic — fixes H3)
-            await this.reconcileOrders();
-
-            // Optional: throttle reconciliation if needed later
-            // if (this.updateCount % 2 === 0) {
-            //     await this.reconcileOrders();
-            // }
-
-            // 3. Log current status
-            // NOTE: All wayfinder calls below are expected to be async
-            const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
-            const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
-
-            const logLevel = this.verboseLogging ? 'info' : 'debug';
-            this.logger[logLevel](
-                `[GRID] ${this.coin} @ $${currentPrice.toFixed(2)} | ` +
-                `Pos: ${position.toFixed(4)} | ` +
-                `Unrealized: $${unrealizedPnl.toFixed(2)} | ` +
-                `Realized: $${this.totalPnL.toFixed(2)}`
-            );
         } catch (e) {
-            this.logger?.error?.(`[GRID] Update error: ${e.message}`);
+            this.logger?.error?.(`[GRID] update() error: ${e.message}`);
         } finally {
-            this._updating = false;
+            this._updating = false; // Release lock BEFORE we call stopGrid
+        }
+
+        // Handle breach *outside* the lock
+        if (breached) {
+            await this.stopGrid();
+
+            if (this.autoReCenter) {
+                this.logger.info('[GRID] Auto re-centering grid...');
+                await this.startGrid(this.coin, currentPrice);
+            }
         }
     }
 
@@ -485,10 +470,10 @@ class GridStrategy {
         if (!this.active || !this.basePrice) return false;
 
         const movePct = Math.abs((currentPrice - this.basePrice) / this.basePrice) * 100;
+
         if (movePct >= this.rangeBoundPct) {
             this.logger.warn(`[GRID] Range breached! ${movePct.toFixed(2)}% move`);
-            await this.stopGrid();
-            return true;
+            return true; // Just detect — do NOT call stopGrid here
         }
         return false;
     }
@@ -497,17 +482,13 @@ class GridStrategy {
         if (this.updateInterval) clearInterval(this.updateInterval);
 
         this.updateInterval = setInterval(async () => {
-            if (this._updating) return;
-            this._updating = true;
-
             try {
-                // NOTE: All wayfinder calls below are expected to be async
                 const price = await this.wayfinder.getPrice(this.coin);
-                if (price) await this.update(price);
+                if (price) {
+                    await this.update(price); // Let update() own the _updating lock
+                }
             } catch (e) {
-                this.logger.error(`[GRID] Update loop error: ${e.message}`);
-            } finally {
-                this._updating = false;
+                this.logger?.error?.(`[GRID] Update loop error: ${e.message}`);
             }
         }, this.updateIntervalMs);
     }
