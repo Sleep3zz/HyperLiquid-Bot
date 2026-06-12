@@ -237,6 +237,7 @@ class GridStrategy {
                         let afterFills = [];
                         let attempts = 0;
                         const maxAttempts = 3;
+                        let captured = false;
 
                         while (attempts < maxAttempts) {
                             afterFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
@@ -250,8 +251,9 @@ class GridStrategy {
 
                                 this.totalPnL += closePnL;
                                 this.logger?.info?.(
-                                    `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
+                                    `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total: $${this.totalPnL.toFixed(2)}`
                                 );
+                                captured = true;
                                 break;
                             }
 
@@ -261,7 +263,7 @@ class GridStrategy {
                             }
                         }
 
-                        if (attempts === maxAttempts && afterFills.length === beforeFills.length) {
+                        if (!captured) {
                             this.logger?.warn?.(`[GRID] Could not capture close PnL after ${maxAttempts} attempts`);
                         }
                     } else {
