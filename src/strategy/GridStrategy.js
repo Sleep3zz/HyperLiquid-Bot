@@ -18,7 +18,7 @@ const WayfinderCommander = require('../wayfinder/wayfinder-cmds');
  * - Stronger cleanup in stopGrid() and _cancelAllOrders()
  */
 class GridStrategy {
-    constructor(logger, wayfinderCmds = null) {
+    constructor(logger, wayfinderCmds = null, userConfig = {}) {
         this.logger = logger || console;
 
         this.wayfinder = wayfinderCmds || new WayfinderCommander({
@@ -28,19 +28,19 @@ class GridStrategy {
         });
 
         // Config from file (node-config) - can be overridden by constructor config
-        const g = config.get ? config.get("trading.grid") || {} : {};
+        const fileConfig = require("config").get ? require("config").get("trading.grid") || {} : {};
 
         // Configurable parameters (constructor config takes precedence over file config)
-        this.coin = config.coin || g.coin || 'BTC';
-        this.updateIntervalMs = config.updateIntervalMs || g.updateIntervalMs || 15000;
-        this.baseAmount = Number(config.baseAmount || g.baseAmount || 50);
-        this.gridSpacingPct = Number(config.gridSpacingPct || g.spacingPct || 0.8);
-        this.gridLevels = Number(config.gridLevels || g.levels || 20);
-        this.rangeBoundPct = Number(config.rangeBoundPct || g.rangeBoundPct || 5.0);
-        this.maxGridCapital = Number(config.maxGridCapital || g.maxGridCapital || 2000);
-        this.autoReCenter = config.autoReCenter ?? g.autoReCenter ?? false;
-        this.maxFilledHistory = config.maxFilledHistory || g.maxFilledHistory || 500;
-        this.verboseLogging = config.verboseLogging ?? g.verboseLogging ?? true;
+        this.coin = userConfig.coin || fileConfig.coin || 'BTC';
+        this.updateIntervalMs = userConfig.updateIntervalMs || fileConfig.updateIntervalMs || 15000;
+        this.baseAmount = Number(userConfig.baseAmount || fileConfig.baseAmount || 50);
+        this.gridSpacingPct = Number(userConfig.gridSpacingPct || fileConfig.spacingPct || 0.8);
+        this.gridLevels = Number(userConfig.gridLevels || fileConfig.levels || 20);
+        this.rangeBoundPct = Number(userConfig.rangeBoundPct || fileConfig.rangeBoundPct || 5.0);
+        this.maxGridCapital = Number(userConfig.maxGridCapital || fileConfig.maxGridCapital || 2000);
+        this.autoReCenter = userConfig.autoReCenter ?? fileConfig.autoReCenter ?? false;
+        this.maxFilledHistory = userConfig.maxFilledHistory || fileConfig.maxFilledHistory || 500;
+        this.verboseLogging = userConfig.verboseLogging ?? fileConfig.verboseLogging ?? true;
 
         // State
         this.active = false;
@@ -291,9 +291,16 @@ class GridStrategy {
                 .map(f => [String(f.oid), f])
         );
 
+        const gracePeriodMs = (this.updateIntervalMs || 15000) * 2;
+
         for (const [oid, order] of this.gridOrders) {
             if (order.status === "filled") continue;
-            if (openOids.has(oid)) continue; // still open
+
+            if (openOids.has(oid)) {
+                // Order is back on the book → clear any missing timestamp
+                if (order.missingSince) delete order.missingSince;
+                continue;
+            }
 
             const fill = filledByOid.get(oid);
 
@@ -306,7 +313,7 @@ class GridStrategy {
                     fee: Number(fill.fee) || 0
                 };
                 this._handleFilledOrder(oid, enriched);
-            } else if (!openOids.has(oid)) {
+            } else {
                 // Order is missing from both book and recent fills.
                 // Give it one more cycle before treating it as cancelled.
                 if (!order.missingSince) {
@@ -314,9 +321,9 @@ class GridStrategy {
                     continue; // skip this cycle
                 }
 
-                // If it's been missing for more than 2 cycles (~30s), treat as cancelled
-                if (Date.now() - order.missingSince > 30000) {
-                    this.logger.warn(`[GRID] Order ${oid} missing for too long — treating as cancelled`);
+                // If it's been missing for more than grace period (~2 cycles), treat as cancelled
+                if (Date.now() - order.missingSince > gracePeriodMs) {
+                    this.logger.warn(`[GRID] Order ${oid} missing too long — treating as cancelled`);
                     this.gridOrders.delete(oid);
                 }
             }
@@ -484,7 +491,9 @@ class GridStrategy {
                 const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
                 const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
 
-                this.logger.info(
+                const logFn = this.verboseLogging ? this.logger.info : this.logger.debug;
+
+                logFn(
                     `[GRID] ${this.coin} @ $${currentPrice.toFixed(2)} | ` +
                     `Pos: ${position.toFixed(4)} | Unrealized: $${unrealizedPnl.toFixed(2)} | ` +
                     `Realized: $${this.totalPnL.toFixed(2)}`
@@ -586,6 +595,30 @@ class GridStrategy {
         }
 
         return total;
+    }
+
+    /**
+     * Retry wrapper with exponential backoff
+     * @param {Function} fn - Async function to retry
+     * @param {number} maxRetries - Maximum retry attempts
+     * @param {number} baseDelayMs - Base delay in milliseconds
+     * @returns {Promise<any>} - Result of fn()
+     */
+    async _withRetry(fn, maxRetries = 3, baseDelayMs = 800) {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                return await fn();
+            } catch (error) {
+                if (attempt === maxRetries) {
+                    throw error;
+                }
+                const delay = baseDelayMs * attempt;
+                this.logger?.warn?.(
+                    `[GRID] Retry ${attempt}/${maxRetries} after error: ${error.message}. Waiting ${delay}ms...`
+                );
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
     }
 }
 
