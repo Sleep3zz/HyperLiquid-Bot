@@ -48,7 +48,6 @@ class GridStrategy {
         this.gridOrders = new Map(); // oid -> { side, price, level, status }
         this.filledOrders = [];
         this.totalPnL = 0;
-        this.updateCount = 0;
         this.updateInterval = null;
         this._updating = false;
         this._stopping = false;
@@ -652,6 +651,10 @@ class GridStrategy {
      * @returns {Promise<any>} - Result of fn()
      */
     async _withRetry(fn, maxRetries = 3, baseDelayMs = 800) {
+        if (maxRetries < 1) {
+            throw new Error("maxRetries must be at least 1");
+        }
+
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
             try {
                 return await fn();
