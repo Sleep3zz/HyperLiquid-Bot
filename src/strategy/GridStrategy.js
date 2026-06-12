@@ -4,6 +4,12 @@ const WayfinderCommander = require('../wayfinder/wayfinder-cmds');
 /**
  * GridStrategy - Grid Trading Implementation using Wayfinder SDK
  * 
+ * IMPORTANT NOTES:
+ * - basePrice is fixed for the life of the grid (set at startGrid()). 
+ *   Re-centering requires stopping and restarting the grid (or use autoReCenter).
+ * - Grid levels are placed symmetrically around basePrice at startup.
+ * - Rebalanced orders use the actual fill price, not basePrice.
+ * 
  * Improvements in this version:
  * - Fixed update() race condition
  * - Added fill detection + automatic grid rebalancing
@@ -21,22 +27,31 @@ class GridStrategy {
             logger: this.logger
         });
 
-        const g = config.get("trading.grid") || {};
-        this.gridLevels = Number(g.levels) || 8;
-        this.gridSpacingPct = Number(g.spacingPct) || 0.8;
-        this.baseAmount = Number(g.baseAmount) || 50;
-        this.maxGridCapital = Number(g.maxGridCapital) || 2000;
-        this.rangeBoundPct = Number(g.rangeBoundPct) || 5.0;
+        // Config from file (node-config) - can be overridden by constructor config
+        const g = config.get ? config.get("trading.grid") || {} : {};
+
+        // Configurable parameters (constructor config takes precedence over file config)
+        this.coin = config.coin || g.coin || 'BTC';
+        this.updateIntervalMs = config.updateIntervalMs || g.updateIntervalMs || 15000;
+        this.baseAmount = Number(config.baseAmount || g.baseAmount || 50);
+        this.gridSpacingPct = Number(config.gridSpacingPct || g.spacingPct || 0.8);
+        this.gridLevels = Number(config.gridLevels || g.levels || 20);
+        this.rangeBoundPct = Number(config.rangeBoundPct || g.rangeBoundPct || 5.0);
+        this.maxGridCapital = Number(config.maxGridCapital || g.maxGridCapital || 2000);
+        this.autoReCenter = config.autoReCenter ?? g.autoReCenter ?? false;
+        this.maxFilledHistory = config.maxFilledHistory || g.maxFilledHistory || 500;
+        this.verboseLogging = config.verboseLogging ?? g.verboseLogging ?? true;
 
         // State
         this.active = false;
-        this.coin = null;
         this.basePrice = null;
         this.gridOrders = new Map(); // oid -> { side, price, level, status }
         this.filledOrders = [];
         this.totalPnL = 0;
+        this.updateCount = 0;
         this.updateInterval = null;
         this._updating = false;
+        this._stopping = false;
     }
 
     _extractOrderId(res) {
@@ -64,7 +79,7 @@ class GridStrategy {
         }
     }
 
-    async startGrid(coin = "BTC") {
+    async startGrid(coin = "BTC", price = null) {
         if (this.active) return `Grid already running on ${this.coin}`;
 
         const totalCapital = this.gridLevels * 2 * this.baseAmount;
@@ -72,18 +87,30 @@ class GridStrategy {
             return `Grid capital $${totalCapital} exceeds max $${this.maxGridCapital}`;
         }
 
-        let price;
-        try {
-            price = this.wayfinder.getPrice(coin);
-        } catch (e) {
-            return `Failed to get price: ${e.message}`;
+        // Use provided price (for re-centering) or fetch fresh price
+        if (!price) {
+            try {
+                price = await this.wayfinder.getPrice(coin); // NOTE: wayfinder calls are async
+            } catch (e) {
+                return `Failed to get price: ${e.message}`;
+            }
         }
+        
         if (!Number.isFinite(price) || price <= 0) {
             return "No valid price available from Wayfinder";
         }
 
+        // Validate grid configuration
+        const maxGridRange = (this.gridSpacingPct / 100) * this.gridLevels;
+        if (maxGridRange > this.rangeBoundPct / 100) {
+            this.logger?.warn?.(
+                `[GRID] Warning: Grid range (${(maxGridRange * 100).toFixed(2)}%) exceeds range bound ` +
+                `(${this.rangeBoundPct}%). Some levels may never fill.`
+            );
+        }
+
         this.coin = coin;
-        this.basePrice = price;
+        this.basePrice = price; // NOTE: basePrice is set once when grid starts and does not change. Re-centering requires stopping/restarting.
         this.active = true;
         this.gridOrders.clear();
         this.filledOrders = [];
@@ -106,6 +133,7 @@ class GridStrategy {
 
     async _buildGrid() {
         const placed = [];
+        const placedOrders = []; // Track raw responses for rollback
 
         try {
             const totalCapital = this.gridLevels * 2 * this.baseAmount;
@@ -120,44 +148,56 @@ class GridStrategy {
 
                 if (!(buyPrice > 0) || !(sellPrice > 0)) {
                     this.logger.error(`[GRID] Invalid price at level ${i}`);
-                    await this._cancelAllOrders();
-                    this.active = false;
-                    return [];
+                    throw new Error(`Invalid price at level ${i}`);
                 }
 
                 // BUY
-                const buyRes = this.wayfinder.placeLimitOrder({
+                const buyRes = await this.wayfinder.placeLimitOrder({
                     coin: this.coin, isBuy: true, size: this.baseAmount / buyPrice, price: buyPrice
                 });
+                placedOrders.push(buyRes);
+                
                 const buyId = this._extractOrderId(buyRes);
                 if (buyId) {
                     this.gridOrders.set(buyId.oid, { side: "BUY", price: buyPrice, level: i, status: buyId.status });
                     placed.push(buyId.oid);
                 } else {
                     this.logger.error(`[GRID] Buy L${i} failed to return OID — aborting`);
-                    await this._cancelAllOrders();
-                    this.active = false;
-                    return [];
+                    throw new Error(`Buy L${i} failed to return OID`);
                 }
 
                 // SELL
-                const sellRes = this.wayfinder.placeLimitOrder({
+                const sellRes = await this.wayfinder.placeLimitOrder({
                     coin: this.coin, isBuy: false, size: this.baseAmount / sellPrice, price: sellPrice
                 });
+                placedOrders.push(sellRes);
+                
                 const sellId = this._extractOrderId(sellRes);
                 if (sellId) {
                     this.gridOrders.set(sellId.oid, { side: "SELL", price: sellPrice, level: i, status: sellId.status });
                     placed.push(sellId.oid);
                 } else {
                     this.logger.error(`[GRID] Sell L${i} failed to return OID — aborting`);
-                    await this._cancelAllOrders();
-                    this.active = false;
-                    return [];
+                    throw new Error(`Sell L${i} failed to return OID`);
                 }
             }
         } catch (e) {
-            this.logger.error(`[GRID] _buildGrid failed: ${e.message}`);
-            await this._cancelAllOrders();
+            this.logger.error(`[GRID] Error building grid: ${e.message}`);
+            
+            // Better rollback: cancel all placed orders
+            for (const order of placedOrders) {
+                try {
+                    const oid = this._extractOrderId(order)?.oid;
+                    if (oid) {
+                        await this.wayfinder.cancelOrder(this.coin, oid);
+                        this.logger?.info?.(`[GRID] Rolled back order ${oid}`);
+                    }
+                } catch (cancelErr) {
+                    this.logger?.warn?.(`[GRID] Failed to cancel during rollback: ${cancelErr.message}`);
+                }
+            }
+            
+            this.gridOrders.clear();
             this.active = false;
             return [];
         }
@@ -166,30 +206,28 @@ class GridStrategy {
     }
 
     async stopGrid() {
-        if (!this.active) return "Grid not active";
-
+        if (this._stopping) return;
+        this._stopping = true;
         this.active = false;
-        this._stopUpdateLoop();
 
-        this.logger.info(`[GRID] Stopping grid on ${this.coin}...`);
+        try {
+            // Wait for any in-progress update/reconciliation to finish
+            let waitCount = 0;
+            while (this._updating && waitCount < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                waitCount++;
+            }
 
-        const cancelResult = await this._cancelAllOrders();
+            await this._cancelAllOrders();
+            this.gridOrders.clear();
+            this.filledOrders = []; // optional cleanup
 
-        // Close any remaining position
-        let positionCloseFailed = false;
-        const positionSize = Number(this.wayfinder.getPositionSize(this.coin)) || 0;
-        if (Math.abs(positionSize) > 0) {
-            const closeRes = this.wayfinder.closePosition(this.coin);
-            if (!closeRes) positionCloseFailed = true;
+            this.logger?.info?.('[GRID] Grid stopped cleanly');
+        } catch (e) {
+            this.logger?.error?.(`[GRID] Error while stopping: ${e.message}`);
+        } finally {
+            this._stopping = false;
         }
-
-        this.logger.info(`[GRID] Grid stopped. Filled orders: ${this.filledOrders.length} | Realized PnL: $${this.totalPnL.toFixed(2)}`);
-
-        if (cancelResult.failed > 0 || positionCloseFailed) {
-            return `Grid stopped with warnings — some orders/positions may still be open`;
-        }
-
-        return `Grid stopped cleanly on ${this.coin}`;
     }
 
     async _cancelAllOrders() {
@@ -198,14 +236,18 @@ class GridStrategy {
 
         for (const [oid, order] of this.gridOrders) {
             try {
-                const res = this.wayfinder.cancelOrder(this.coin, oid);
-                if (res) {
+                const res = await this.wayfinder.cancelOrder(this.coin, oid);
+
+                if (res && (res.status === 'ok' || res.success === true)) {
+                    this.logger?.info?.(`[GRID] Order ${oid} cancelled successfully`);
                     this.gridOrders.delete(oid);
                     cancelled++;
                 } else {
+                    this.logger?.warn?.(`[GRID] Failed to cancel order ${oid}`, res);
                     failedIds.push(oid);
                 }
             } catch (e) {
+                this.logger?.error?.(`[GRID] Exception cancelling order ${oid}: ${e.message}`);
                 failedIds.push(oid);
             }
         }
@@ -217,97 +259,226 @@ class GridStrategy {
         return { cancelled, failed: failedIds.length, failedIds };
     }
 
-    /* Best-effort reconciliation using local state + CLI (if available)
+    /* Best-effort reconciliation using local state + API fills
      */
     async reconcileOrders() {
         if (!this.active || this.gridOrders.size === 0) return;
 
-        try {
-            const openOrders = this.wayfinder.getOpenOrders(this.coin) || [];
-            const openOids = new Set(openOrders.map(o => String(o.oid)));
+        let openOrders, recentFills;
 
-            for (const [oid, order] of this.gridOrders) {
-                if (!openOids.has(oid) && order.status !== "filled") {
-                    // Order is no longer on the book → likely filled
-                    this._handleFilledOrder(oid, order);
-                }
-            }
+        try {
+            openOrders = await this.wayfinder.getOpenOrders(this.coin);
+            recentFills = await this.wayfinder.getUserFills(this.coin);
         } catch (e) {
-            this.logger.warn(`[GRID] Reconciliation error: ${e.message}`);
+            this.logger?.warn?.(`[GRID] Reconciliation skipped — API error: ${e.message}`);
+            return;
+        }
+
+        if (!Array.isArray(openOrders)) {
+            this.logger?.warn?.(`[GRID] Open orders response invalid — skipping reconciliation`);
+            return;
+        }
+
+        const openOids = new Set(openOrders.map(o => String(o.oid)));
+        const filledByOid = new Map(
+            (Array.isArray(recentFills) ? recentFills : [])
+                .map(f => [String(f.oid), f])
+        );
+
+        for (const [oid, order] of this.gridOrders) {
+            if (order.status === "filled") continue;
+            if (openOids.has(oid)) continue; // still open
+
+            const fill = filledByOid.get(oid);
+
+            if (fill) {
+                // Confirmed fill with real data
+                const enriched = {
+                    ...order,
+                    price: Number(fill.px) || order.price,
+                    fillSize: Number(fill.sz),
+                    fee: Number(fill.fee) || 0
+                };
+                this._handleFilledOrder(oid, enriched);
+            } else {
+                // Gone from book but not in fills → treat as cancelled
+                this.logger?.warn?.(`[GRID] Order ${oid} disappeared without fill — treating as cancelled`);
+                this.gridOrders.delete(oid);
+            }
+        }
+
+        // === Partial Fill Detection (H4) ===
+        for (const [oid, order] of this.gridOrders) {
+            if (order.status === "filled") continue;
+
+            const openOrder = openOrders.find(o => String(o.oid) === oid);
+            if (!openOrder) continue;
+
+            const originalSize = this.baseAmount / order.price;
+            const filledSoFar = Number(openOrder.filledSize || 0);
+            const fillRatio = filledSoFar / originalSize;
+
+            if (fillRatio > 0.05 && fillRatio < 0.95) {
+                this.logger?.info?.(
+                    `[GRID] Partial fill on order ${oid} ` +
+                    `(${ (fillRatio * 100).toFixed(1)}% filled)`
+                );
+
+                // Optional: You can store partial fill info if needed later
+                // order.partialFill = fillRatio;
+            }
         }
     }
 
     _handleFilledOrder(oid, orderInfo) {
         this.gridOrders.delete(oid);
-        this.filledOrders.push({ ...orderInfo, oid, filledAt: Date.now() });
 
-        // Simple realized PnL estimation (can be improved with actual fill price)
-        const estimatedPnl = orderInfo.side === "BUY" ? 0 : 0; // placeholder
-        this.totalPnL += estimatedPnl;
+        const fillPrice = Number(orderInfo.price) || 0;
+        const size = this.baseAmount / fillPrice;
 
-        this.logger.info(`[GRID] Detected fill: ${orderInfo.side} @ $${orderInfo.price.toFixed(2)} (Level ${orderInfo.level})`);
+        // Calculate realized PnL only on closing legs
+        let realized = 0;
+        if (orderInfo.entryPrice && orderInfo.entryPrice > 0) {
+            if (orderInfo.side === "SELL") {
+                realized = (fillPrice - orderInfo.entryPrice) * size;
+            } else {
+                realized = (orderInfo.entryPrice - fillPrice) * size;
+            }
+        }
 
-        // Rebalance: place opposite order
-        this._rebalanceGrid(orderInfo);
+        this.totalPnL += realized;
+
+        this.filledOrders.push({
+            ...orderInfo,
+            oid,
+            fillPrice,
+            size,
+            realizedPnl: realized,
+            filledAt: Date.now()
+        });
+
+        // Limit filledOrders history to prevent unbounded growth
+        if (this.filledOrders.length > this.maxFilledHistory) {
+            this.filledOrders = this.filledOrders.slice(-Math.floor(this.maxFilledHistory * 0.6)); // keep last 60%
+        }
+
+        this.logger?.info?.(
+            `[GRID] Fill: ${orderInfo.side} @ $${fillPrice.toFixed(2)} (L${orderInfo.level}) | ` +
+            `Realized: $${realized.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
+        );
+
+        // Rebalance safely (fire-and-forget with error handling)
+        this._rebalanceGrid(orderInfo).catch(e =>
+            this.logger?.error?.(`[GRID] Rebalance error after fill: ${e.message}`)
+        );
     }
 
     async _rebalanceGrid(filledOrder) {
         if (!this.active) return;
 
-        const { side, level, price } = filledOrder;
+        const { side, level, price: fillPrice } = filledOrder;
+        const step = this.gridSpacingPct / 100;
 
+        // Place counter-order ONE step away from the actual fill price
         let newPrice, isBuy;
 
         if (side === "BUY") {
-            // Buy filled → place new sell above
-            newPrice = this.basePrice * (1 + (level * this.gridSpacingPct / 100));
+            newPrice = fillPrice * (1 + step); // Sell higher
             isBuy = false;
         } else {
-            // Sell filled → place new buy below
-            newPrice = this.basePrice * (1 - (level * this.gridSpacingPct / 100));
+            newPrice = fillPrice * (1 - step); // Buy lower
             isBuy = true;
         }
 
-        if (newPrice <= 0) return;
+        if (!(newPrice > 0)) return;
+
+        // Prevent duplicate orders at nearly the same price
+        const duplicate = [...this.gridOrders.values()].some(o =>
+            o.side === (isBuy ? "BUY" : "SELL") &&
+            Math.abs(o.price - newPrice) / newPrice < 1e-5
+        );
+
+        if (duplicate) {
+            this.logger?.warn?.(`[GRID] Skipping rebalance — order already exists near $${newPrice.toFixed(2)}`);
+            return;
+        }
 
         const size = this.baseAmount / newPrice;
 
-        const res = this.wayfinder.placeLimitOrder({
-            coin: this.coin,
-            isBuy,
-            size,
-            price: newPrice
-        });
-
-        const newId = this._extractOrderId(res);
-        if (newId) {
-            this.gridOrders.set(newId.oid, {
-                side: isBuy ? "BUY" : "SELL",
-                price: newPrice,
-                level,
-                status: newId.status
+        try {
+            const res = await this.wayfinder.placeLimitOrder({
+                coin: this.coin,
+                isBuy,
+                size,
+                price: newPrice
             });
-            this.logger.info(`[GRID] Rebalanced: Placed ${isBuy ? "BUY" : "SELL"} @ $${newPrice.toFixed(2)}`);
+
+            const newId = this._extractOrderId(res);
+            if (newId) {
+                this.gridOrders.set(newId.oid, {
+                    side: isBuy ? "BUY" : "SELL",
+                    price: newPrice,
+                    level,
+                    entryPrice: fillPrice, // ← Important for PnL tracking
+                    status: newId.status || "open"
+                });
+
+                this.logger?.info?.(
+                    `[GRID] Rebalanced: ${isBuy ? "BUY" : "SELL"} @ $${newPrice.toFixed(2)} ` +
+                    `(paired from $${fillPrice.toFixed(2)})`
+                );
+            } else {
+                this.logger?.error?.(`[GRID] Rebalance placed but no OID returned at $${newPrice.toFixed(2)}`);
+            }
+        } catch (e) {
+            this.logger?.error?.(`[GRID] Rebalance order failed: ${e.message}`);
         }
     }
 
     async update(currentPrice) {
-        if (!this.active) return;
+        if (!this.active || this._updating || this._stopping) return;
 
-        const breached = await this.checkRangeBound(currentPrice);
-        if (breached) return;
+        this._updating = true;
+        this.updateCount = (this.updateCount ?? 0) + 1;
 
-        // Periodic reconciliation (every few updates)
-        if (Math.random() < 0.3) {
+        try {
+            // 1. Check if price breached the grid range first
+            const breached = await this.checkRangeBound(currentPrice);
+            if (breached) {
+                if (this.autoReCenter) {
+                    this.logger?.info?.('[GRID] Range breached — re-centering grid...');
+                    await this.stopGrid();
+                    // Re-initialize grid around current price
+                    await this.startGrid(this.coin, currentPrice);
+                }
+                return;
+            }
+
+            // 2. Always run reconciliation (deterministic — fixes H3)
             await this.reconcileOrders();
+
+            // Optional: throttle reconciliation if needed later
+            // if (this.updateCount % 2 === 0) {
+            //     await this.reconcileOrders();
+            // }
+
+            // 3. Log current status
+            // NOTE: All wayfinder calls below are expected to be async
+            const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
+            const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
+
+            const logLevel = this.verboseLogging ? 'info' : 'debug';
+            this.logger[logLevel](
+                `[GRID] ${this.coin} @ $${currentPrice.toFixed(2)} | ` +
+                `Pos: ${position.toFixed(4)} | ` +
+                `Unrealized: $${unrealizedPnl.toFixed(2)} | ` +
+                `Realized: $${this.totalPnL.toFixed(2)}`
+            );
+        } catch (e) {
+            this.logger?.error?.(`[GRID] Update error: ${e.message}`);
+        } finally {
+            this._updating = false;
         }
-
-        const position = Number(this.wayfinder.getPositionSize(this.coin)) || 0;
-        const unrealizedPnl = Number(this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
-
-        this.logger.info(
-            `[GRID] ${this.coin} @ $${currentPrice.toFixed(2)} | Pos: ${position.toFixed(4)} | Unrealized: $${unrealizedPnl.toFixed(2)} | Realized: $${this.totalPnL.toFixed(2)}`
-        );
     }
 
     async checkRangeBound(currentPrice) {
@@ -330,14 +501,15 @@ class GridStrategy {
             this._updating = true;
 
             try {
-                const price = this.wayfinder.getPrice(this.coin);
+                // NOTE: All wayfinder calls below are expected to be async
+                const price = await this.wayfinder.getPrice(this.coin);
                 if (price) await this.update(price);
             } catch (e) {
                 this.logger.error(`[GRID] Update loop error: ${e.message}`);
             } finally {
                 this._updating = false;
             }
-        }, 15000); // every 15 seconds
+        }, this.updateIntervalMs);
     }
 
     _stopUpdateLoop() {
@@ -349,9 +521,12 @@ class GridStrategy {
 
     /**
      * Get grid status summary
-     * @returns {Object} Grid status
+     * @returns {Promise<Object>} Grid status
      */
-    getStatus() {
+    async getStatus() {
+        const position = Number(await this.wayfinder.getPositionSize(this.coin)) || 0;
+        const unrealizedPnl = Number(await this.wayfinder.getUnrealizedPnl(this.coin)) || 0;
+
         return {
             active: this.active,
             coin: this.coin,
@@ -360,8 +535,28 @@ class GridStrategy {
             spacingPct: this.gridSpacingPct,
             openOrders: this.gridOrders.size,
             filledOrders: this.filledOrders.length,
-            totalPnL: this.totalPnL
+            totalPnL: this.totalPnL,
+            capitalUsed: this.getCurrentCapitalUsage?.() || 0,
+            currentPosition: position,
+            unrealizedPnL: unrealizedPnl,
+            lastUpdate: Date.now()
         };
+    }
+
+    /**
+     * Get current capital usage (H5 fix)
+     * Tracks capital usage after rebalancing
+     * @returns {number} Total capital currently used by grid orders
+     */
+    getCurrentCapitalUsage() {
+        let totalCapital = 0;
+
+        for (const order of this.gridOrders.values()) {
+            // Approximate capital used per order
+            totalCapital += this.baseAmount;
+        }
+
+        return totalCapital;
     }
 }
 
