@@ -1,63 +1,69 @@
-const { calculateBollingerBands, calculateADX } = require("./indicators");
+const { calculateADX, calculateATR, calculateBollingerBands } = require('./indicators'); // adjust path if needed
 
 class RegimeDetector {
-    /**
-     * @param {Object} bbrsiStrategy - BBRSI strategy instance (provides bbPeriod, bbStdDev, adxPeriod)
-     * @param {Object} wayfinder - WayfinderAgent instance for fetching candles
-     * @param {Object} logger - Logger instance (default: console)
-     * @param {string} interval - Candle interval for regime detection (default: "15m" for responsiveness)
-     */
-    constructor(bbrsiStrategy, wayfinder, logger = console, interval = "15m") {
-        this.bb = bbrsiStrategy;
-        this.wayfinder = wayfinder;
-        this.logger = logger;
-        this.interval = interval; // explicit, not buried in getRegime
-        this.streak = { regime: null, count: 0 };
+    constructor(logger) {
+        this.logger = logger || console;
+        this.lastRegime = null;
+        this.regimeHistory = [];
+        this.hysteresis = 2; // Prevents rapid flipping
     }
 
-    _stable(raw, needed = 3) {
-        if (raw === this.streak.regime) this.streak.count++;
-        else this.streak = { regime: raw, count: 1 };
-        return this.streak.count >= needed ? raw : "hold";
-    }
-
-    async getRegime(coin = "BTC") {
-        // Request more candles to ensure we get enough clean ones after filtering
-        // Wayfinder needs 22 minimum, we want 50+ for reliable indicators
-        const candles = await this.wayfinder.getHistoricalCandles(coin, this.interval, 200);
-        if (!candles || candles.length < 50) {
-            this.logger.warn(`Insufficient candles for ${coin}: got ${candles?.length || 0}, need 50+`);
-            return "unknown";
+    detect(ohlcv) {
+        if (!ohlcv || ohlcv.length < 50) {
+            return { type: 'UNKNOWN', confidence: 0 };
         }
 
-        // Indicators expect array of candle objects with c/h/l properties
-        const bbRaw = calculateBollingerBands(candles, this.bb.bbPeriod, this.bb.bbStdDev);
-        const adx = calculateADX(candles, this.bb.adxPeriod);
-        
-        // Convert Big.js strings to numbers
-        const bb = {
-            upper: parseFloat(bbRaw.upper),
-            middle: parseFloat(bbRaw.middle),
-            lower: parseFloat(bbRaw.lower)
+        const closes = ohlcv.map(c => c.c);
+        const highs = ohlcv.map(c => c.h);
+        const lows = ohlcv.map(c => c.l);
+
+        // Calculate indicators
+        const adx = calculateADX(highs, lows, closes, 14);
+        const atr = calculateATR(highs, lows, closes, 14);
+        const bb = calculateBollingerBands(closes, 20, 2);
+
+        const currentAdx = adx[adx.length - 1];
+        const currentAtrPct = (atr[atr.length - 1] / closes[closes.length - 1]) * 100;
+        const bbWidth = ((bb.upper - bb.lower) / bb.middle) * 100;
+
+        let regime = 'RANGING';
+        let confidence = 60;
+
+        // Strong Trend
+        if (currentAdx > 28) {
+            regime = 'TRENDING';
+            confidence = 85;
+        }
+        // High Volatility
+        else if (currentAtrPct > 3.8 || bbWidth > 6) {
+            regime = 'HIGH_VOLATILITY';
+            confidence = 75;
+        }
+        // Clear Ranging
+        else if (currentAdx < 18 && bbWidth < 3.5) {
+            regime = 'RANGING';
+            confidence = 80;
+        }
+
+        // Hysteresis to prevent rapid switching
+        if (this.lastRegime && this.lastRegime.type === regime) {
+            confidence = Math.min(95, confidence + 10);
+        }
+
+        const result = {
+            type: regime,
+            adx: currentAdx,
+            atrPct: currentAtrPct,
+            bbWidth,
+            confidence,
+            timestamp: Date.now()
         };
 
-        if (![bb.upper, bb.middle, bb.lower, adx].every(Number.isFinite) || bb.middle === 0) return "unknown";
+        this.lastRegime = result;
+        this.regimeHistory.push(result);
+        if (this.regimeHistory.length > 20) this.regimeHistory.shift();
 
-        const bandWidth = (bb.upper - bb.lower) / bb.middle;
-
-        let raw = "neutral";
-        if (adx > 25 && bandWidth > 0.03) raw = "trending";
-        if (adx < 20 && bandWidth < 0.015) raw = "ranging";
-
-        // "unknown" must never feed the hysteresis streak
-        const confirmed = raw === "unknown" ? "unknown" : this._stable(raw, 3);
-
-        this.logger.info(
-            `Regime ${coin}: raw=${raw} confirmed=${confirmed} ` +
-            `(adx=${adx.toFixed(1)} bw=${bandWidth.toFixed(4)} streak=${this.streak.count})`
-        );
-
-        return confirmed;
+        return result;
     }
 }
 

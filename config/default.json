@@ -7,7 +7,24 @@
       "maxPositions": 3,
       "timeframe": "15m",
       "profitTarget": 1.5,
-      "testMode": true
+      "testMode": true,
+      "grid": {
+          "levels": 8,
+          "spacingPct": 0.8,
+          "baseAmount": 50,
+          "maxGridCapital": 2000,
+          "rangeBoundPct": 5.0,
+          "updateIntervalMs": 15000
+      }
+  },
+  "backtest": {
+      "grid": {
+          "initialCapital": 10000,
+          "feeRate": 0.00045,
+          "startDate": "2025-01-01",
+          "endDate": "2025-06-01",
+          "timeframe": "15m"
+      }
   },
   "indicators": {
       "rsi": {

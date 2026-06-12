@@ -5,3 +5,4 @@ webhook-dashboard.js
 *.log
 data/paper-trading/
 backtest-results/
+*.bak
