@@ -270,13 +270,11 @@ class GridStrategy {
 
                             this.logger.info(`[GRID] Position close (fallback): $${closePnL.toFixed(2)}`);
 
-                            // Extra debug
-                            if (this.debugMode) {
-                                await new Promise(r => setTimeout(r, 2000));
-                                const lateFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
-                                const reallyNew = lateFills.filter(f => !beforeIds.has(String(f.tid ?? f.oid)));
-                                this.logger.debug(`[DEBUG] Late fills found: ${reallyNew.length}`, reallyNew);
-                            }
+                            // Extra debug for eventual consistency issues
+                            await new Promise(r => setTimeout(r, 2000));
+                            const lateFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
+                            const reallyNew = lateFills.filter(f => !beforeIds.has(String(f.tid ?? f.oid)));
+                            this._debug(`Late fills found after close PnL loop: ${reallyNew.length}`, reallyNew);
                         }
                     }
                 } catch (closeErr) {
@@ -363,9 +361,7 @@ class GridStrategy {
             }
 
             // === DEBUG ===
-            if (this.debugMode) {
-                this.logger.debug(`[DEBUG] Order ${oid} missing from open orders`);
-            }
+            this._debug(`Order ${oid} missing from open orders`);
 
             const fill = filledByOid.get(oid);
 
@@ -393,11 +389,9 @@ class GridStrategy {
         }
 
         // === Partial Fill Debug ===
-        if (this.debugMode) {
-            for (const [oid, order] of this.gridOrders) {
-                if (order.partialFilled) {
-                    this.logger.debug(`[DEBUG] Partial fill on ${oid}: ${(order.partialFilled * 100).toFixed(1)}%`);
-                }
+        for (const [oid, order] of this.gridOrders) {
+            if (order.partialFilled) {
+                this._debug(`Partial fill on ${oid}: ${(order.partialFilled * 100).toFixed(1)}%`);
             }
         }
     }
@@ -667,6 +661,15 @@ class GridStrategy {
                 );
                 await new Promise(resolve => setTimeout(resolve, delay));
             }
+        }
+    }
+
+    /**
+     * Debug logging helper - only logs when debugMode is enabled
+     */
+    _debug(message, ...args) {
+        if (this.debugMode) {
+            this.logger.debug(`[GRID-DEBUG] ${message}`, ...args);
         }
     }
 }
