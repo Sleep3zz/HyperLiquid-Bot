@@ -220,7 +220,6 @@ class GridStrategy {
 
             if (Math.abs(position) > 0.0001) {
                 try {
-                    // Snapshot fills before closing
                     const beforeFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
                     const beforeIds = new Set(beforeFills.map(f => String(f.tid ?? f.oid)));
 
@@ -229,11 +228,10 @@ class GridStrategy {
                     if (closeRes && (closeRes.status === 'ok' || closeRes.success === true)) {
                         this.logger.info(`[GRID] Closed remaining position: ${position}`);
 
-                        // === More robust PnL capture ===
                         let closePnL = 0;
                         let captured = false;
-                        const maxAttempts = 5; // Increased from 3
-                        const delayMs = 1200; // Slightly longer delay
+                        const maxAttempts = 6;
+                        const delayMs = 1200;
 
                         for (let attempt = 0; attempt < maxAttempts; attempt++) {
                             const afterFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
@@ -243,6 +241,7 @@ class GridStrategy {
                                 for (const f of newFills) {
                                     closePnL += Number(f.closedPnl ?? 0) - Number(f.fee ?? 0);
                                 }
+
                                 this.totalPnL += closePnL;
                                 this.logger.info(
                                     `[GRID] Position close realized: $${closePnL.toFixed(2)} | Total PnL: $${this.totalPnL.toFixed(2)}`
@@ -257,14 +256,20 @@ class GridStrategy {
                         }
 
                         if (!captured) {
-                            this.logger.warn(`[GRID] Could not capture close PnL after ${maxAttempts} attempts. ` +
-                                `Position was closed but PnL may be missing.`);
+                            this.logger.warn(`[GRID] Could not capture close PnL after ${maxAttempts} attempts`);
+
+                            // === Debug logging for eventual consistency issues ===
+                            await new Promise(r => setTimeout(r, 2000));
+                            const lateFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin)) || [];
+                            const reallyNew = lateFills.filter(f => !beforeIds.has(String(f.tid ?? f.oid)));
+
+                            this.logger.debug(`[DEBUG] Late fills found after loop: ${reallyNew.length}`, reallyNew);
                         }
                     } else {
-                        this.logger.warn(`[GRID] closePosition response invalid`, closeRes);
+                        this.logger.warn(`[GRID] closePosition response was not successful`, closeRes);
                     }
                 } catch (err) {
-                    this.logger.error(`[GRID] Error during position close: ${err.message}`);
+                    this.logger.error(`[GRID] Error closing position and capturing PnL: ${err.message}`);
                 }
             }
 
