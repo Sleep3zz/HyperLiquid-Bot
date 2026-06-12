@@ -1,33 +1,38 @@
 const { BBRSIStrategy } = require("./BBRSIStrategy");
 const GridStrategy = require("./GridStrategy");
 const RegimeDetector = require("./RegimeDetector");
-const FileStateStore = require("./FileStateStore"); // adjust path if needed
 
 class HybridStrategy {
     constructor(logger, wayfinderCmds, baseStatePath = "./state") {
         this.logger = logger || console;
         this.wayfinder = wayfinderCmds;
+        this.baseStatePath = baseStatePath; // ← Fixed: now stored as instance variable
 
         if (!this.wayfinder) {
             throw new Error("HybridStrategy requires a WayfinderCommander instance");
         }
 
-        // Per-coin state
-        this.coins = new Map(); // coin => { activeStrategy, lastRegimeChange, regimeConfirmation, ... }
-        this.baseStatePath = baseStatePath;
-
+        this.coins = new Map();
         this.regimeDetector = new RegimeDetector(logger);
 
-        // Global config
-        this.defaultRegimeCooldownMs = 3 * 60 * 60 * 1000; // 3 hours (can be made asymmetric)
-        this.requiredConfirmations = 3; // NEW: confirmation count
+        this.defaultRegimeCooldownMs = 3 * 60 * 60 * 1000;
+        this.requiredConfirmations = 3;
         this.minDataBars = 60;
     }
 
-    // ==================== PER-COIN INITIALIZATION ====================
     _getOrCreateCoinState(coin) {
         if (!this.coins.has(coin)) {
-            const stateStore = new FileStateStore(`${this.baseStatePath}/${coin}_hybrid.json`);
+            // Use this.baseStatePath instead of the local variable
+            const stateFile = `${this.baseStatePath}/${coin}_hybrid.json`;
+            let stateStore = null;
+
+            try {
+                const FileStateStore = require("./FileStateStore");
+                stateStore = new FileStateStore(stateFile);
+            } catch (e) {
+                // Fallback if FileStateStore doesn't exist yet
+                this.logger.warn("FileStateStore not found, running without persistence");
+            }
 
             const state = {
                 coin,
@@ -40,15 +45,12 @@ class HybridStrategy {
                 lastUpdateTs: 0
             };
 
-            // Give BBRSI access to wayfinder for execution
             state.bbrsi.wayfinder = this.wayfinder;
-
             this.coins.set(coin, state);
         }
         return this.coins.get(coin);
     }
 
-    // ==================== MAIN UPDATE LOOP ====================
     async update(coin, ohlcv, currentPrice, currentPosition = null) {
         const state = this._getOrCreateCoinState(coin);
 
@@ -56,12 +58,10 @@ class HybridStrategy {
             return { action: 'HOLD', reason: 'Insufficient data', regime: 'UNKNOWN' };
         }
 
-        // 1. Detect regime
         const regime = this.regimeDetector.detect(ohlcv);
         const newRegime = regime.type;
-
-        // 2. Regime change logic with confirmation count
         const now = Date.now();
+
         let shouldSwitch = false;
 
         if (newRegime !== state.currentRegime) {
@@ -83,62 +83,49 @@ class HybridStrategy {
             state.regimeConfirmation = 0;
         }
 
-        // 3. Execute active strategy
         return await this._executeActiveStrategy(state, ohlcv, currentPrice, currentPosition);
     }
 
-    // ==================== STRATEGY SWITCHING ====================
     async _switchStrategy(state, newRegime, currentPrice, currentPosition) {
         const desiredStrategy = this._decideStrategy(newRegime);
 
         if (state.activeStrategy === desiredStrategy) return;
 
-        this.logger.info(`[Hybrid] Regime change detected: ${state.currentRegime} → ${newRegime} | Switching to ${desiredStrategy}`);
+        this.logger.info(`[Hybrid] Regime: ${state.currentRegime} → ${newRegime} | Switching to ${desiredStrategy}`);
 
-        // === Stop current strategy safely ===
         if (state.activeStrategy === 'GRID' && state.grid.active) {
             this.logger.info(`[Hybrid] Stopping Grid on ${state.coin}...`);
             const stopResult = await state.grid.stopGrid();
 
-            // P0 Fix: Verify stop was successful
             const stillHasPosition = currentPosition && Math.abs(currentPosition.size || 0) > 0.0001;
-            if (stillHasPosition || stopResult?.failedIds?.length > 0) {
-                this.logger.error(`[Hybrid] WARNING: stopGrid may have failed. Position still open or failed orders.`);
-                // Do not proceed with switch
+            if (stillHasPosition || (stopResult && stopResult.failedIds && stopResult.failedIds.length > 0)) {
+                this.logger.error(`[Hybrid] stopGrid may have failed. Aborting switch.`);
                 return;
             }
         }
 
-        // === Start new strategy ===
         if (desiredStrategy === 'GRID') {
             await state.grid.startGrid(state.coin, currentPrice);
             state.activeStrategy = 'GRID';
-        } 
-        else if (desiredStrategy === 'BBRSI') {
+        } else if (desiredStrategy === 'BBRSI') {
             state.activeStrategy = 'BBRSI';
-            // BBRSI is signal-based, no "start" needed
-        } 
-        else {
-            state.activeStrategy = null; // HOLD
+        } else {
+            state.activeStrategy = null;
         }
     }
 
     _decideStrategy(regimeType) {
         if (regimeType === 'TRENDING') return 'BBRSI';
         if (regimeType === 'RANGING') return 'GRID';
-        // P0 Fix: Safer defaults
-        if (regimeType === 'HIGH_VOLATILITY') return 'HOLD'; // or 'GRID' depending on preference
-        return 'HOLD'; // UNKNOWN → safe default
+        return 'HOLD';
     }
 
-    // ==================== EXECUTION ====================
     async _executeActiveStrategy(state, ohlcv, currentPrice, currentPosition) {
         if (!state.activeStrategy) {
             return { action: 'HOLD', regime: state.currentRegime, reason: 'No active strategy' };
         }
 
         if (state.activeStrategy === 'GRID') {
-            // Grid manages itself via internal loop or we can call update
             if (typeof state.grid.update === 'function') {
                 await state.grid.update(currentPrice, currentPosition);
             }
@@ -146,7 +133,6 @@ class HybridStrategy {
         }
 
         if (state.activeStrategy === 'BBRSI') {
-            // P0 Fix: Correct call signature
             const equity = await this.wayfinder.getAvailableMargin?.() || 0;
             const posInfo = currentPosition || { side: null, entryPrice: null, unrealizedPnlPct: 0 };
 
@@ -158,7 +144,6 @@ class HybridStrategy {
                 posInfo.unrealizedPnlPct || 0
             );
 
-            // P0 Fix: Actually execute the signal
             if (result && result.signal && result.signal !== 'NONE') {
                 return await this._executeBBSRISignal(state, result, currentPrice);
             }
@@ -170,7 +155,7 @@ class HybridStrategy {
     }
 
     async _executeBBSRISignal(state, signalResult, currentPrice) {
-        const { signal, positionSize, stopLoss, takeProfit } = signalResult;
+        const { signal, positionSize } = signalResult;
 
         try {
             if (signal === 'LONG' || signal === 'SHORT') {
@@ -179,12 +164,9 @@ class HybridStrategy {
                     coin: state.coin,
                     isBuy,
                     size: positionSize,
-                    price: currentPrice, // or use limit/market as preferred
-                    reduceOnly: false
+                    price: currentPrice
                 });
-
                 this.logger.info(`[Hybrid] BBRSI executed ${signal} on ${state.coin}`);
-
                 return { action: signal, regime: state.currentRegime, strategy: 'BBRSI', executed: true };
             }
 
@@ -196,16 +178,14 @@ class HybridStrategy {
                 return { action: signal, regime: state.currentRegime, strategy: 'BBRSI', executed: true };
             }
         } catch (err) {
-            this.logger.error(`[Hybrid] Failed to execute BBRSI signal: ${err.message}`);
+            this.logger.error(`[Hybrid] BBRSI execution failed: ${err.message}`);
         }
 
-        return { action: 'HOLD', regime: state.currentRegime, strategy: 'BBRSI', error: 'Execution failed' };
+        return { action: 'HOLD', regime: state.currentRegime, strategy: 'BBRSI' };
     }
 
-    // ==================== UTILITIES ====================
     async forceStrategy(coin, strategy) {
         const state = this._getOrCreateCoinState(coin);
-        // Force bypasses cooldown
         state.lastRegimeChange = 0;
         await this._switchStrategy(state, strategy === 'GRID' ? 'RANGING' : 'TRENDING', null, null);
         state.activeStrategy = strategy;
@@ -225,7 +205,7 @@ class HybridStrategy {
     }
 
     async shutdown() {
-        for (const [coin, state] of this.coins) {
+        for (const [, state] of this.coins) {
             if (state.grid?.active) await state.grid.stopGrid();
             if (typeof state.bbrsi.shutdown === 'function') state.bbrsi.shutdown();
         }
