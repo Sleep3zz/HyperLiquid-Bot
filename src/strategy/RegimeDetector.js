@@ -1,24 +1,23 @@
+const config = require('config');
 const { calculateADX, calculateATR, calculateBollingerBands } = require('./indicators');
 
 class RegimeDetector {
-    constructor(logger, config = {}) {
+    constructor(logger, overrides = {}) {
         this.logger = logger || console;
 
+        // Load from central config + allow overrides
+        const regimeConfig = config.has('regime') ? config.get('regime') : {};
+
         this.config = {
-            // ADX thresholds (still absolute - generally reliable)
-            adxTrending: config.adxTrending ?? 28,
-            adxRanging: config.adxRanging ?? 18,
-
-            // Percentile-based thresholds (recommended by Claude)
-            atrHighVolPercentile: config.atrHighVolPercentile ?? 75, // Top 25%
-            bbWidthHighVolPercentile: config.bbWidthHighVolPercentile ?? 75,
-            bbWidthRangingPercentile: config.bbWidthRangingPercentile ?? 30,
-
-            lookback: config.lookback ?? 100, // Rolling window size
-            minBars: config.minBars ?? 60,
-            historyLength: config.historyLength ?? 8,
-            requiredPersistence: config.requiredPersistence ?? 2,
-            ...config
+            adxTrending: overrides.adxTrending ?? regimeConfig.adx?.trending ?? 27,
+            adxRanging: overrides.adxRanging ?? regimeConfig.adx?.ranging ?? 19,
+            atrHighVolPercentile: overrides.atrHighVolPercentile ?? regimeConfig.atr?.highVolPercentile ?? 75,
+            bbWidthHighVolPercentile: overrides.bbWidthHighVolPercentile ?? regimeConfig.bbWidth?.highVolPercentile ?? 72,
+            bbWidthRangingPercentile: overrides.bbWidthRangingPercentile ?? regimeConfig.bbWidth?.rangingPercentile ?? 28,
+            lookback: overrides.lookback ?? regimeConfig.detector?.lookback ?? 120,
+            requiredPersistence: overrides.requiredPersistence ?? regimeConfig.detector?.requiredPersistence ?? 2,
+            historyLength: overrides.historyLength ?? regimeConfig.detector?.historyLength ?? 8,
+            minBars: overrides.minBars ?? 60
         };
 
         this.lastRegime = null;

@@ -1,0 +1,20 @@
+{
+  "adx": {
+    "trending": 27,
+    "ranging": 19,
+    "transitioningLow": 19,
+    "transitioningHigh": 27
+  },
+  "atr": {
+    "highVolPercentile": 75
+  },
+  "bbWidth": {
+    "highVolPercentile": 72,
+    "rangingPercentile": 28
+  },
+  "detector": {
+    "lookback": 120,
+    "requiredPersistence": 2,
+    "historyLength": 8
+  }
+}
