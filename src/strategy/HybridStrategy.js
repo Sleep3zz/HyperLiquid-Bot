@@ -172,20 +172,21 @@ class HybridStrategy {
 
         if (state.activeStrategy === desired) return;
 
-        this.logger.info(`[${state.coin}] Regime change: ${state.currentRegime} → ${newRegime} | Switching to ${desired}`);
+        this.logger.info(`[${state.coin}] Regime: ${state.currentRegime} → ${newRegime} | Switching to ${desired}`);
 
-        // Stop current strategy safely
         if (state.activeStrategy === 'GRID' && state.grid.active) {
-            const stopResult = await state.grid.stopGrid();
+            await state.grid.stopGrid();
 
-            const stillOpen = currentPosition && Math.abs(currentPosition.size || 0) > 0.0001;
+            // Re-query after stopGrid to verify position is closed
+            const afterStop = await this.wayfinder.getPosition(state.coin);
+            const stillOpen = afterStop && Math.abs(afterStop.size || 0) > 0.0001;
+
             if (stillOpen) {
-                this.logger.error(`[${state.coin}] stopGrid may have failed. Not switching yet.`);
+                this.logger.error(`[${state.coin}] stopGrid failed to close position. Aborting switch.`);
                 return;
             }
         }
 
-        // Start new strategy
         if (desired === 'GRID') {
             const maxCapital = this._getMaxCapitalForStrategy('GRID');
             this._updateCapitalAllocation('GRID', maxCapital);
@@ -238,7 +239,7 @@ class HybridStrategy {
             );
 
             if (result?.signal && result.signal !== 'NONE') {
-                const signalResult = await this._executeBBSRISignal(state, result, currentPrice);
+                const signalResult = await this._executeBBSRISignal(state, result, currentPrice, currentPosition);
                 return { ...signalResult, thresholds };
             }
 
@@ -248,25 +249,68 @@ class HybridStrategy {
         return { action: 'HOLD', regime: state.currentRegime, thresholds };
     }
 
-    async _executeBBSRISignal(state, signalResult, currentPrice) {
-        const { signal, positionSize } = signalResult;
+    async _executeBBSRISignal(state, signalResult, currentPrice, currentPosition) {
+        const { signal, positionSize, stopLoss, takeProfit } = signalResult;
 
         try {
             if (signal === 'LONG' || signal === 'SHORT') {
                 const isBuy = signal === 'LONG';
+
+                // Place main order
                 await this.wayfinder.placeOrder({
                     coin: state.coin,
                     isBuy,
                     size: positionSize,
                     price: currentPrice
                 });
+
+                // Place protective stop-loss if provided
+                if (stopLoss && this.wayfinder.placeOrder) {
+                    try {
+                        await this.wayfinder.placeOrder({
+                            coin: state.coin,
+                            isBuy: !isBuy, // opposite side
+                            size: positionSize,
+                            price: stopLoss,
+                            reduceOnly: true
+                        });
+                    } catch (err) {
+                        this.logger.warn(`[${state.coin}] Failed to place stop-loss:`, err.message);
+                    }
+                }
+
+                // Place take-profit if provided
+                if (takeProfit && this.wayfinder.placeOrder) {
+                    try {
+                        await this.wayfinder.placeOrder({
+                            coin: state.coin,
+                            isBuy: !isBuy,
+                            size: positionSize,
+                            price: takeProfit,
+                            reduceOnly: true
+                        });
+                    } catch (err) {
+                        this.logger.warn(`[${state.coin}] Failed to place take-profit:`, err.message);
+                    }
+                }
+
                 return { action: signal, regime: state.currentRegime, strategy: 'BBRSI', executed: true };
             }
 
             if (signal.startsWith('CLOSE')) {
+                // Calculate realized PnL before closing (best effort)
+                let realizedPnl = 0;
+                if (currentPosition && currentPosition.entryPrice) {
+                    const entry = currentPosition.entryPrice;
+                    const exit = currentPrice;
+                    const size = currentPosition.size || 0;
+                    realizedPnl = (exit - entry) * size * (currentPosition.side === 'LONG' ? 1 : -1);
+                }
+
                 await this.wayfinder.closePosition(state.coin);
+
                 if (typeof state.bbrsi.notifyExit === 'function') {
-                    state.bbrsi.notifyExit(Date.now());
+                    state.bbrsi.notifyExit(Date.now(), realizedPnl);
                 }
                 return { action: signal, regime: state.currentRegime, strategy: 'BBRSI', executed: true };
             }
