@@ -1,39 +1,28 @@
 export default function HybridMetrics({ metrics }) {
-  if (!metrics) return (
-    <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
-      <div className="text-slate-500 text-center">No hybrid data</div>
-    </div>
-  );
+  if (!metrics) return null;
 
   return (
     <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
-      <h3 className="font-semibold mb-4 flex items-center gap-2 text-white">
-        <span>{metrics.coin}</span>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-semibold">Hybrid Status</h3>
         {metrics.paused && (
-          <span className="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">
-            PAUSED
-          </span>
+          <span className="text-xs bg-red-500/20 text-red-400 px-2.5 py-1 rounded-full">PAUSED</span>
         )}
-      </h3>
-      <div className="grid grid-cols-2 gap-4 text-sm">
-        <div>
-          <div className="text-slate-400 text-xs uppercase tracking-wider">Regime</div>
-          <div className="font-medium text-white mt-1">{metrics.regime || 'N/A'}</div>
+      </div>
+      
+      <div className="space-y-3 text-sm">
+        <div className="flex justify-between">
+          <span className="text-slate-400">Regime</span>
+          <span className="font-medium">{metrics.regime || 'N/A'}</span>
         </div>
-        <div>
-          <div className="text-slate-400 text-xs uppercase tracking-wider">Strategy</div>
-          <div className="font-medium text-white mt-1">{metrics.activeStrategy || 'N/A'}</div>
+        <div className="flex justify-between">
+          <span className="text-slate-400">Active Strategy</span>
+          <span className="font-medium">{metrics.activeStrategy || 'N/A'}</span>
         </div>
-        <div>
-          <div className="text-slate-400 text-xs uppercase tracking-wider">Daily Switches</div>
-          <div className="font-medium text-white mt-1">{metrics.dailySwitches || 0}</div>
+        <div className="flex justify-between">
+          <span className="text-slate-400">Daily Switches</span>
+          <span className="font-medium">{metrics.dailySwitches || 0}</span>
         </div>
-        {metrics.pauseReason && (
-          <div className="col-span-2">
-            <div className="text-slate-400 text-xs uppercase tracking-wider">Pause Reason</div>
-            <div className="font-medium text-red-400 mt-1 text-xs">{metrics.pauseReason}</div>
-          </div>
-        )}
       </div>
     </div>
   );
