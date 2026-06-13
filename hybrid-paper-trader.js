@@ -3,6 +3,20 @@ const DataProvider = require('./src/data/data-provider');
 const { writeHybridState } = require('./src/hybrid-state-writer');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
+// Optional: Socket.io client for real-time dashboard updates
+let ioClient;
+try {
+    const { io } = require('socket.io-client');
+    ioClient = io('http://localhost:3456', {
+        transports: ['websocket'],
+        autoConnect: true
+    });
+    ioClient.on('connect', () => console.log(`[${coinFromCli}] Connected to dashboard`));
+    ioClient.on('connect_error', () => {}); // Silently fail if dashboard not running
+} catch (e) {
+    // Socket.io-client not installed or dashboard not available
+}
+
 // ==================== Prometheus Metrics (Optional) ====================
 let client;
 try {
@@ -337,6 +351,18 @@ Trading has been paused.`;
                 paused: this.tradingPaused,
                 pauseReason: this.pauseReason
             });
+
+            // Emit real-time update via WebSocket
+            if (ioClient && ioClient.connected) {
+                ioClient.emit('hybrid-update', {
+                    coin: this.coin,
+                    regime: result.regime,
+                    activeStrategy: result.strategy,
+                    dailySwitches: this.dailySwitches,
+                    paused: this.tradingPaused,
+                    pauseReason: this.pauseReason
+                });
+            }
 
             // === Enhanced Logging with Dynamic Thresholds ===
             let thresholdLog = '';
