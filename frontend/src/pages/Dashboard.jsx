@@ -31,7 +31,7 @@ export default function Dashboard() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 30000);
+    const interval = setInterval(fetchData, 5000); // 5 second refresh for live prices
     return () => clearInterval(interval);
   }, []);
 

@@ -7,22 +7,32 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://trading.s3zapp.us';
 export default function TraderDetail() {
   const { coin } = useParams();
   const [data, setData] = useState(null);
+  const [priceData, setPriceData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/traders/${coin}`);
-        const result = await res.json();
-        setData(result);
+        const [traderRes, pricesRes] = await Promise.all([
+          fetch(`${API_URL}/api/traders/${coin}`),
+          fetch(`${API_URL}/api/prices`)
+        ]);
+
+        const traderData = await traderRes.json();
+        const prices = await pricesRes.json();
+
+        setData(traderData);
+        setPriceData(prices.prices?.[coin] || null);
       } catch (error) {
-        console.error('Failed to fetch trader data:', error);
+        console.error('Failed to fetch data:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
+    const interval = setInterval(fetchData, 5000); // 5 second refresh for live prices
+    return () => clearInterval(interval);
   }, [coin]);
 
   if (loading) {
@@ -49,11 +59,52 @@ export default function TraderDetail() {
     <div className="max-w-5xl mx-auto p-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold">{coin} Trader</h1>
+        <h1 className="text-4xl font-bold flex items-center gap-3">
+          {coin} Trader
+        </h1>
         <p className="text-slate-400 mt-1">
           {data.params?.configName || 'Hybrid Strategy'} • Last updated: {new Date(data.lastUpdated).toLocaleString()}
         </p>
       </div>
+
+      {/* Current Market Price */}
+      {priceData && (
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <i className="fa-solid fa-chart-line text-blue-400"></i>
+            Current Market Data
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
+              <div className="text-sm text-slate-400">Current Price</div>
+              <div className="text-3xl font-semibold mt-1 tabular-nums">
+                ${priceData.price?.toLocaleString()}
+              </div>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
+              <div className="text-sm text-slate-400">24h Change</div>
+              <div className={`text-3xl font-semibold mt-1 ${priceData.change24h >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                {priceData.change24h >= 0 ? '+' : ''}{priceData.change24h?.toFixed(2)}%
+              </div>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
+              <div className="text-sm text-slate-400">24h High</div>
+              <div className="text-3xl font-semibold mt-1 tabular-nums text-emerald-400">
+                ${priceData.high24h?.toLocaleString()}
+              </div>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
+              <div className="text-sm text-slate-400">24h Low</div>
+              <div className="text-3xl font-semibold mt-1 tabular-nums text-red-400">
+                ${priceData.low24h?.toLocaleString()}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -77,7 +128,7 @@ export default function TraderDetail() {
         </div>
       </div>
 
-      {/* === PROMINENT HYBRID STATUS SECTION === */}
+      {/* Hybrid Strategy Status */}
       {data.hybrid && (
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
@@ -111,9 +162,7 @@ export default function TraderDetail() {
 
             <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
               <div className="text-sm text-slate-400 mb-1">Daily Switches</div>
-              <div className="text-3xl font-semibold">
-                {data.hybrid.dailySwitches || 0}
-              </div>
+              <div className="text-3xl font-semibold mt-1">{data.hybrid.dailySwitches || 0}</div>
             </div>
 
             <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
@@ -121,9 +170,6 @@ export default function TraderDetail() {
               <div className={`text-3xl font-semibold ${data.hybrid.paused ? 'text-red-400' : 'text-emerald-400'}`}>
                 {data.hybrid.paused ? 'Paused' : 'Active'}
               </div>
-              {data.hybrid.pauseReason && (
-                <div className="text-xs text-red-400 mt-1">{data.hybrid.pauseReason}</div>
-              )}
             </div>
           </div>
         </div>
@@ -136,33 +182,6 @@ export default function TraderDetail() {
           <EquityChart equity={data.equity} />
         </div>
       </div>
-
-      {/* Best & Worst Trades */}
-      {(data.bestTrade || data.worstTrade) && (
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Best & Worst Trades</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {data.bestTrade && (
-              <div className="bg-slate-900 border border-emerald-900/50 rounded-2xl p-5">
-                <div className="text-emerald-400 text-sm font-medium mb-1">BEST TRADE</div>
-                <div className="text-2xl font-semibold text-emerald-400">+{data.bestTrade.pnlPercent?.toFixed(2)}%</div>
-                <div className="text-sm text-slate-400 mt-1">
-                  ${data.bestTrade.pnl?.toFixed(2)} • {new Date(data.bestTrade.exitTime).toLocaleDateString()}
-                </div>
-              </div>
-            )}
-            {data.worstTrade && (
-              <div className="bg-slate-900 border border-red-900/50 rounded-2xl p-5">
-                <div className="text-red-400 text-sm font-medium mb-1">WORST TRADE</div>
-                <div className="text-2xl font-semibold text-red-400">{data.worstTrade.pnlPercent?.toFixed(2)}%</div>
-                <div className="text-sm text-slate-400 mt-1">
-                  ${data.worstTrade.pnl?.toFixed(2)} • {new Date(data.worstTrade.exitTime).toLocaleDateString()}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
