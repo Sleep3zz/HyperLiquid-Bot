@@ -165,6 +165,80 @@ class HyperliquidRESTPriceFeed {
         }
         this.intervals.clear();
     }
+
+    /**
+     * Get candle data for a coin
+     * @param {string} coin - Coin symbol (e.g., 'BTC')
+     * @param {string} interval - Candle interval (e.g., '15m', '1h')
+     * @param {number} limit - Number of candles to fetch
+     */
+    async getCandles(coin, interval = '15m', limit = 150) {
+        try {
+            // Convert interval to Hyperliquid format
+            const intervalMap = {
+                '1m': '1m',
+                '5m': '5m',
+                '15m': '15m',
+                '30m': '30m',
+                '1h': '1h',
+                '2h': '2h',
+                '4h': '4h',
+                '1d': '1d'
+            };
+            const hlInterval = intervalMap[interval] || '15m';
+
+            // Calculate start time (limit * interval minutes ago)
+            const intervalMinutes = this._intervalToMinutes(hlInterval);
+            const endTime = Date.now();
+            const startTime = endTime - (limit * intervalMinutes * 60 * 1000);
+
+            const payload = {
+                type: 'candleSnapshot',
+                req: {
+                    coin: coin,
+                    interval: hlInterval,
+                    startTime: startTime,
+                    endTime: endTime
+                }
+            };
+
+            const candles = await this.makeRequest('/info', payload);
+            
+            if (!Array.isArray(candles)) {
+                throw new Error('Invalid candle data received');
+            }
+
+            // Format candles to standard OHLCV format
+            return candles.map(c => ({
+                t: c.t,           // timestamp
+                o: parseFloat(c.o), // open
+                h: parseFloat(c.h), // high
+                l: parseFloat(c.l), // low
+                c: parseFloat(c.c), // close
+                v: parseFloat(c.v)  // volume
+            }));
+        } catch (error) {
+            this.logger.error(`[REST] Error fetching candles for ${coin}:`, error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Convert interval string to minutes
+     */
+    _intervalToMinutes(interval) {
+        const map = {
+            '1m': 1,
+            '5m': 5,
+            '15m': 15,
+            '30m': 30,
+            '1h': 60,
+            '2h': 120,
+            '4h': 240,
+            '1d': 1440
+        };
+        return map[interval] || 15;
+    }
 }
 
 module.exports = HyperliquidRESTPriceFeed;

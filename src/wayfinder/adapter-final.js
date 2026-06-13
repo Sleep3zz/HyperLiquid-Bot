@@ -77,6 +77,17 @@ class WayfinderAdapterFinal {
     }
 
     /**
+     * Get candle data for a symbol
+     * @param {string} symbol - Symbol like 'BTC-PERP'
+     * @param {string} timeframe - Candle timeframe (e.g., '15m')
+     * @param {number} limit - Number of candles
+     */
+    async getCandles(symbol, timeframe = '15m', limit = 150) {
+        const coin = symbol.replace('-PERP', '');
+        return await this.feed.getCandles(coin, timeframe, limit);
+    }
+
+    /**
      * Test connection
      */
     async testConnection() {
