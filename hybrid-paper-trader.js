@@ -23,6 +23,7 @@ class HybridPaperTrader {
                 from: options.notifications?.from || 'alerts@yourdomain.com',
                 smtp: options.notifications?.smtp || null, // SMTP config object
             },
+            regimeConfig: options.regimeConfig || {}, // NEW: Per-coin regime detection config
             ...options
         };
 
@@ -33,7 +34,8 @@ class HybridPaperTrader {
         this.hybrid = new HybridStrategy(
             this.logger,
             this.wayfinder,
-            `./state/${coin.toLowerCase().replace(/-/g, '_')}`
+            `./state/${coin.toLowerCase().replace(/-/g, '_')}`,
+            this.config.regimeConfig // Pass regime config
         );
 
         // Circuit breaker state
@@ -170,8 +172,17 @@ Trading has been paused.`;
             }
             this.lastRegime = result.regime;
 
+            // === Enhanced Logging with Dynamic Thresholds ===
+            let thresholdLog = '';
+            if (result.thresholds) {
+                thresholdLog = ` | ATR> ${result.thresholds.atrHighVol?.toFixed(2)} | ` +
+                    `BB High> ${result.thresholds.bbHighVol?.toFixed(2)} | ` +
+                    `BB Range< ${result.thresholds.bbRanging?.toFixed(2)}`;
+            }
+
             this.logger.info(
-                `[${this.coin}] ${result.regime} | ${result.strategy || 'N/A'} | ${result.action} | ` +
+                `[${this.coin}] ${result.regime} | ${result.strategy || 'N/A'} | ${result.action}` +
+                `${thresholdLog} | Paused: ${status?.pauseAggressiveRisk || false} | ` +
                 `Daily PnL: $${this.dailyPnL.toFixed(2)} | Switches: ${this.dailySwitches}`
             );
 

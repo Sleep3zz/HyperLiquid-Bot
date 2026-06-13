@@ -3,17 +3,17 @@ const GridStrategy = require("./GridStrategy");
 const RegimeDetector = require("./RegimeDetector");
 
 class HybridStrategy {
-    constructor(logger, wayfinderCmds, baseStatePath = "./state") {
+    constructor(logger, wayfinderCmds, baseStatePath = "./state", regimeConfig = {}) {
         this.logger = logger || console;
         this.wayfinder = wayfinderCmds;
         this.baseStatePath = baseStatePath;
+        this.regimeConfig = regimeConfig;
 
         if (!this.wayfinder) {
             throw new Error("HybridStrategy requires a Wayfinder instance");
         }
 
         this.coins = new Map();
-        this.regimeDetector = new RegimeDetector(logger);
 
         // === Asymmetric Cooldowns (Claude P1) ===
         this.cooldowns = {
@@ -41,6 +41,7 @@ class HybridStrategy {
                 coin,
                 bbrsi: new BBRSIStrategy(this.logger, stateStore),
                 grid: new GridStrategy(this.logger, this.wayfinder, { coin }),
+                regimeDetector: new RegimeDetector(this.logger, this.regimeConfig),
                 activeStrategy: null,
                 currentRegime: 'UNKNOWN',
                 lastRegimeChange: 0,
@@ -62,7 +63,7 @@ class HybridStrategy {
             return { action: 'HOLD', regime: 'UNKNOWN', reason: 'Insufficient data' };
         }
 
-        const regimeResult = this.regimeDetector.detect(ohlcv);
+        const regimeResult = state.regimeDetector.detect(ohlcv);
         const newRegime = regimeResult.type;
         const now = Date.now();
 
@@ -96,7 +97,7 @@ class HybridStrategy {
             state.pauseAggressiveRisk = false;
         }
 
-        return await this._executeActiveStrategy(state, ohlcv, currentPrice, currentPosition);
+        return await this._executeActiveStrategy(state, ohlcv, currentPrice, currentPosition, regimeResult);
     }
 
     _getCooldownDuration(fromRegime, toRegime) {
@@ -152,19 +153,21 @@ class HybridStrategy {
         return 'HOLD'; // UNKNOWN or HIGH_VOLATILITY
     }
 
-    async _executeActiveStrategy(state, ohlcv, currentPrice, currentPosition) {
+    async _executeActiveStrategy(state, ohlcv, currentPrice, currentPosition, regimeResult) {
+        const thresholds = regimeResult?.thresholds || null;
+
         if (!state.activeStrategy) {
-            return { action: 'HOLD', regime: state.currentRegime };
+            return { action: 'HOLD', regime: state.currentRegime, thresholds };
         }
 
         if (state.activeStrategy === 'GRID') {
             if (state.pauseAggressiveRisk) {
-                return { action: 'HOLD', regime: state.currentRegime, reason: 'Cooldown - Grid risk paused' };
+                return { action: 'HOLD', regime: state.currentRegime, reason: 'Cooldown - Grid risk paused', thresholds };
             }
             if (typeof state.grid.update === 'function') {
                 await state.grid.update(currentPrice, currentPosition);
             }
-            return { action: 'GRID_RUNNING', regime: state.currentRegime, strategy: 'GRID' };
+            return { action: 'GRID_RUNNING', regime: state.currentRegime, strategy: 'GRID', thresholds };
         }
 
         if (state.activeStrategy === 'BBRSI') {
@@ -176,13 +179,14 @@ class HybridStrategy {
             );
 
             if (result?.signal && result.signal !== 'NONE') {
-                return await this._executeBBSRISignal(state, result, currentPrice);
+                const signalResult = await this._executeBBSRISignal(state, result, currentPrice);
+                return { ...signalResult, thresholds };
             }
 
-            return { action: 'HOLD', regime: state.currentRegime, strategy: 'BBRSI', bbrsiResult: result };
+            return { action: 'HOLD', regime: state.currentRegime, strategy: 'BBRSI', bbrsiResult: result, thresholds };
         }
 
-        return { action: 'HOLD', regime: state.currentRegime };
+        return { action: 'HOLD', regime: state.currentRegime, thresholds };
     }
 
     async _executeBBSRISignal(state, signalResult, currentPrice) {
