@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * Multi-Coin Paper Trader
- * Runs paper trading for BTC, SOL, and HYPE with optimal parameters
+ * Multi-Coin Hybrid Paper Trader
+ * Runs hybrid-paper-trader.js for multiple coins with regime-aware trading
  */
 
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const COINS = ['BTC', 'SOL', 'HYPE'];
+const COINS = ['BTC-PERP', 'ETH-PERP', 'SOL-PERP']; // add more as needed
 const DATA_DIR = path.join(__dirname, 'data', 'paper-trading');
 
 // Ensure data directory exists
@@ -17,25 +17,30 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 console.log('╔══════════════════════════════════════════════════════════════════╗');
-console.log('║     MULTI-COIN PAPER TRADER                                     ║');
-console.log('║     BTC | SOL | HYPE                                            ║');
+console.log('║     MULTI-COIN HYBRID PAPER TRADER                              ║');
+console.log('║     Regime-Aware: BBRSI + Grid Strategy                         ║');
+console.log('║     BTC | ETH | SOL                                             ║');
 console.log('╚══════════════════════════════════════════════════════════════════╝');
 console.log('');
 
 const processes = [];
 
-COINS.forEach(coin => {
-    console.log(`🚀 Starting paper trader for ${coin}...`);
+function startHybridTrader(coin, capital = 1000) {
+    console.log(`🚀 Starting hybrid trader for ${coin}...`);
     
-    const proc = spawn('node', ['paper-trader.js', '--coin', coin, '--capital', '1000'], {
+    const child = spawn('node', [
+        'hybrid-paper-trader.js',
+        `--coin=${coin}`,
+        `--capital=${capital}`
+    ], {
         cwd: __dirname,
         detached: true,
         stdio: ['ignore', 'pipe', 'pipe']
     });
-    
-    processes.push({ coin, proc });
-    
-    proc.stdout.on('data', (data) => {
+
+    processes.push({ coin, process: child });
+
+    child.stdout.on('data', (data) => {
         const lines = data.toString().trim().split('\n');
         lines.forEach(line => {
             if (line.trim()) {
@@ -43,48 +48,47 @@ COINS.forEach(coin => {
             }
         });
     });
-    
-    proc.stderr.on('data', (data) => {
+
+    child.stderr.on('data', (data) => {
         const lines = data.toString().trim().split('\n');
         lines.forEach(line => {
             if (line.trim()) {
-                console.error(`[${coin}] ⚠️ ${line}`);
+                console.error(`[${coin} ERROR] ${line}`);
             }
         });
     });
-    
-    proc.on('error', (err) => {
+
+    child.on('error', (err) => {
         console.error(`[${coin}] ❌ Failed to start: ${err.message}`);
     });
-    
-    proc.on('exit', (code) => {
+
+    child.on('exit', (code) => {
         console.log(`[${coin}] Process exited with code ${code}`);
     });
-});
+
+    console.log(`[MultiHybrid] Started hybrid trader for ${coin}`);
+}
+
+function shutdown() {
+    console.log('\n[MultiHybrid] Shutting down all traders...');
+    processes.forEach(({ coin, process }) => {
+        console.log(`  Stopping ${coin}...`);
+        process.kill('SIGINT');
+    });
+    setTimeout(() => process.exit(0), 1000);
+}
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+
+// Start all coins
+COINS.forEach(coin => startHybridTrader(coin, 1000));
 
 console.log('');
-console.log('✅ All paper traders started!');
-console.log('');
-console.log('Dashboard: https://trading.s3zapp.us');
-console.log('Password:  4EsJ9QU$7ATNWjm');
+console.log('✅ All hybrid paper traders started!');
 console.log('');
 console.log('Press Ctrl+C to stop all traders');
 console.log('');
 
-// Handle shutdown
-process.on('SIGINT', () => {
-    console.log('\n🛑 Stopping all paper traders...');
-    processes.forEach(({ coin, proc }) => {
-        console.log(`  Stopping ${coin}...`);
-        proc.kill('SIGTERM');
-    });
-    setTimeout(() => process.exit(0), 1000);
-});
-
-process.on('SIGTERM', () => {
-    processes.forEach(({ proc }) => proc.kill('SIGTERM'));
-    setTimeout(() => process.exit(0), 1000);
-});
-
 // Keep process alive
-setInterval(() => {}, 1000);
+setInterval(() => {}, 1000 * 60 * 60);
