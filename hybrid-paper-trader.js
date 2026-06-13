@@ -2,6 +2,7 @@ const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
 const { writeHybridState } = require('./src/hybrid-state-writer');
 const PaperTradingEngine = require('./src/paper-trading/engine');
+const PaperTradingWayfinderWrapper = require('./src/paper-trading/wayfinder-wrapper');
 const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
@@ -83,9 +84,12 @@ class HybridPaperTrader {
         this.dataProvider = options.dataProvider || new DataProvider('./data', this.wayfinder);
         this.engine = options.engine;
 
+        // Create paper trading wrapper for wayfinder interface
+        this.paperWayfinder = new PaperTradingWayfinderWrapper(this.engine, this.logger);
+
         this.hybrid = new HybridStrategy(
             this.logger,
-            this.wayfinder,
+            this.paperWayfinder,  // Use paper wrapper instead of real wayfinder
             `./state/${coin.toLowerCase().replace(/-/g, '_')}`,
             this.config.regimeConfig // Pass regime config
         );
@@ -553,11 +557,11 @@ Trading has been paused.`;
 
         // === Position Reconciliation on Startup ===
         try {
-            const existingPosition = await this.wayfinder.getPosition(this.coin);
+            const existingPosition = this.engine?.getPosition?.(this.coin);
 
             if (existingPosition && Math.abs(existingPosition.size || 0) > 0.0001) {
                 this.logger.warn(
-                    `[${this.coin}] Found existing position on startup: ` +
+                    `[${this.coin}] Found existing paper position on startup: ` +
                     `${existingPosition.side} ${existingPosition.size} @ ${existingPosition.entryPrice}`
                 );
 
