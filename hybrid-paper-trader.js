@@ -12,11 +12,13 @@ class HybridPaperTrader {
             maxLeverage: options.maxLeverage || 5,
             riskPerTrade: options.riskPerTrade || 0.02,
             timeframe: options.timeframe || '1m',
+            dailyLossLimit: options.dailyLossLimit || 0.05, // 5% daily loss limit
+            maxDailySwitches: options.maxDailySwitches || 8, // Max regime switches per day
             ...options
         };
 
         this.wayfinder = options.wayfinder;
-        this.dataProvider = options.dataProvider || new DataProvider();
+        this.dataProvider = options.dataProvider || new DataProvider('./data', this.wayfinder);
 
         this.hybrid = new HybridStrategy(
             this.logger,
@@ -26,47 +28,40 @@ class HybridPaperTrader {
 
         this.engine = options.engine;
 
-        // === Safeguards & Logging ===
-        this.transitionLog = [];
+        // === Circuit Breakers ===
+        this.dailyPnL = 0;
+        this.dailySwitches = 0;
+        this.lastResetDay = new Date().getUTCDate();
+        this.tradingPaused = false;
         this.lastRegime = null;
-        this.totalSwitches = 0;
 
         this.isRunning = false;
         this.intervalId = null;
     }
 
-    async fetchOHLCV(symbol, limit = 150) {
-        const candles = await this.dataProvider.getCandles(symbol, this.config.timeframe, limit);
-        
-        if (candles.length > 0) {
-            return candles;
+    _resetDailyStatsIfNeeded() {
+        const currentDay = new Date().getUTCDate();
+        if (currentDay !== this.lastResetDay) {
+            this.dailyPnL = 0;
+            this.dailySwitches = 0;
+            this.tradingPaused = false;
+            this.lastResetDay = currentDay;
+            this.logger.info(`[${this.coin}] Daily stats reset`);
         }
-
-        // Fallback to mock
-        this.logger.warn(`Using mock data for ${symbol}`);
-        const price = await this.wayfinder.getPrice(symbol);
-        return this._generateMockOHLCV(price, limit);
     }
 
-    _generateMockOHLCV(currentPrice, length = 150) {
-        const data = [];
-        let price = currentPrice;
-
-        for (let i = 0; i < length; i++) {
-            price += (Math.random() - 0.5) * (currentPrice * 0.008);
-            data.push({
-                t: Date.now() - (length - i) * 60000,
-                o: Number(price.toFixed(4)),
-                h: Number((price + currentPrice * 0.005).toFixed(4)),
-                l: Number((price - currentPrice * 0.005).toFixed(4)),
-                c: Number(price.toFixed(4)),
-                v: 1200 + Math.floor(Math.random() * 500)
-            });
-        }
-        return data;
+    async fetchOHLCV(symbol, limit = 150) {
+        return await this.dataProvider.getCandles(symbol, this.config.timeframe, limit);
     }
 
     async runCycle() {
+        this._resetDailyStatsIfNeeded();
+
+        if (this.tradingPaused) {
+            this.logger.warn(`[${this.coin}] Trading paused due to circuit breaker`);
+            return;
+        }
+
         try {
             const currentPrice = await this.wayfinder.getPrice(this.coin);
             if (!currentPrice) return;
@@ -77,17 +72,34 @@ class HybridPaperTrader {
             const result = await this.hybrid.update(this.coin, ohlcv, currentPrice, currentPosition);
             const status = this.hybrid.getStatus(this.coin);
 
-            // Track regime transitions + costs
-            this._logTransition(result.regime, result.strategy);
+            // Track switches
+            if (result.regime !== this.lastRegime && this.lastRegime !== null) {
+                this.dailySwitches++;
+            }
+            this.lastRegime = result.regime;
 
             this.logger.info(
                 `[${this.coin}] ${result.regime} | ${result.strategy || 'N/A'} | ${result.action} | ` +
-                `Paused: ${status?.pauseAggressiveRisk || false} | Switches: ${this.totalSwitches}`
+                `Switches today: ${this.dailySwitches}/${this.config.maxDailySwitches}`
             );
+
+            // === Circuit Breaker Checks ===
+            if (this.dailySwitches >= this.config.maxDailySwitches) {
+                this.tradingPaused = true;
+                this.logger.error(`[${this.coin}] MAX DAILY SWITCHES REACHED. Trading paused.`);
+                return;
+            }
+
+            // Check daily loss (basic implementation - improve with engine stats later)
+            if (this.dailyPnL <= -this.initialCapital * this.config.dailyLossLimit) {
+                this.tradingPaused = true;
+                this.logger.error(`[${this.coin}] DAILY LOSS LIMIT REACHED. Trading paused.`);
+                return;
+            }
 
             if (result.action && result.action !== 'HOLD' && result.action !== 'NONE') {
                 if (status?.pauseAggressiveRisk && result.strategy === 'GRID') {
-                    this.logger.warn(`[${this.coin}] Execution blocked - Grid risk paused`);
+                    this.logger.warn(`[${this.coin}] Skipping - Grid risk paused`);
                 } else {
                     await this.executeHybridSignal(result, currentPrice);
                 }
@@ -96,34 +108,6 @@ class HybridPaperTrader {
         } catch (err) {
             this.logger.error(`[${this.coin}] Cycle error:`, err.message);
         }
-    }
-
-    _logTransition(newRegime, strategy) {
-        if (this.lastRegime && this.lastRegime !== newRegime) {
-            const transition = {
-                from: this.lastRegime,
-                to: newRegime,
-                strategy,
-                timestamp: new Date().toISOString(),
-                estimatedCost: this._estimateTransitionCost()
-            };
-
-            this.transitionLog.push(transition);
-            this.totalSwitches++;
-
-            this.logger.info(
-                `[${this.coin}] Regime Transition: ${this.lastRegime} → ${newRegime} ` +
-                `(Est. cost: $${transition.estimatedCost.toFixed(2)})`
-            );
-        }
-        this.lastRegime = newRegime;
-    }
-
-    _estimateTransitionCost() {
-        // Simple estimation: fees + slippage
-        const estimatedFees = this.initialCapital * 0.0009; // ~0.09% round trip
-        const estimatedSlippage = this.initialCapital * 0.0005;
-        return estimatedFees + estimatedSlippage;
     }
 
     async executeHybridSignal(result, currentPrice) {
@@ -135,8 +119,6 @@ class HybridPaperTrader {
         } else if (strategy === 'BBRSI') {
             size = (this.initialCapital * this.config.riskPerTrade) / currentPrice;
         }
-
-        this.logger.info(`[${this.coin}] Executing ${action} via ${strategy}`);
 
         try {
             if ((action === 'LONG' || action === 'SHORT') && this.engine?.openPosition) {
@@ -150,7 +132,7 @@ class HybridPaperTrader {
                 await this.engine.closePosition(this.coin);
             }
         } catch (err) {
-            this.logger.error(`Execution failed:`, err.message);
+            this.logger.error(`Execution error:`, err.message);
         }
     }
 
@@ -166,7 +148,7 @@ class HybridPaperTrader {
         this.isRunning = false;
         if (this.intervalId) clearInterval(this.intervalId);
         this.hybrid.shutdown?.();
-        this.logger.info(`[HybridPaperTrader] Stopped. Total switches: ${this.totalSwitches}`);
+        this.logger.info(`[HybridPaperTrader] Stopped. Daily switches: ${this.dailySwitches}`);
     }
 }
 
