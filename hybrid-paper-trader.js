@@ -2,16 +2,30 @@ const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
-// Parse CLI arguments
+// ==================== CLI Argument Parsing ====================
 const args = process.argv.slice(2);
-const getArg = (name) => {
+
+function getArg(name) {
     const arg = args.find(a => a.startsWith(`--${name}=`));
     return arg ? arg.split('=')[1] : null;
-};
+}
+
+function parseJsonArg(name, defaultValue = {}) {
+    const raw = getArg(name);
+    if (!raw) return defaultValue;
+    try {
+        return JSON.parse(raw);
+    } catch (e) {
+        console.warn(`Invalid JSON for --${name}, using defaults`);
+        return defaultValue;
+    }
+}
 
 const coinFromCli = getArg('coin') || 'BTC-PERP';
 const capitalFromCli = parseFloat(getArg('capital')) || 1000;
 const dataDirFromCli = getArg('data-dir') || './data';
+const regimeConfigFromCli = parseJsonArg('regime-config', {});
+const notificationsFromCli = parseJsonArg('notifications', { enabled: false });
 
 class HybridPaperTrader {
     constructor(coin = 'BTC-PERP', options = {}) {
@@ -276,8 +290,10 @@ module.exports = HybridPaperTrader;
 if (require.main === module) {
     const trader = new HybridPaperTrader(coinFromCli, {
         initialCapital: capitalFromCli,
-        dataProvider: new DataProvider(dataDirFromCli) // ← Shared config
-        // wayfinder, engine, notifications, regimeConfig, etc. can be added here
+        dataProvider: new DataProvider(dataDirFromCli),
+        regimeConfig: regimeConfigFromCli,
+        notifications: notificationsFromCli
+        // wayfinder and engine should still be passed if running standalone
     });
 
     trader.start();

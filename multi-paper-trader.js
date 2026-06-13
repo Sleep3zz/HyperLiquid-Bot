@@ -1,8 +1,7 @@
 const { spawn } = require('child_process');
 const DataProvider = require('./src/data/data-provider');
 
-// === Shared DataProvider Configuration ===
-const DATA_DIR = './data'; // Single source of truth
+const DATA_DIR = './data';
 const dataProvider = new DataProvider(DATA_DIR);
 
 const COINS = [
@@ -11,19 +10,49 @@ const COINS = [
     { symbol: 'SOL-PERP', capital: 1000 }
 ];
 
+// === Shared Configuration (applied to all coins) ===
+const SHARED_CONFIG = {
+    regimeConfig: {
+        adxTrending: 26,
+        adxRanging: 19,
+        atrHighVolPercentile: 78,
+        bbWidthHighVolPercentile: 72,
+        bbWidthRangingPercentile: 28,
+        lookback: 120
+    },
+    notifications: {
+        enabled: true,
+        email: 'alerts@yourdomain.com',
+        from: 'trading@yourdomain.com',
+        smtp: {
+            host: 'smtp.yourdomain.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'trading@yourdomain.com',
+                pass: 'your-app-password'
+            }
+        }
+    }
+};
+
 const processes = [];
 
 function startHybridTrader(coinConfig) {
     const { symbol, capital } = coinConfig;
 
-    console.log(`[MultiHybrid] Starting hybrid trader for ${symbol}...`);
-
-    const child = spawn('node', [
+    const args = [
         'hybrid-paper-trader.js',
         `--coin=${symbol}`,
         `--capital=${capital}`,
-        `--data-dir=${DATA_DIR}` // ← Pass shared data directory
-    ], {
+        `--data-dir=${DATA_DIR}`,
+        `--regime-config=${JSON.stringify(SHARED_CONFIG.regimeConfig)}`,
+        `--notifications=${JSON.stringify(SHARED_CONFIG.notifications)}`
+    ];
+
+    console.log(`[MultiHybrid] Starting ${symbol} with shared config...`);
+
+    const child = spawn('node', args, {
         detached: true,
         stdio: ['ignore', 'pipe', 'pipe']
     });
@@ -36,19 +65,13 @@ function startHybridTrader(coinConfig) {
         process.stderr.write(`[${symbol} ERROR] ${data}`);
     });
 
-    child.on('exit', (code) => {
-        console.log(`[${symbol}] Process exited with code ${code}`);
-    });
-
     processes.push({ symbol, process: child });
 }
 
 function shutdown() {
-    console.log('\n[MultiHybrid] Shutting down all hybrid traders...');
+    console.log('\n[MultiHybrid] Shutting down all traders...');
     processes.forEach(({ symbol, process }) => {
-        if (!process.killed) {
-            process.kill('SIGINT');
-        }
+        if (!process.killed) process.kill('SIGINT');
     });
     process.exit(0);
 }
@@ -56,8 +79,5 @@ function shutdown() {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-// Start all coins
 COINS.forEach(startHybridTrader);
-
-// Keep main process alive
 setInterval(() => {}, 1000 * 60 * 60);
