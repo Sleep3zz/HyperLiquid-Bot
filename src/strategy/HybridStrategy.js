@@ -101,11 +101,12 @@ class HybridStrategy {
     }
 
     async update(coin, ohlcv, currentPrice, currentPosition = null) {
-        const state = this._getOrCreateCoinState(coin);
+        try {
+            const state = this._getOrCreateCoinState(coin);
 
-        if (!ohlcv || ohlcv.length < this.minDataBars) {
-            return { action: 'HOLD', regime: 'UNKNOWN', reason: 'Insufficient data' };
-        }
+            if (!ohlcv || ohlcv.length < this.minDataBars) {
+                return { action: 'HOLD', regime: 'UNKNOWN', reason: 'Insufficient data' };
+            }
 
         const regimeResult = state.regimeDetector.detect(ohlcv);
         const newRegime = regimeResult.type;
@@ -142,6 +143,10 @@ class HybridStrategy {
         }
 
         return await this._executeActiveStrategy(state, ohlcv, currentPrice, currentPosition, regimeResult);
+        } catch (error) {
+            this.logger.error(`[${coin}] Hybrid update failed:`, error.message);
+            return { action: 'HOLD', regime: 'UNKNOWN', reason: 'Internal error', error: error.message };
+        }
     }
 
     _getCooldownDuration(fromRegime, toRegime) {
