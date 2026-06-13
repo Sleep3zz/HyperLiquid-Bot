@@ -201,7 +201,7 @@ class GridStrategy {
         try {
             const totalCapital = this.gridLevels * 2 * this.baseAmount;
             if (totalCapital > this.maxGridCapital) {
-                this.logger.error(`[GRID] Capital exceeds limit`);
+                this.logger.error(`[GRID] Capital exceeds limit: $${totalCapital.toFixed(2)} > $${this.maxGridCapital}`);
                 return [];
             }
 
@@ -210,8 +210,8 @@ class GridStrategy {
                 const sellPrice = this.basePrice * (1 + (i * this.gridSpacingPct / 100));
 
                 if (!(buyPrice > 0) || !(sellPrice > 0)) {
-                    this.logger.error(`[GRID] Invalid price at level ${i}`);
-                    throw new Error(`Invalid price at level ${i}`);
+                    this.logger.error(`[GRID] Invalid price calculated at level ${i}: buy=${buyPrice}, sell=${sellPrice}`);
+                    throw new Error(`Invalid price at grid level ${i}`);
                 }
 
                 // BUY
@@ -421,8 +421,7 @@ class GridStrategy {
                 continue;
             }
 
-            // === DEBUG ===
-            this._debug(`Order ${oid} missing from open orders`);
+            this._logDebug(`Order ${oid} missing from open orders`);
 
             const fill = filledByOid.get(oid);
 
@@ -449,12 +448,15 @@ class GridStrategy {
             }
         }
 
-        // === Partial Fill Debug ===
+        // Log partial fills in debug mode
         for (const [oid, order] of this.gridOrders) {
             if (order.partialFilled) {
-                this._debug(`Partial fill on ${oid}: ${(order.partialFilled * 100).toFixed(1)}%`);
+                this._logDebug(`Partial fill on ${oid}: ${(order.partialFilled * 100).toFixed(1)}%`);
             }
         }
+
+        // Summary debug logging
+        this._logDebug(`Reconciled orders. Current active: ${this.gridOrders.size}`);
     }
 
     _handleFilledOrder(oid, orderInfo) {
@@ -731,6 +733,15 @@ class GridStrategy {
     _debug(message, ...args) {
         if (this.debugMode) {
             this.logger.debug(`[GRID-DEBUG] ${message}`, ...args);
+        }
+    }
+
+    /**
+     * Clean debug logging helper with [GRID] prefix
+     */
+    _logDebug(message) {
+        if (this.debugMode) {
+            this.logger.debug(`[GRID] ${message}`);
         }
     }
 }
