@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import EquityChart from '../components/EquityChart';
+import PriceSparkline from '../components/PriceSparkline';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://trading.s3zapp.us';
 
@@ -67,39 +68,51 @@ export default function TraderDetail() {
         </p>
       </div>
 
-      {/* Current Market Price */}
+      {/* Current Market Data */}
       {priceData && (
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <i className="fa-solid fa-chart-line text-blue-400"></i>
             Current Market Data
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
-              <div className="text-sm text-slate-400">Current Price</div>
-              <div className="text-3xl font-semibold mt-1 tabular-nums">
-                ${priceData.price?.toLocaleString()}
-              </div>
-            </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
-              <div className="text-sm text-slate-400">24h Change</div>
-              <div className={`text-3xl font-semibold mt-1 ${priceData.change24h >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                {priceData.change24h >= 0 ? '+' : ''}{priceData.change24h?.toFixed(2)}%
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
+              
+              {/* Price Info */}
+              <div className="md:col-span-2">
+                <div className="text-sm text-slate-400">Current Price</div>
+                <div className="text-4xl font-semibold tabular-nums mt-1">
+                  ${priceData.price?.toLocaleString()}
+                </div>
+                <div className={`text-lg font-medium mt-1 ${priceData.change24h >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {priceData.change24h >= 0 ? '+' : ''}{priceData.change24h?.toFixed(2)}% <span className="text-sm">(24h)</span>
+                </div>
               </div>
-            </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
-              <div className="text-sm text-slate-400">24h High</div>
-              <div className="text-3xl font-semibold mt-1 tabular-nums text-emerald-400">
-                ${priceData.high24h?.toLocaleString()}
+              {/* Sparkline */}
+              <div className="md:col-span-2">
+                <div className="text-sm text-slate-400 mb-1">Price Trend (24h)</div>
+                <PriceSparkline 
+                  data={priceData.sparklineData || [priceData.low24h, priceData.price, priceData.high24h]} 
+                  color={priceData.change24h >= 0 ? "#10b981" : "#ef4444"} 
+                />
               </div>
-            </div>
 
-            <div className="bg-slate-900 border border-slate-700 rounded-2xl p-5">
-              <div className="text-sm text-slate-400">24h Low</div>
-              <div className="text-3xl font-semibold mt-1 tabular-nums text-red-400">
-                ${priceData.low24h?.toLocaleString()}
+              {/* High / Low */}
+              <div className="md:col-span-1 space-y-4">
+                <div>
+                  <div className="text-xs text-slate-400">24h High</div>
+                  <div className="text-xl font-semibold text-emerald-400 tabular-nums">
+                    ${priceData.high24h?.toLocaleString()}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-slate-400">24h Low</div>
+                  <div className="text-xl font-semibold text-red-400 tabular-nums">
+                    ${priceData.low24h?.toLocaleString()}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
