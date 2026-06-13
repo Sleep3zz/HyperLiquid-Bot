@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login • Hybrid Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Logo / Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4">
+                <i class="fa-solid fa-chart-line text-white text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-white">Hybrid Dashboard</h1>
+            <p class="text-slate-400 mt-2">Paper Trading Monitor</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="glass border border-slate-700 rounded-3xl p-8 shadow-2xl">
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold text-white">Welcome back</h2>
+                <p class="text-slate-400 text-sm mt-1">Enter your password to continue</p>
+            </div>
+
+            <form id="loginForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            class="w-full bg-slate-900 border border-slate-700 focus:border-blue-500 text-white rounded-2xl px-4 py-3.5 placeholder-slate-500 focus:outline-none transition-colors"
+                            placeholder="Enter dashboard password"
+                            required
+                            autofocus
+                        >
+                        <button 
+                            type="button" 
+                            onclick="togglePassword()"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                        >
+                            <i class="fa-solid fa-eye" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button 
+                    type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2"
+                >
+                    <span>Access Dashboard</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-xs text-slate-500">
+                    Protected area • Authorized personnel only
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center mt-6">
+            <p class="text-xs text-slate-500">
+                Hybrid Grid + BBRSI Trading System
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('toggleIcon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            if (password) {
+                window.location.href = `/?password=${encodeURIComponent(password)}`;
+            }
+        });
+
+        window.onload = function() {
+            document.getElementById('password').focus();
+        };
+    </script>
+</body>
+</html>
