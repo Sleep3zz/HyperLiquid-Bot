@@ -2,6 +2,17 @@ const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
+// Parse CLI arguments
+const args = process.argv.slice(2);
+const getArg = (name) => {
+    const arg = args.find(a => a.startsWith(`--${name}=`));
+    return arg ? arg.split('=')[1] : null;
+};
+
+const coinFromCli = getArg('coin') || 'BTC-PERP';
+const capitalFromCli = parseFloat(getArg('capital')) || 1000;
+const dataDirFromCli = getArg('data-dir') || './data';
+
 class HybridPaperTrader {
     constructor(coin = 'BTC-PERP', options = {}) {
         this.coin = coin;
@@ -260,3 +271,19 @@ Trading has been paused.`;
 }
 
 module.exports = HybridPaperTrader;
+
+// CLI execution
+if (require.main === module) {
+    const trader = new HybridPaperTrader(coinFromCli, {
+        initialCapital: capitalFromCli,
+        dataProvider: new DataProvider(dataDirFromCli) // ← Shared config
+        // wayfinder, engine, notifications, regimeConfig, etc. can be added here
+    });
+
+    trader.start();
+
+    process.on('SIGINT', () => {
+        trader.stop();
+        process.exit(0);
+    });
+}
