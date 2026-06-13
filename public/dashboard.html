@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid Paper Trader Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-200">
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-chart-line text-blue-500"></i>
+                    Hybrid Paper Trader
+                </h1>
+                <p class="text-slate-400">Real-time monitoring • Grid + BBRSI</p>
+            </div>
+            <button onclick="location.reload()" 
+                class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg flex items-center gap-2 text-sm">
+                <i class="fa-solid fa-sync-alt"></i>
+                <span>Refresh</span>
+            </button>
+        </div>
+
+        <!-- Overview Stats -->
+        <div id="overview" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Hybrid Metrics (Live from Prometheus) -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-robot text-purple-400"></i>
+                Live Hybrid Metrics
+            </h2>
+            <div id="hybrid-metrics" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Traders Grid -->
+        <h2 class="text-xl font-semibold mb-4">Active Traders</h2>
+        <div id="traders-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <script>
+        async function loadData() {
+            try {
+                const [tradersRes, metricsRes] = await Promise.all([
+                    fetch('/api/traders'),
+                    fetch('/metrics')
+                ]);
+
+                const tradersData = await tradersRes.json();
+                const metricsText = await metricsRes.text();
+
+                renderOverview(tradersData);
+                renderTraders(tradersData.traders);
+                renderHybridMetrics(metricsText);
+            } catch (e) {
+                console.error('Failed to load data');
+            }
+        }
+
+        function renderOverview(data) {
+            const totalEquity = data.totalEquity || 0;
+            const avgReturn = data.traders?.length 
+                ? data.traders.reduce((a, b) => a + b.totalReturn, 0) / data.traders.length 
+                : 0;
+
+            document.getElementById('overview').innerHTML = `
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+                    <div class="text-sm text-slate-400">Total Equity</div>
+                    <div class="text-3xl font-semibold mt-1">$${totalEquity.toFixed(0)}</div>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+                    <div class="text-sm text-slate-400">Avg Return</div>
+                    <div class="text-3xl font-semibold mt-1 ${avgReturn >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                        ${avgReturn >= 0 ? '+' : ''}${avgReturn.toFixed(1)}%
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTraders(traders) {
+            const container = document.getElementById('traders-grid');
+            if (!traders.length) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400">No active traders</div>`;
+                return;
+            }
+
+            container.innerHTML = traders.map(t => `
+                <div onclick="window.location.href='/trader/${t.coin}'" 
+                    class="bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-slate-600 transition-all p-5 rounded-2xl cursor-pointer">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-semibold text-lg">${t.coin}</div>
+                            <div class="text-sm text-slate-400">${t.hasPosition ? 'In Position' : 'Idle'}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xl font-semibold ${t.totalReturn >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                                ${t.totalReturn >= 0 ? '+' : ''}${t.totalReturn.toFixed(1)}%
+                            </div>
+                            <div class="text-xs text-slate-400">Return</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderHybridMetrics(metricsText) {
+            const container = document.getElementById('hybrid-metrics');
+            const lines = metricsText.split('\n');
+            const hybridData = {};
+
+            lines.forEach(line => {
+                if (line.startsWith('hybrid_')) {
+                    const match = line.match(/hybrid_(\w+)\{coin="(.+?)"\}\s+(.+)/);
+                    if (match) {
+                        const [, metric, coin, value] = match;
+                        if (!hybridData[coin]) hybridData[coin] = {};
+                        hybridData[coin][metric] = parseFloat(value);
+                    }
+                }
+            });
+
+            if (Object.keys(hybridData).length === 0) {
+                container.innerHTML = `<div class="col-span-full text-slate-400 text-sm">No hybrid metrics available yet.</div>`;
+                return;
+            }
+
+            container.innerHTML = Object.entries(hybridData).map(([coin, m]) => `
+                <div class="bg-slate-900 border border-slate-700 p-4 rounded-2xl">
+                    <div class="font-semibold mb-3">${coin}</div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span class="text-slate-400">Regime</span> <span class="font-medium">${m.regime || 'N/A'}</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Daily Switches</span> <span class="font-medium">${m.daily_switches || 0}</span></div>
+                        <div class="flex justify-between"><span class="text-slate-400">Paused</span> 
+                            <span class="${m.trading_paused ? 'text-red-400' : 'text-emerald-400'} font-medium">
+                                ${m.trading_paused ? 'YES' : 'NO'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Auto refresh every 15 seconds
+        setInterval(loadData, 15000);
+        loadData();
+    </script>
+</body>
+</html>

@@ -8,15 +8,19 @@ function writeHybridState(coin, hybridState) {
 
     let data = {};
     if (fs.existsSync(filePath)) {
-        data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        try {
+            data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        } catch (e) {
+            data = {};
+        }
     }
 
     data.hybrid = {
-        regime: hybridState.regime,
-        activeStrategy: hybridState.activeStrategy,
-        dailySwitches: hybridState.dailySwitches,
-        paused: hybridState.paused,
-        pauseReason: hybridState.pauseReason,
+        regime: hybridState.regime || 'UNKNOWN',
+        activeStrategy: hybridState.activeStrategy || null,
+        dailySwitches: hybridState.dailySwitches || 0,
+        paused: !!hybridState.paused,
+        pauseReason: hybridState.pauseReason || null,
         lastUpdated: Date.now()
     };
 
