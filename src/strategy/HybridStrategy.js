@@ -323,8 +323,17 @@ class HybridStrategy {
 
     async forceStrategy(coin, strategy) {
         const state = this._getOrCreateCoinState(coin);
-        state.lastRegimeChange = 0;
-        await this._switchStrategy(state, strategy === 'GRID' ? 'RANGING' : 'TRENDING', null, null);
+        state.lastRegimeChange = 0; // bypass cooldown
+
+        // Get current price if possible
+        let price = null;
+        try {
+            price = await this.wayfinder.getPrice(coin);
+        } catch (e) {
+            this.logger.warn(`[${coin}] Could not fetch price for forceStrategy`);
+        }
+
+        await this._switchStrategy(state, strategy === 'GRID' ? 'RANGING' : 'TRENDING', price, null);
     }
 
     getStatus(coin) {
