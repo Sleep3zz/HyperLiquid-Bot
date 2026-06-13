@@ -7,18 +7,26 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://trading.s3zapp.us';
 
 export default function Dashboard() {
   const [traders, setTraders] = useState([]);
+  const [prices, setPrices] = useState({});
   const [hybridMetrics, setHybridMetrics] = useState({});
   const { socket, isConnected } = useSocket();
 
-  // Fetch traders data
+  // Fetch traders + prices
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/traders`);
-        const data = await res.json();
-        setTraders(data.traders || []);
+        const [tradersRes, pricesRes] = await Promise.all([
+          fetch(`${API_URL}/api/traders`),
+          fetch(`${API_URL}/api/prices`)
+        ]);
+
+        const tradersData = await tradersRes.json();
+        const pricesData = await pricesRes.json();
+
+        setTraders(tradersData.traders || []);
+        setPrices(pricesData.prices || {});
       } catch (error) {
-        console.error('Failed to fetch traders:', error);
+        console.error('Failed to fetch data:', error);
       }
     };
 
@@ -27,7 +35,7 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  // Real-time Hybrid updates via Socket.io
+  // Real-time Hybrid updates
   useEffect(() => {
     if (!socket) return;
 
@@ -40,13 +48,6 @@ export default function Dashboard() {
 
     return () => socket.off('hybrid-update');
   }, [socket]);
-
-  // Count regimes for summary
-  const regimeCounts = Object.values(hybridMetrics).reduce((acc, m) => {
-    const regime = m.regime || 'UNKNOWN';
-    acc[regime] = (acc[regime] || 0) + 1;
-    return acc;
-  }, {});
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -66,25 +67,13 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* === PROMINENT HYBRID METRICS SECTION === */}
+      {/* Live Hybrid Metrics */}
       <div className="mb-10">
         <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-2xl font-semibold flex items-center gap-3">
-              <i className="fa-solid fa-robot text-purple-400"></i>
-              Live Hybrid Strategy Status
-            </h2>
-            <p className="text-sm text-slate-400 mt-1">Real-time regime detection across all coins</p>
-          </div>
-          {Object.keys(hybridMetrics).length > 0 && (
-            <div className="flex gap-2 text-sm">
-              {Object.entries(regimeCounts).map(([regime, count]) => (
-                <div key={regime} className="px-3 py-1 bg-slate-900 border border-slate-700 rounded-full text-xs">
-                  {regime}: <span className="font-semibold">{count}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          <h2 className="text-2xl font-semibold flex items-center gap-3">
+            <i className="fa-solid fa-robot text-purple-400"></i>
+            Live Hybrid Strategy Status
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -93,17 +82,14 @@ export default function Dashboard() {
               <HybridMetrics key={coin} metrics={metrics} coin={coin} />
             ))
           ) : (
-            <div className="col-span-full bg-slate-900 border border-slate-700 rounded-2xl p-8 text-center">
-              <div className="text-slate-400">
-                Waiting for hybrid strategy data...<br />
-                <span className="text-xs">Start your hybrid traders to see live regime updates.</span>
-              </div>
+            <div className="col-span-full bg-slate-900 border border-slate-700 rounded-2xl p-8 text-center text-slate-400">
+              Waiting for hybrid strategy data...
             </div>
           )}
         </div>
       </div>
 
-      {/* Traders Section */}
+      {/* Active Traders */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold">Active Traders</h2>
         <button 
@@ -118,12 +104,15 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {traders.length > 0 ? (
           traders.map(trader => (
-            <TraderCard key={trader.coin} trader={trader} />
+            <TraderCard 
+              key={trader.coin} 
+              trader={trader} 
+              price={prices[trader.coin]} 
+            />
           ))
         ) : (
           <div className="col-span-full text-center py-12 text-slate-400 bg-slate-900 rounded-2xl border border-slate-700">
-            No active traders found.<br />
-            <span className="text-xs">Start traders with: node hybrid-paper-trader.js</span>
+            No active traders found.
           </div>
         )}
       </div>
