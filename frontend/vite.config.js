@@ -1,21 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://trading.s3zapp.us'
-  : 'http://localhost:3456';
-
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': API_URL,
-      '/metrics': API_URL,
+      '/api': 'http://localhost:3456',
+      '/metrics': 'http://localhost:3456',
       '/socket.io': {
-        target: API_URL,
+        target: 'http://localhost:3456',
         ws: true,
-        changeOrigin: true
-      }
-    }
-  }
+      },
+    },
+  },
+  // Production build settings
+  define: {
+    'import.meta.env.VITE_API_URL': JSON.stringify(
+      process.env.VITE_API_URL || 'https://trading.s3zapp.us'
+    ),
+  },
 });
