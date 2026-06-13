@@ -1,94 +1,53 @@
-#!/usr/bin/env node
-/**
- * Multi-Coin Hybrid Paper Trader
- * Runs hybrid-paper-trader.js for multiple coins with regime-aware trading
- */
-
-const fs = require('fs');
-const path = require('path');
 const { spawn } = require('child_process');
 
-const COINS = ['BTC-PERP', 'ETH-PERP', 'SOL-PERP']; // add more as needed
-const DATA_DIR = path.join(__dirname, 'data', 'paper-trading');
+const COINS = ['BTC-PERP', 'ETH-PERP', 'SOL-PERP']; // Add/remove coins here
+const CAPITAL_PER_COIN = 1000;
 
-// Ensure data directory exists
-if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-}
+const activeProcesses = [];
 
-console.log('╔══════════════════════════════════════════════════════════════════╗');
-console.log('║     MULTI-COIN HYBRID PAPER TRADER                              ║');
-console.log('║     Regime-Aware: BBRSI + Grid Strategy                         ║');
-console.log('║     BTC | ETH | SOL                                             ║');
-console.log('╚══════════════════════════════════════════════════════════════════╝');
-console.log('');
+function startHybridTrader(coin) {
+    console.log(`[MultiHybrid] Starting hybrid trader for ${coin}...`);
 
-const processes = [];
-
-function startHybridTrader(coin, capital = 1000) {
-    console.log(`🚀 Starting hybrid trader for ${coin}...`);
-    
     const child = spawn('node', [
         'hybrid-paper-trader.js',
         `--coin=${coin}`,
-        `--capital=${capital}`
+        `--capital=${CAPITAL_PER_COIN}`
     ], {
-        cwd: __dirname,
         detached: true,
         stdio: ['ignore', 'pipe', 'pipe']
     });
 
-    processes.push({ coin, process: child });
-
     child.stdout.on('data', (data) => {
-        const lines = data.toString().trim().split('\n');
-        lines.forEach(line => {
-            if (line.trim()) {
-                console.log(`[${coin}] ${line}`);
-            }
-        });
+        process.stdout.write(`[${coin}] ${data}`);
     });
 
     child.stderr.on('data', (data) => {
-        const lines = data.toString().trim().split('\n');
-        lines.forEach(line => {
-            if (line.trim()) {
-                console.error(`[${coin} ERROR] ${line}`);
-            }
-        });
-    });
-
-    child.on('error', (err) => {
-        console.error(`[${coin}] ❌ Failed to start: ${err.message}`);
+        process.stderr.write(`[${coin} ERROR] ${data}`);
     });
 
     child.on('exit', (code) => {
         console.log(`[${coin}] Process exited with code ${code}`);
     });
 
-    console.log(`[MultiHybrid] Started hybrid trader for ${coin}`);
+    activeProcesses.push({ coin, process: child });
 }
 
-function shutdown() {
-    console.log('\n[MultiHybrid] Shutting down all traders...');
-    processes.forEach(({ coin, process }) => {
-        console.log(`  Stopping ${coin}...`);
-        process.kill('SIGINT');
+function shutdownAll() {
+    console.log('\n[MultiHybrid] Shutting down all hybrid traders...');
+    activeProcesses.forEach(({ coin, process }) => {
+        if (!process.killed) {
+            process.kill('SIGINT');
+            console.log(`[MultiHybrid] Sent shutdown signal to ${coin}`);
+        }
     });
-    setTimeout(() => process.exit(0), 1000);
+    process.exit(0);
 }
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdownAll);
+process.on('SIGTERM', shutdownAll);
 
 // Start all coins
-COINS.forEach(coin => startHybridTrader(coin, 1000));
+COINS.forEach(coin => startHybridTrader(coin));
 
-console.log('');
-console.log('✅ All hybrid paper traders started!');
-console.log('');
-console.log('Press Ctrl+C to stop all traders');
-console.log('');
-
-// Keep process alive
+// Keep the main process alive
 setInterval(() => {}, 1000 * 60 * 60);
