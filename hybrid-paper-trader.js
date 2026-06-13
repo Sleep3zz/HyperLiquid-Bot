@@ -72,6 +72,7 @@ class HybridPaperTrader {
         this.pauseReason = null;
         this.pauseTimestamp = null;
         this.lastRegime = null;
+        this.lastActiveStrategy = null;
 
         this.isRunning = false;
         this.intervalId = null;
@@ -223,10 +224,11 @@ Trading has been paused.`;
             const result = await this.hybrid.update(this.coin, ohlcv, currentPrice, currentPosition);
             const status = this.hybrid.getStatus(this.coin);
 
-            // Track switches
-            if (this.lastRegime && this.lastRegime !== result.regime) {
+            // Track switches (based on strategy changes, not regime)
+            if (result.strategy && result.strategy !== this.lastActiveStrategy) {
                 this.dailySwitches++;
                 this.metrics.totalSwitches++;
+                this.lastActiveStrategy = result.strategy;
             }
             this.lastRegime = result.regime;
             this.metrics.lastRegime = result.regime;
