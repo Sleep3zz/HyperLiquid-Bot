@@ -81,8 +81,16 @@ class GridStrategy {
         }
     }
 
-    async startGrid(coin = "BTC", price = null) {
+    async startGrid(coin = "BTC", price = null, options = {}) {
+        const { maxCapital, disableInternalLoop = false } = options;
+
         if (this.active) return `Grid already running on ${this.coin}`;
+
+        // Apply dynamic capital limit if provided
+        if (maxCapital) {
+            this.maxGridCapital = maxCapital;
+            this.logger.info(`[GRID] Using dynamic capital limit: $${maxCapital}`);
+        }
 
         const totalCapital = this.gridLevels * 2 * this.baseAmount;
         if (totalCapital > this.maxGridCapital) {
@@ -97,7 +105,7 @@ class GridStrategy {
                 return `Failed to get price: ${e.message}`;
             }
         }
-        
+
         if (!Number.isFinite(price) || price <= 0) {
             return "No valid price available from Wayfinder";
         }
@@ -129,8 +137,24 @@ class GridStrategy {
             return "Failed to place/track any grid orders — verify exchange for orphaned orders";
         }
 
-        this._startUpdateLoop();
+        // Only start internal loop if NOT disabled by Hybrid
+        if (!disableInternalLoop) {
+            this._startUpdateLoop();
+        } else {
+            this.logger.info(`[GRID] Internal heartbeat disabled (managed by HybridStrategy)`);
+        }
+
         return `Grid active on ${coin} with ${placed.length} tracked orders`;
+    }
+
+    /**
+     * Manual update method for HybridStrategy to call
+     * Reuses existing update logic but without its own interval
+     */
+    async manualUpdate(currentPrice, currentPosition) {
+        if (!this.active) return;
+        // Reuse existing update logic but without its own interval
+        await this.update(currentPrice, currentPosition);
     }
 
     async _buildGrid() {

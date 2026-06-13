@@ -27,14 +27,45 @@ class HybridStrategy {
         // === Global Capital Budget ===
         this.capitalConfig = {
             totalBudget: capitalConfig.totalBudget || 10000,
-            gridAllocation: capitalConfig.gridAllocation || 0.6, // 60% max to Grid
-            bbrsiAllocation: capitalConfig.bbrsiAllocation || 0.8, // 80% max to BBRSI
+            gridMaxAllocation: capitalConfig.gridMaxAllocation || 0.6, // 60% max to Grid
+            bbrsiMaxAllocation: capitalConfig.bbrsiMaxAllocation || 0.8, // 80% max to BBRSI
+            minCapitalPerStrategy: capitalConfig.minCapitalPerStrategy || 500,
             ...capitalConfig
         };
 
-        this.currentAllocatedCapital = {
+        this.allocatedCapital = {
             GRID: 0,
             BBRSI: 0
+        };
+    }
+
+    _getMaxCapitalForStrategy(strategy) {
+        const total = this.capitalConfig.totalBudget;
+        if (strategy === 'GRID') {
+            return Math.max(
+                this.capitalConfig.minCapitalPerStrategy,
+                total * this.capitalConfig.gridMaxAllocation
+            );
+        }
+        if (strategy === 'BBRSI') {
+            return Math.max(
+                this.capitalConfig.minCapitalPerStrategy,
+                total * this.capitalConfig.bbrsiMaxAllocation
+            );
+        }
+        return total * 0.5;
+    }
+
+    _updateCapitalAllocation(strategy, amount) {
+        this.allocatedCapital[strategy] = amount;
+    }
+
+    getCapitalStatus() {
+        return {
+            totalBudget: this.capitalConfig.totalBudget,
+            allocated: { ...this.allocatedCapital },
+            available: this.capitalConfig.totalBudget -
+                (this.allocatedCapital.GRID + this.allocatedCapital.BBRSI)
         };
     }
 
@@ -123,17 +154,6 @@ class HybridStrategy {
         return this.cooldowns.trendToGrid; // Default to conservative
     }
 
-    _getAvailableCapitalForStrategy(strategy) {
-        const total = this.capitalConfig.totalBudget;
-        if (strategy === 'GRID') {
-            return total * this.capitalConfig.gridAllocation;
-        }
-        if (strategy === 'BBRSI') {
-            return total * this.capitalConfig.bbrsiAllocation;
-        }
-        return total * 0.5;
-    }
-
     // Claude P1: Don't keep running stale strategy aggressively during cooldown
     _handleStaleStrategy(state, newRegime) {
         if (state.activeStrategy === 'GRID' && newRegime === 'TRENDING') {
@@ -162,20 +182,22 @@ class HybridStrategy {
 
         // Start new strategy
         if (desired === 'GRID') {
-            // Prevent Grid from starting its own internal loop (single heartbeat from HybridStrategy)
-            state.grid._startUpdateLoop = () => {};
+            const maxCapital = this._getMaxCapitalForStrategy('GRID');
+            this._updateCapitalAllocation('GRID', maxCapital);
 
-            const maxCapital = this._getAvailableCapitalForStrategy('GRID');
-            await state.grid.startGrid(state.coin, currentPrice, { maxCapital });
+            await state.grid.startGrid(state.coin, currentPrice, {
+                maxCapital,
+                disableInternalLoop: true
+            });
             state.activeStrategy = 'GRID';
-            this.currentAllocatedCapital.GRID = maxCapital;
         } else if (desired === 'BBRSI') {
+            const maxCapital = this._getMaxCapitalForStrategy('BBRSI');
+            this._updateCapitalAllocation('BBRSI', maxCapital);
             state.activeStrategy = 'BBRSI';
-            this.currentAllocatedCapital.BBRSI = this._getAvailableCapitalForStrategy('BBRSI');
         } else {
             state.activeStrategy = null;
-            this.currentAllocatedCapital.GRID = 0;
-            this.currentAllocatedCapital.BBRSI = 0;
+            this._updateCapitalAllocation('GRID', 0);
+            this._updateCapitalAllocation('BBRSI', 0);
         }
     }
 
