@@ -59,7 +59,13 @@ class BBRSIStrategy {
  this.bbPeriod = Number(indicators.bollinger.period) || 20;
  this.bbStdDev = Number(indicators.bollinger.stdDev) || 2;
  this.adxPeriod = Number(indicators.adx.period) || 14;
- this.adxThreshold = Number(indicators.adx.threshold) || 25;
+
+ // Load ADX threshold from central regime config first, then allow override from indicators config
+ const regimeConfig = config.has('regime') ? config.get('regime') : {};
+ const centralAdxTrending = regimeConfig.adx?.trending;
+ this.adxThreshold = Number(
+ indicators.adx?.threshold ?? centralAdxTrending ?? 25
+ );
 
  // Cooldown (timestamp-based)
  this.cooldownPeriodMs = (Number(trading.cooldownPeriod) || 1) * 60 * 1000;

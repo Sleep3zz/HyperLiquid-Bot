@@ -27,6 +27,41 @@ class RegimeDetector {
         // Rolling history for percentile calculation
         this.atrHistory = [];
         this.bbWidthHistory = [];
+
+        // Validate configuration
+        this._validateConfig();
+    }
+
+    _validateConfig() {
+        const cfg = this.config;
+
+        if (cfg.adxTrending <= cfg.adxRanging) {
+            throw new Error(`Invalid regime config: adxTrending (${cfg.adxTrending}) must be greater than adxRanging (${cfg.adxRanging})`);
+        }
+
+        if (cfg.atrHighVolPercentile < 0 || cfg.atrHighVolPercentile > 100) {
+            throw new Error(`atrHighVolPercentile must be between 0 and 100`);
+        }
+
+        if (cfg.bbWidthHighVolPercentile < 0 || cfg.bbWidthHighVolPercentile > 100) {
+            throw new Error(`bbWidthHighVolPercentile must be between 0 and 100`);
+        }
+
+        if (cfg.bbWidthRangingPercentile < 0 || cfg.bbWidthRangingPercentile > 100) {
+            throw new Error(`bbWidthRangingPercentile must be between 0 and 100`);
+        }
+
+        if (cfg.bbWidthRangingPercentile >= cfg.bbWidthHighVolPercentile) {
+            throw new Error(`bbWidthRangingPercentile must be lower than bbWidthHighVolPercentile`);
+        }
+
+        if (cfg.lookback < 20) {
+            throw new Error(`lookback must be at least 20 for reliable percentile calculation`);
+        }
+
+        if (cfg.requiredPersistence < 1) {
+            throw new Error(`requiredPersistence must be at least 1`);
+        }
     }
 
     getLastValue(value) {
