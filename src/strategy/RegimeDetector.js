@@ -89,9 +89,10 @@ class RegimeDetector {
 
         let adxRaw, atrRaw, bbRaw;
         try {
-            adxRaw = calculateADX(highs, lows, closes, 14);
+            // calculateADX expects ohlcv data array, not separate arrays
+            adxRaw = calculateADX(ohlcv, 14);
             atrRaw = calculateATR(highs, lows, closes, 14);
-            bbRaw = calculateBollingerBands(closes, 20, 2);
+            bbRaw = calculateBollingerBands(ohlcv, 20, 2);
         } catch (e) {
             return { type: 'UNKNOWN', confidence: 0, reason: 'Indicator calculation failed' };
         }

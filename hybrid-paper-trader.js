@@ -61,7 +61,7 @@ class HybridPaperTrader {
             checkInterval: options.checkInterval || 60000,
             maxLeverage: options.maxLeverage || 5,
             riskPerTrade: options.riskPerTrade || 0.02,
-            timeframe: options.timeframe || '1m',
+            timeframe: options.timeframe || '15m',
             dailyLossLimit: options.dailyLossLimit || 0.05,
             maxDailySwitches: options.maxDailySwitches || 8,
             autoResumeAfterMinutes: options.autoResumeAfterMinutes || 0,
