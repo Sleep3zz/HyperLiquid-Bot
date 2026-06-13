@@ -1,4 +1,4 @@
-const BBRSIStrategy = require("./BBRSIStrategy");
+const { BBRSIStrategy } = require("./BBRSIStrategy");
 const GridStrategy = require("./GridStrategy");
 const RegimeDetector = require("./RegimeDetector");
 

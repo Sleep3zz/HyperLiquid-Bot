@@ -486,12 +486,16 @@ module.exports = HybridPaperTrader;
 
 // CLI execution
 if (require.main === module) {
+    // Initialize Wayfinder adapter for paper trading
+    const WayfinderAdapter = require('./src/wayfinder/adapter-final');
+    const wayfinder = new WayfinderAdapter({ logger: console });
+
     const trader = new HybridPaperTrader(coinFromCli, {
         initialCapital: capitalFromCli,
-        dataProvider: new DataProvider(dataDirFromCli),
+        dataProvider: new DataProvider(dataDirFromCli, wayfinder),
         regimeConfig: regimeConfigFromCli,
-        notifications: notificationsFromCli
-        // wayfinder and engine should still be passed if running standalone
+        notifications: notificationsFromCli,
+        wayfinder: wayfinder // Pass wayfinder instance
     });
 
     trader.start();
@@ -507,8 +511,10 @@ if (require.main === module) {
         }
     });
 
-    server.listen(9090, () => {
-        console.log(`[Hybrid] Prometheus metrics available at http://localhost:9090/metrics`);
+    // Use unique port per coin to avoid conflicts
+    const metricsPort = 9090 + (coinFromCli.charCodeAt(0) % 100);
+    server.listen(metricsPort, () => {
+        console.log(`[Hybrid] Prometheus metrics available at http://localhost:${metricsPort}/metrics`);
     });
 
     process.on('SIGINT', async () => {
