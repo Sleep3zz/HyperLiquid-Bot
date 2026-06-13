@@ -1,6 +1,9 @@
 const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
 const { writeHybridState } = require('./src/hybrid-state-writer');
+const PaperTradingEngine = require('./src/paper-trading/engine');
+const fs = require('fs');
+const path = require('path');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
 // Optional: Socket.io client for real-time dashboard updates
@@ -97,6 +100,7 @@ class HybridPaperTrader {
         this.pauseTimestamp = null;
         this.lastRegime = null;
         this.lastActiveStrategy = null;
+        this.startTime = Date.now();
 
         this.isRunning = false;
         this.intervalId = null;
@@ -286,6 +290,111 @@ Trading has been paused.`;
         return this.initialCapital;
     }
 
+    /**
+     * Save full trading state to disk for dashboard
+     */
+    _saveTradingState() {
+        try {
+            const DATA_DIR = path.join(__dirname, 'data', 'paper-trading');
+            if (!fs.existsSync(DATA_DIR)) {
+                fs.mkdirSync(DATA_DIR, { recursive: true });
+            }
+
+            const filePath = path.join(DATA_DIR, `${this.coin}-paper-trades.json`);
+            
+            // Load existing data to preserve hybrid state
+            let data = {};
+            if (fs.existsSync(filePath)) {
+                try {
+                    data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                } catch (e) {
+                    data = {};
+                }
+            }
+
+            // Get portfolio data from engine
+            let portfolio = { equity: this.initialCapital, balance: this.initialCapital, unrealizedPnl: 0 };
+            let position = null;
+            let trades = [];
+            
+            if (this.engine) {
+                if (typeof this.engine.getPortfolio === 'function') {
+                    portfolio = this.engine.getPortfolio() || portfolio;
+                }
+                if (typeof this.engine.getPosition === 'function') {
+                    position = this.engine.getPosition(this.coin);
+                }
+                if (this.engine.trades) {
+                    trades = this.engine.trades;
+                }
+            }
+
+            // Calculate metrics
+            const winningTrades = trades.filter(t => t.pnl > 0).length;
+            const totalTrades = trades.length;
+            const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
+            
+            // Calculate max drawdown
+            let maxDrawdown = 0;
+            if (trades.length > 0) {
+                let peak = this.initialCapital;
+                let runningEquity = this.initialCapital;
+                
+                for (const trade of trades) {
+                    if (trade.type === 'CLOSE' && trade.pnl) {
+                        runningEquity += trade.pnl;
+                        if (runningEquity > peak) {
+                            peak = runningEquity;
+                        } else {
+                            const drawdown = ((peak - runningEquity) / peak) * 100;
+                            if (drawdown > maxDrawdown) {
+                                maxDrawdown = drawdown;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Calculate total return
+            const totalReturn = ((portfolio.equity - this.initialCapital) / this.initialCapital) * 100;
+
+            // Build equity history from trades
+            const equity = [{ timestamp: this.startTime || Date.now(), equity: this.initialCapital }];
+            let runningEquity = this.initialCapital;
+            for (const trade of trades) {
+                if (trade.type === 'CLOSE' && trade.pnl) {
+                    runningEquity += trade.pnl;
+                    equity.push({
+                        timestamp: trade.timestamp,
+                        equity: runningEquity
+                    });
+                }
+            }
+
+            // Merge with existing data
+            const updatedData = {
+                ...data,
+                coin: this.coin,
+                initialCapital: this.initialCapital,
+                currentEquity: portfolio.equity,
+                balance: portfolio.balance,
+                unrealizedPnl: portfolio.unrealizedPnl || 0,
+                totalReturn: totalReturn,
+                totalTrades: totalTrades,
+                winRate: winRate,
+                maxDrawdown: maxDrawdown,
+                position: position,
+                trades: trades,
+                equity: equity,
+                lastUpdated: Date.now()
+            };
+
+            fs.writeFileSync(filePath, JSON.stringify(updatedData, null, 2));
+        } catch (err) {
+            this.logger.error(`[${this.coin}] Failed to save trading state:`, err.message);
+        }
+    }
+
     _updateDailyPnL() {
         const currentEquity = this._getCurrentEquity();
         this.dailyPnL = currentEquity - this.dailyStartEquity;
@@ -351,6 +460,9 @@ Trading has been paused.`;
                 paused: this.tradingPaused,
                 pauseReason: this.pauseReason
             });
+
+            // Persist full trading state for dashboard
+            this._saveTradingState();
 
             // Emit real-time update via WebSocket
             if (ioClient && ioClient.connected) {
@@ -490,12 +602,19 @@ if (require.main === module) {
     const WayfinderAdapter = require('./src/wayfinder/adapter-final');
     const wayfinder = new WayfinderAdapter({ logger: console });
 
+    // Create PaperTradingEngine for this coin
+    const engine = new PaperTradingEngine({
+        initialCapital: capitalFromCli,
+        logger: console
+    });
+
     const trader = new HybridPaperTrader(coinFromCli, {
         initialCapital: capitalFromCli,
         dataProvider: new DataProvider(dataDirFromCli, wayfinder),
         regimeConfig: regimeConfigFromCli,
         notifications: notificationsFromCli,
-        wayfinder: wayfinder // Pass wayfinder instance
+        wayfinder: wayfinder, // Pass wayfinder instance
+        engine: engine // Pass paper trading engine
     });
 
     trader.start();
