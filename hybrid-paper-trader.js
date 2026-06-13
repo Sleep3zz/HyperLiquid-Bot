@@ -81,6 +81,37 @@ class HybridPaperTrader {
         if (this.config.notifications.enabled && this.config.notifications.smtp) {
             this.transporter = nodemailer.createTransport(this.config.notifications.smtp);
         }
+
+        // Metrics tracking
+        this.metrics = {
+            totalCycles: 0,
+            totalSwitches: 0,
+            totalErrors: 0,
+            lastRegime: null
+        };
+    }
+
+    /**
+     * Retry wrapper with exponential backoff
+     */
+    async _withRetry(fn, maxRetries = 3, baseDelay = 1000) {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                return await fn();
+            } catch (error) {
+                if (attempt === maxRetries) throw error;
+                const delay = baseDelay * Math.pow(2, attempt - 1);
+                this.logger.warn(`[${this.coin}] Retry ${attempt}/${maxRetries} after error: ${error.message}`);
+                await new Promise(res => setTimeout(res, delay));
+            }
+        }
+    }
+
+    /**
+     * Get current metrics
+     */
+    getMetrics() {
+        return { ...this.metrics };
     }
 
     // ==================== NOTIFICATION SYSTEM ====================
@@ -168,6 +199,7 @@ Trading has been paused.`;
     async runCycle() {
         this._resetDailyStatsIfNeeded();
         this._updateDailyPnL();
+        this.metrics.totalCycles++;
 
         if (this.tradingPaused && this.config.autoResumeAfterMinutes > 0) {
             const minutesPaused = (Date.now() - this.pauseTimestamp) / (1000 * 60);
@@ -182,10 +214,10 @@ Trading has been paused.`;
         }
 
         try {
-            const currentPrice = await this.wayfinder.getPrice(this.coin);
+            const currentPrice = await this._withRetry(() => this.wayfinder.getPrice(this.coin));
             if (!currentPrice) return;
 
-            const ohlcv = await this.fetchOHLCV(this.coin);
+            const ohlcv = await this._withRetry(() => this.fetchOHLCV(this.coin));
             const currentPosition = this.engine?.getPosition?.(this.coin) || null;
 
             const result = await this.hybrid.update(this.coin, ohlcv, currentPrice, currentPosition);
@@ -194,8 +226,10 @@ Trading has been paused.`;
             // Track switches
             if (this.lastRegime && this.lastRegime !== result.regime) {
                 this.dailySwitches++;
+                this.metrics.totalSwitches++;
             }
             this.lastRegime = result.regime;
+            this.metrics.lastRegime = result.regime;
 
             // === Enhanced Logging with Dynamic Thresholds ===
             let thresholdLog = '';
@@ -234,6 +268,7 @@ Trading has been paused.`;
             }
 
         } catch (err) {
+            this.metrics.totalErrors++;
             this.logger.error(`[${this.coin}] Cycle error:`, err.message);
         }
     }
@@ -276,11 +311,20 @@ Trading has been paused.`;
         this.intervalId = setInterval(() => this.runCycle(), this.config.checkInterval);
     }
 
-    stop() {
+    async stop() {
         this.isRunning = false;
         if (this.intervalId) clearInterval(this.intervalId);
-        this.hybrid.shutdown?.();
-        this.logger.info(`[HybridPaperTrader] Stopped. Final Daily PnL: $${this.dailyPnL.toFixed(2)}`);
+
+        try {
+            await this.hybrid.shutdown?.();
+            if (this.engine?.closeAllPositions) {
+                await this.engine.closeAllPositions(); // optional safety
+            }
+        } catch (err) {
+            this.logger.error(`[${this.coin}] Error during shutdown:`, err.message);
+        }
+
+        this.logger.info(`[${this.coin}] Stopped cleanly. Final Daily PnL: $${this.dailyPnL.toFixed(2)}`);
     }
 }
 
@@ -298,8 +342,8 @@ if (require.main === module) {
 
     trader.start();
 
-    process.on('SIGINT', () => {
-        trader.stop();
+    process.on('SIGINT', async () => {
+        await trader.stop();
         process.exit(0);
     });
 }
