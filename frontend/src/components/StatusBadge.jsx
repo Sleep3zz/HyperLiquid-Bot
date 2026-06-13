@@ -1,5 +1,5 @@
 export default function StatusBadge({ type, value }) {
-  const getStyles = () => {
+  const getBadgeStyles = () => {
     switch (type) {
       case 'LONG':
         return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
@@ -12,10 +12,10 @@ export default function StatusBadge({ type, value }) {
   };
 
   return (
-    <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStyles()}`}>
+    <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${getBadgeStyles()}`}>
       {type}
       {value !== null && value !== undefined && (
-        <span className="ml-1.5 font-mono">
+        <span className="ml-1.5 font-mono tabular-nums">
           {value >= 0 ? '+' : ''}{value.toFixed(2)}
         </span>
       )}
