@@ -285,7 +285,7 @@ Trading has been paused.`;
     _getCurrentEquity() {
         if (this.engine && typeof this.engine.getPortfolio === 'function') {
             const portfolio = this.engine.getPortfolio();
-            return portfolio?.equity || this.initialCapital;
+            return portfolio?.totalValue || portfolio?.equity || this.initialCapital;
         }
         return this.initialCapital;
     }
@@ -313,7 +313,7 @@ Trading has been paused.`;
             }
 
             // Get portfolio data from engine
-            let portfolio = { equity: this.initialCapital, balance: this.initialCapital, unrealizedPnl: 0 };
+            let portfolio = { totalValue: this.initialCapital, balance: this.initialCapital, unrealizedPnl: 0 };
             let position = null;
             let trades = [];
             
@@ -355,8 +355,11 @@ Trading has been paused.`;
                 }
             }
 
+            // Use totalValue as equity (PaperTradingEngine uses totalValue not equity)
+            const currentEquity = portfolio.totalValue || portfolio.equity || this.initialCapital;
+            
             // Calculate total return
-            const totalReturn = ((portfolio.equity - this.initialCapital) / this.initialCapital) * 100;
+            const totalReturn = ((currentEquity - this.initialCapital) / this.initialCapital) * 100;
 
             // Build equity history from trades
             const equity = [{ timestamp: this.startTime || Date.now(), equity: this.initialCapital }];
@@ -376,7 +379,7 @@ Trading has been paused.`;
                 ...data,
                 coin: this.coin,
                 initialCapital: this.initialCapital,
-                currentEquity: portfolio.equity,
+                currentEquity: currentEquity,
                 balance: portfolio.balance,
                 unrealizedPnl: portfolio.unrealizedPnl || 0,
                 totalReturn: totalReturn,
