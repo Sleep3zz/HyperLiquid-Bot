@@ -1,5 +1,6 @@
 const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
+const { writeHybridState } = require('./src/hybrid-state-writer');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
 // ==================== Prometheus Metrics (Optional) ====================
@@ -327,6 +328,15 @@ Trading has been paused.`;
                 this.metricTradingPaused.set({ coin: this.coin }, this.tradingPaused ? 1 : 0);
                 this.metricCycles.inc({ coin: this.coin });
             }
+
+            // Persist hybrid state for dashboard
+            writeHybridState(this.coin, {
+                regime: result.regime,
+                activeStrategy: result.strategy,
+                dailySwitches: this.dailySwitches,
+                paused: this.tradingPaused,
+                pauseReason: this.pauseReason
+            });
 
             // === Enhanced Logging with Dynamic Thresholds ===
             let thresholdLog = '';
