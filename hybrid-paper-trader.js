@@ -500,7 +500,9 @@ if (require.main === module) {
 
     trader.start();
 
-    // Optional: HTTP server for Prometheus metrics
+    // Optional: HTTP server for Prometheus metrics (disabled by default to avoid port conflicts)
+    // Metrics are available via the main dashboard API at /api/traders/:coin
+    /*
     const http = require('http');
     const server = http.createServer(async (req, res) => {
         if (req.url === '/metrics') {
@@ -516,9 +518,10 @@ if (require.main === module) {
     server.listen(metricsPort, () => {
         console.log(`[Hybrid] Prometheus metrics available at http://localhost:${metricsPort}/metrics`);
     });
+    */
 
     process.on('SIGINT', async () => {
-        server.close();
+        // server?.close();
         await trader.stop();
         process.exit(0);
     });
