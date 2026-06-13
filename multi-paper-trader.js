@@ -1,4 +1,5 @@
 const { spawn } = require('child_process');
+const DataProvider = require('./src/data/data-provider');
 
 const COINS = [
     { symbol: 'BTC-PERP', capital: 2000 },
@@ -6,26 +7,33 @@ const COINS = [
     { symbol: 'SOL-PERP', capital: 1000 }
 ];
 
+const dataProvider = new DataProvider('./data'); // Shared instance
 const processes = [];
 
-function startCoin(coinConfig) {
+function startHybridTrader(coinConfig) {
     const { symbol, capital } = coinConfig;
 
     const child = spawn('node', [
         'hybrid-paper-trader.js',
         `--coin=${symbol}`,
         `--capital=${capital}`
-    ], { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+    ], {
+        detached: true,
+        stdio: ['ignore', 'pipe', 'pipe'],
+        env: {
+            ...process.env,
+            DATA_PROVIDER: 'shared' // Can be used inside hybrid-paper-trader if needed
+        }
+    });
 
     child.stdout.on('data', data => process.stdout.write(`[${symbol}] ${data}`));
     child.stderr.on('data', data => process.stderr.write(`[${symbol} ERROR] ${data}`));
 
     processes.push({ symbol, process: child });
-    console.log(`[MultiHybrid] Launched hybrid trader for ${symbol}`);
 }
 
 function shutdown() {
-    console.log('\n[MultiHybrid] Shutting down all traders...');
+    console.log('\n[MultiHybrid] Shutting down...');
     processes.forEach(p => p.process.kill('SIGINT'));
     process.exit(0);
 }
@@ -33,5 +41,5 @@ function shutdown() {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-COINS.forEach(startCoin);
-setInterval(() => {}, 1000 * 60 * 60); // keep alive
+COINS.forEach(startHybridTrader);
+setInterval(() => {}, 1000 * 60 * 60);

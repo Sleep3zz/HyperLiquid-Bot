@@ -1,4 +1,5 @@
 const HybridStrategy = require('./src/strategy/HybridStrategy');
+const DataProvider = require('./src/data/data-provider');
 
 class HybridPaperTrader {
     constructor(coin = 'BTC-PERP', options = {}) {
@@ -15,12 +16,7 @@ class HybridPaperTrader {
         };
 
         this.wayfinder = options.wayfinder;
-        if (!this.wayfinder) {
-            throw new Error("Wayfinder instance is required");
-        }
-
-        // === Data Provider (your existing infrastructure) ===
-        this.dataProvider = options.dataProvider || null;
+        this.dataProvider = options.dataProvider || new DataProvider();
 
         this.hybrid = new HybridStrategy(
             this.logger,
@@ -29,41 +25,27 @@ class HybridPaperTrader {
         );
 
         this.engine = options.engine;
+
+        // === Safeguards & Logging ===
+        this.transitionLog = [];
+        this.lastRegime = null;
+        this.totalSwitches = 0;
+
         this.isRunning = false;
         this.intervalId = null;
     }
 
-    // ==================== REAL OHLCV DATA ====================
     async fetchOHLCV(symbol, limit = 150) {
-        // Priority 1: Use provided data provider
-        if (this.dataProvider && typeof this.dataProvider.getCandles === 'function') {
-            try {
-                const candles = await this.dataProvider.getCandles(
-                    symbol,
-                    this.config.timeframe,
-                    limit
-                );
-                if (candles && candles.length > 0) {
-                    return candles;
-                }
-            } catch (err) {
-                this.logger.warn(`Data provider failed for ${symbol}, falling back to mock: ${err.message}`);
-            }
+        const candles = await this.dataProvider.getCandles(symbol, this.config.timeframe, limit);
+        
+        if (candles.length > 0) {
+            return candles;
         }
 
-        // Priority 2: Try common project patterns (adjust as needed)
-        try {
-            // Example: If you have a global data loader or function
-            if (global.getHistoricalData) {
-                return await global.getHistoricalData(symbol, this.config.timeframe, limit);
-            }
-        } catch (err) {
-            // ignore and fall back
-        }
-
-        // Fallback: Mock data (with warning)
-        this.logger.warn(`Using mock OHLCV data for ${symbol}. Replace with real data for accurate regime detection.`);
-        return this._generateMockOHLCV(await this.wayfinder.getPrice(symbol), limit);
+        // Fallback to mock
+        this.logger.warn(`Using mock data for ${symbol}`);
+        const price = await this.wayfinder.getPrice(symbol);
+        return this._generateMockOHLCV(price, limit);
     }
 
     _generateMockOHLCV(currentPrice, length = 150) {
@@ -90,21 +72,22 @@ class HybridPaperTrader {
             if (!currentPrice) return;
 
             const ohlcv = await this.fetchOHLCV(this.coin);
-            if (!ohlcv || ohlcv.length === 0) return;
-
             const currentPosition = this.engine?.getPosition?.(this.coin) || null;
 
             const result = await this.hybrid.update(this.coin, ohlcv, currentPrice, currentPosition);
             const status = this.hybrid.getStatus(this.coin);
 
+            // Track regime transitions + costs
+            this._logTransition(result.regime, result.strategy);
+
             this.logger.info(
-                `[${this.coin}] ${result.regime} | Strategy: ${result.strategy || 'N/A'} | ` +
-                `Action: ${result.action} | Paused: ${status?.pauseAggressiveRisk || false}`
+                `[${this.coin}] ${result.regime} | ${result.strategy || 'N/A'} | ${result.action} | ` +
+                `Paused: ${status?.pauseAggressiveRisk || false} | Switches: ${this.totalSwitches}`
             );
 
             if (result.action && result.action !== 'HOLD' && result.action !== 'NONE') {
                 if (status?.pauseAggressiveRisk && result.strategy === 'GRID') {
-                    this.logger.warn(`[${this.coin}] Skipping trade - Grid risk paused during cooldown`);
+                    this.logger.warn(`[${this.coin}] Execution blocked - Grid risk paused`);
                 } else {
                     await this.executeHybridSignal(result, currentPrice);
                 }
@@ -113,6 +96,34 @@ class HybridPaperTrader {
         } catch (err) {
             this.logger.error(`[${this.coin}] Cycle error:`, err.message);
         }
+    }
+
+    _logTransition(newRegime, strategy) {
+        if (this.lastRegime && this.lastRegime !== newRegime) {
+            const transition = {
+                from: this.lastRegime,
+                to: newRegime,
+                strategy,
+                timestamp: new Date().toISOString(),
+                estimatedCost: this._estimateTransitionCost()
+            };
+
+            this.transitionLog.push(transition);
+            this.totalSwitches++;
+
+            this.logger.info(
+                `[${this.coin}] Regime Transition: ${this.lastRegime} → ${newRegime} ` +
+                `(Est. cost: $${transition.estimatedCost.toFixed(2)})`
+            );
+        }
+        this.lastRegime = newRegime;
+    }
+
+    _estimateTransitionCost() {
+        // Simple estimation: fees + slippage
+        const estimatedFees = this.initialCapital * 0.0009; // ~0.09% round trip
+        const estimatedSlippage = this.initialCapital * 0.0005;
+        return estimatedFees + estimatedSlippage;
     }
 
     async executeHybridSignal(result, currentPrice) {
@@ -125,7 +136,7 @@ class HybridPaperTrader {
             size = (this.initialCapital * this.config.riskPerTrade) / currentPrice;
         }
 
-        this.logger.info(`[${this.coin}] Executing ${action} via ${strategy} | Size: ${size.toFixed(4)}`);
+        this.logger.info(`[${this.coin}] Executing ${action} via ${strategy}`);
 
         try {
             if ((action === 'LONG' || action === 'SHORT') && this.engine?.openPosition) {
@@ -139,14 +150,14 @@ class HybridPaperTrader {
                 await this.engine.closePosition(this.coin);
             }
         } catch (err) {
-            this.logger.error(`[${this.coin}] Execution error:`, err.message);
+            this.logger.error(`Execution failed:`, err.message);
         }
     }
 
     start() {
         if (this.isRunning) return;
         this.isRunning = true;
-        this.logger.info(`[HybridPaperTrader] Starting hybrid trader for ${this.coin}`);
+        this.logger.info(`[HybridPaperTrader] Starting for ${this.coin}`);
         this.runCycle();
         this.intervalId = setInterval(() => this.runCycle(), this.config.checkInterval);
     }
@@ -155,7 +166,7 @@ class HybridPaperTrader {
         this.isRunning = false;
         if (this.intervalId) clearInterval(this.intervalId);
         this.hybrid.shutdown?.();
-        this.logger.info(`[HybridPaperTrader] Stopped for ${this.coin}`);
+        this.logger.info(`[HybridPaperTrader] Stopped. Total switches: ${this.totalSwitches}`);
     }
 }
 

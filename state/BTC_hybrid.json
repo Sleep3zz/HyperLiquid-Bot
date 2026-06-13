@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "market": "BTC-PERP",
+  "positionFingerprint": null,
+  "forceCloseEmittedFor": null,
+  "lastExitTs": null,
+  "dailyLossStartTs": 1781308800000,
+  "dailyRealizedPnl": 0,
+  "trailHighWater": null
+}
