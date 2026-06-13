@@ -11,6 +11,7 @@
 
 const PaperTradingEngine = require('./src/paper-trading/engine');
 const BBRSIStrategy = require('./src/strategy/BBRSIStrategy');
+const HybridStrategy = require('./src/strategy/HybridStrategy');
 const RiskManager = require('./src/backtesting/RiskManager');
 const MLOptimizer = require('./src/backtesting/ml_optimizer');
 const WayfinderAdapterFinal = require('./src/wayfinder/adapter-final');
@@ -44,7 +45,14 @@ class PaperTradingRunner {
             logger: this.logger
         });
 
-        // Initialize strategy
+        // === NEW: Use HybridStrategy instead of plain BBRSIStrategy ===
+        this.hybrid = new HybridStrategy(
+            this.logger,
+            this.adapter, // Pass the Wayfinder adapter
+            './state' // State storage path
+        );
+
+        // Keep old strategy reference if needed for fallback
         this.strategy = new BBRSIStrategy(this.logger);
         
         // Initialize risk manager
@@ -142,29 +150,47 @@ class PaperTradingRunner {
     }
 
     /**
-     * Evaluate strategy signal
+     * Evaluate strategy signal using HybridStrategy
      */
     async evaluateSignal(symbol, marketData) {
         try {
-            // Update strategy market
-            this.strategy.market = symbol;
+            const currentPrice = marketData.price;
             
-            // Generate mock data
-            const mockData = this.generateMockData(marketData);
-            
-            // Evaluate strategy
-            const result = await this.strategy.evaluatePosition(mockData);
-            
+            // Generate mock OHLCV data (improve with real candles later)
+            const ohlcv = this.generateMockData(marketData);
+
+            // Get current position from engine
+            const currentPosition = this.engine.getPosition(symbol);
+
+            // === NEW: Use HybridStrategy ===
+            const hybridResult = await this.hybrid.update(
+                symbol,
+                ohlcv,
+                currentPrice,
+                currentPosition
+            );
+
+            this.logger.info(`[Hybrid] ${symbol} | Regime: ${hybridResult.regime} | Strategy: ${hybridResult.strategy || 'N/A'} | Action: ${hybridResult.action}`);
+
+            // Map hybrid result back to expected signal format
+            let signal = 'NONE';
+            if (hybridResult.action === 'LONG' || hybridResult.action === 'BUY') signal = 'LONG';
+            if (hybridResult.action === 'SHORT' || hybridResult.action === 'SELL') signal = 'SHORT';
+            if (hybridResult.action === 'CLOSE' || hybridResult.action?.startsWith('CLOSE')) signal = 'CLOSE';
+
             return {
                 symbol,
-                signal: result.signal,
-                indicators: result.indicators,
-                takeProfit: result.takeProfit,
+                signal,
+                regime: hybridResult.regime,
+                activeStrategy: hybridResult.strategy,
+                hybridResult,
+                price: currentPrice,
                 timestamp: Date.now()
             };
+
         } catch (error) {
-            this.logger.error(`[STRATEGY] Error evaluating ${symbol}:`, error.message);
-            return { symbol, signal: 'NONE' };
+            this.logger.error(`[STRATEGY] Error evaluating hybrid signal for ${symbol}:`, error.message);
+            return { symbol, signal: 'NONE', error: error.message };
         }
     }
 
