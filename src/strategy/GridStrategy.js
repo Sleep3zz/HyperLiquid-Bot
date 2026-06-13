@@ -56,40 +56,64 @@ class GridStrategy {
         this._stopping = false;
     }
 
+    /**
+     * Extracts order ID from Hyperliquid response.
+     * Supports multiple possible response shapes for robustness.
+     */
     _extractOrderId(res) {
         try {
-            if (!res || res.status !== "ok" || !Array.isArray(res.effects)) {
-                return null;
+            if (!res) return null;
+
+            // Normalize different possible response structures
+            let effects = [];
+
+            if (Array.isArray(res.effects)) {
+                effects = res.effects;
+            } else if (res.result?.response?.data?.statuses) {
+                // Some responses put statuses directly under result
+                effects = [{ ok: true, result: res.result }];
+            } else if (Array.isArray(res)) {
+                // Rare case: response is directly an array of statuses
+                effects = [{ ok: true, result: { response: { data: { statuses: res } } } }];
             }
 
-            for (const effect of res.effects) {
-                if (!effect?.ok) continue;
+            for (const effect of effects) {
+                if (!effect || effect.ok === false) continue;
 
-                const statuses = effect?.result?.response?.data?.statuses;
+                // Try multiple paths where statuses might live
+                const statuses =
+                    effect?.result?.response?.data?.statuses ||
+                    effect?.statuses ||
+                    (effect?.result?.response?.data ? [effect.result.response.data] : []);
+
                 if (!Array.isArray(statuses)) continue;
 
                 for (const status of statuses) {
-                    if (status?.error) {
+                    if (!status) continue;
+
+                    // Log rejection but continue
+                    if (status.error) {
                         this.logger?.warn?.(`[GRID] Order rejected by Hyperliquid: ${status.error}`);
                         continue;
                     }
 
-                    // Prefer resting orders, fall back to filled
-                    const restingOid = status?.resting?.oid;
-                    if (restingOid != null) {
-                        return { oid: String(restingOid), status: "resting" };
+                    // Check for resting order
+                    const resting = status.resting || status;
+                    if (resting?.oid != null) {
+                        return { oid: String(resting.oid), status: "resting" };
                     }
 
-                    const filledOid = status?.filled?.oid;
-                    if (filledOid != null) {
-                        return { oid: String(filledOid), status: "filled" };
+                    // Check for filled order
+                    const filled = status.filled || status;
+                    if (filled?.oid != null) {
+                        return { oid: String(filled.oid), status: "filled" };
                     }
                 }
             }
 
             return null;
         } catch (e) {
-            this.logger?.error?.(`[GRID] Failed to extract order ID: ${e.message}`);
+            this.logger?.error?.(`[GRID] _extractOrderId failed: ${e.message}`);
             return null;
         }
     }
