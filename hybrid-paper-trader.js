@@ -2,6 +2,15 @@ const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
 const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
+// ==================== Prometheus Metrics (Optional) ====================
+let client;
+try {
+    client = require('prom-client');
+} catch (e) {
+    // prom-client not installed — metrics disabled
+    client = null;
+}
+
 // ==================== CLI Argument Parsing ====================
 const args = process.argv.slice(2);
 
@@ -90,6 +99,70 @@ class HybridPaperTrader {
             totalErrors: 0,
             lastRegime: null
         };
+
+        // === Prometheus Metrics (simple stub) ===
+        this.metricsEnabled = !!client;
+        if (this.metricsEnabled) {
+            this.registry = new client.Registry();
+            client.collectDefaultMetrics({ register: this.registry });
+
+            this.metricRegime = new client.Gauge({
+                name: 'hybrid_regime',
+                help: 'Current market regime (0=UNKNOWN, 1=RANGING, 2=TRENDING, 3=HIGH_VOL, 4=TRANSITIONING)',
+                labelNames: ['coin'],
+                registers: [this.registry]
+            });
+
+            this.metricDailyPnL = new client.Gauge({
+                name: 'hybrid_daily_pnl',
+                help: 'Current daily PnL in quote currency',
+                labelNames: ['coin'],
+                registers: [this.registry]
+            });
+
+            this.metricDailySwitches = new client.Counter({
+                name: 'hybrid_daily_switches_total',
+                help: 'Number of strategy switches today',
+                labelNames: ['coin'],
+                registers: [this.registry]
+            });
+
+            this.metricTradingPaused = new client.Gauge({
+                name: 'hybrid_trading_paused',
+                help: 'Whether trading is currently paused by circuit breaker (1=true)',
+                labelNames: ['coin'],
+                registers: [this.registry]
+            });
+
+            this.metricCycles = new client.Counter({
+                name: 'hybrid_cycles_total',
+                help: 'Total number of run cycles',
+                labelNames: ['coin'],
+                registers: [this.registry]
+            });
+        }
+    }
+
+    /**
+     * Convert regime string to numeric value for metrics
+     */
+    _regimeToNumber(regime) {
+        const map = {
+            'UNKNOWN': 0,
+            'RANGING': 1,
+            'TRENDING': 2,
+            'HIGH_VOLATILITY': 3,
+            'TRANSITIONING': 4
+        };
+        return map[regime] || 0;
+    }
+
+    /**
+     * Expose Prometheus metrics (useful for /metrics endpoint)
+     */
+    async getPrometheusMetrics() {
+        if (!this.metricsEnabled) return '# Prometheus metrics disabled (prom-client not installed)\n';
+        return this.registry.metrics();
     }
 
     /**
@@ -120,7 +193,8 @@ class HybridPaperTrader {
             tradingPaused: this.tradingPaused,
             pauseReason: this.pauseReason,
             lastRegime: this.lastRegime,
-            activeStrategy: this.hybrid?.getStatus(this.coin)?.activeStrategy
+            activeStrategy: this.hybrid?.getStatus(this.coin)?.activeStrategy,
+            prometheusEnabled: this.metricsEnabled
         };
     }
 
@@ -237,10 +311,22 @@ Trading has been paused.`;
             if (result.strategy && result.strategy !== this.lastActiveStrategy) {
                 this.dailySwitches++;
                 this.metrics.totalSwitches++;
+                if (this.metricsEnabled) {
+                    this.metricDailySwitches.inc({ coin: this.coin });
+                }
                 this.lastActiveStrategy = result.strategy;
             }
             this.lastRegime = result.regime;
             this.metrics.lastRegime = result.regime;
+
+            // Update Prometheus metrics
+            if (this.metricsEnabled) {
+                const regimeValue = this._regimeToNumber(result.regime);
+                this.metricRegime.set({ coin: this.coin }, regimeValue);
+                this.metricDailyPnL.set({ coin: this.coin }, this.dailyPnL);
+                this.metricTradingPaused.set({ coin: this.coin }, this.tradingPaused ? 1 : 0);
+                this.metricCycles.inc({ coin: this.coin });
+            }
 
             // === Enhanced Logging with Dynamic Thresholds ===
             let thresholdLog = '';
@@ -374,7 +460,23 @@ if (require.main === module) {
 
     trader.start();
 
+    // Optional: HTTP server for Prometheus metrics
+    const http = require('http');
+    const server = http.createServer(async (req, res) => {
+        if (req.url === '/metrics') {
+            res.setHeader('Content-Type', 'text/plain');
+            res.end(await trader.getPrometheusMetrics());
+        } else {
+            res.end('Hybrid Trader running');
+        }
+    });
+
+    server.listen(9090, () => {
+        console.log(`[Hybrid] Prometheus metrics available at http://localhost:9090/metrics`);
+    });
+
     process.on('SIGINT', async () => {
+        server.close();
         await trader.stop();
         process.exit(0);
     });
