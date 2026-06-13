@@ -1,13 +1,11 @@
 const HybridStrategy = require('./src/strategy/HybridStrategy');
 const RegimeDetector = require('./src/strategy/RegimeDetector');
 
-// Debug patch
+// Debug logging
 const originalDetect = RegimeDetector.prototype.detect;
 RegimeDetector.prototype.detect = function(ohlcv) {
     const result = originalDetect.call(this, ohlcv);
-    if (result.type !== 'UNKNOWN') {
-        console.log(`[DEBUG] ${result.type} | ADX: ${result.adx?.toFixed(1)} | ATR%: ${result.atrPct?.toFixed(2)} | BBW: ${result.bbWidth?.toFixed(2)}`);
-    }
+    console.log(`[DEBUG] ${result.type.padEnd(14)} | ADX: ${result.adx?.toFixed(1).padStart(5)} | ATR%: ${result.atrPct?.toFixed(2)} | BBW: ${result.bbWidth?.toFixed(2)}`);
     return result;
 };
 
@@ -22,7 +20,6 @@ class MockWayfinder {
     async getPosition() { return this.position; }
     async getPositionSize() { return Math.abs(this.position.size || 0); }
     async getOpenOrders() { return Array.from(this.orders.values()); }
-
     async placeLimitOrder({ coin, isBuy, size, price }) {
         const oid = `mock-${this.orderIdCounter++}`;
         this.orders.set(oid, { oid, coin, isBuy, size, price, status: 'resting' });
@@ -37,9 +34,7 @@ class MockWayfinder {
     }
 }
 
-// ==================== IMPROVED DATA GENERATORS ====================
-
-// Strong trending data
+// Data generators
 function generateTrendingOHLCV(length = 120, startPrice = 100) {
     const data = [];
     let price = startPrice;
@@ -57,27 +52,20 @@ function generateTrendingOHLCV(length = 120, startPrice = 100) {
     return data;
 }
 
-// Much stronger RANGING generator (choppy, low directional movement)
-function generateRangingOHLCV(length = 150, centerPrice = 100) {
+function generateRangingOHLCV(length = 180, centerPrice = 100) {
     const data = [];
     let price = centerPrice;
-
     for (let i = 0; i < length; i++) {
-        // Strong mean reversion + high noise (this helps ADX decay)
         const meanReversion = (centerPrice - price) * 0.35;
         const noise = (Math.random() - 0.5) * 2.8;
         price += meanReversion + noise;
-
-        // Add occasional small spikes to simulate chop
         if (Math.random() < 0.15) {
             price += (Math.random() - 0.5) * 3.5;
         }
-
         const open = price;
         const high = price + 0.7 + Math.random() * 0.6;
         const low = price - 0.7 - Math.random() * 0.6;
         const close = price + (Math.random() - 0.5) * 0.5;
-
         data.push({
             t: Date.now() - (length - i) * 60000,
             o: Number(open.toFixed(4)),
@@ -90,25 +78,32 @@ function generateRangingOHLCV(length = 150, centerPrice = 100) {
     return data;
 }
 
-// ==================== TEST ====================
 async function runTest() {
     const wayfinder = new MockWayfinder();
     const hybrid = new HybridStrategy(console, wayfinder);
 
-    console.log('\n=== TEST 1: Strong TRENDING ===');
+    // === TEST 1: TRENDING ===
+    console.log('\n=== TEST 1: TRENDING ===');
     let ohlcv = generateTrendingOHLCV(120);
-    await hybrid.update('BTC', ohlcv, ohlcv[ohlcv.length - 1].c);
+    await hybrid.update('BTC', ohlcv, ohlcv[ohlcv.length-1].c);
 
-    console.log('\n=== TEST 2: RANGING (longer run for ADX to decay) ===');
-    ohlcv = generateRangingOHLCV(180); // More bars to let ADX drop
-    await hybrid.update('BTC', ohlcv, ohlcv[ohlcv.length - 1].c, wayfinder.position);
+    // Reset detector state for clean test
+    hybrid.regimeDetector?.reset?.();
 
-    console.log('\n=== TEST 3: TRENDING again ===');
+    // === TEST 2: RANGING ===
+    console.log('\n=== TEST 2: RANGING ===');
+    ohlcv = generateRangingOHLCV(200);
+    await hybrid.update('BTC', ohlcv, ohlcv[ohlcv.length-1].c, wayfinder.position);
+
+    hybrid.regimeDetector?.reset?.();
+
+    // === TEST 3: TRENDING ===
+    console.log('\n=== TEST 3: TRENDING ===');
     ohlcv = generateTrendingOHLCV(120);
-    await hybrid.update('BTC', ohlcv, ohlcv[ohlcv.length - 1].c, wayfinder.position);
+    await hybrid.update('BTC', ohlcv, ohlcv[ohlcv.length-1].c, wayfinder.position);
 
     await hybrid.shutdown();
-    console.log('\n✅ Test completed');
+    console.log('\n✅ Final strengthened test completed');
 }
 
 runTest().catch(console.error);
