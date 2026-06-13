@@ -3,7 +3,7 @@ const GridStrategy = require("./GridStrategy");
 const RegimeDetector = require("./RegimeDetector");
 
 class HybridStrategy {
-    constructor(logger, wayfinderCmds, baseStatePath = "./state", regimeConfig = {}) {
+    constructor(logger, wayfinderCmds, baseStatePath = "./state", regimeConfig = {}, capitalConfig = {}) {
         this.logger = logger || console;
         this.wayfinder = wayfinderCmds;
         this.baseStatePath = baseStatePath;
@@ -23,6 +23,19 @@ class HybridStrategy {
 
         this.requiredConfirmations = 3;
         this.minDataBars = 60;
+
+        // === Global Capital Budget ===
+        this.capitalConfig = {
+            totalBudget: capitalConfig.totalBudget || 10000,
+            gridAllocation: capitalConfig.gridAllocation || 0.6, // 60% max to Grid
+            bbrsiAllocation: capitalConfig.bbrsiAllocation || 0.8, // 80% max to BBRSI
+            ...capitalConfig
+        };
+
+        this.currentAllocatedCapital = {
+            GRID: 0,
+            BBRSI: 0
+        };
     }
 
     _getOrCreateCoinState(coin) {
@@ -110,6 +123,17 @@ class HybridStrategy {
         return this.cooldowns.trendToGrid; // Default to conservative
     }
 
+    _getAvailableCapitalForStrategy(strategy) {
+        const total = this.capitalConfig.totalBudget;
+        if (strategy === 'GRID') {
+            return total * this.capitalConfig.gridAllocation;
+        }
+        if (strategy === 'BBRSI') {
+            return total * this.capitalConfig.bbrsiAllocation;
+        }
+        return total * 0.5;
+    }
+
     // Claude P1: Don't keep running stale strategy aggressively during cooldown
     _handleStaleStrategy(state, newRegime) {
         if (state.activeStrategy === 'GRID' && newRegime === 'TRENDING') {
@@ -138,12 +162,20 @@ class HybridStrategy {
 
         // Start new strategy
         if (desired === 'GRID') {
-            await state.grid.startGrid(state.coin, currentPrice);
+            // Prevent Grid from starting its own internal loop (single heartbeat from HybridStrategy)
+            state.grid._startUpdateLoop = () => {};
+
+            const maxCapital = this._getAvailableCapitalForStrategy('GRID');
+            await state.grid.startGrid(state.coin, currentPrice, { maxCapital });
             state.activeStrategy = 'GRID';
+            this.currentAllocatedCapital.GRID = maxCapital;
         } else if (desired === 'BBRSI') {
             state.activeStrategy = 'BBRSI';
+            this.currentAllocatedCapital.BBRSI = this._getAvailableCapitalForStrategy('BBRSI');
         } else {
             state.activeStrategy = null;
+            this.currentAllocatedCapital.GRID = 0;
+            this.currentAllocatedCapital.BBRSI = 0;
         }
     }
 
