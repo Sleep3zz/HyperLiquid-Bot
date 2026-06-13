@@ -14,17 +14,22 @@ class PaperTradingWayfinderWrapper {
 
     /**
      * Place a limit order (paper trade)
+     * Matches Wayfinder SDK interface used by GridStrategy
      */
-    async placeLimitOrder({ coin, side, size, price, reduceOnly = false }) {
+    async placeLimitOrder({ coin, isBuy, size, price, reduceOnly = false }) {
         try {
             // Generate order ID
             const orderId = `paper_${this.orderIdCounter++}`;
+            
+            // Convert isBuy to side
+            const side = isBuy ? 'LONG' : 'SHORT';
             
             // Store order
             const order = {
                 oid: orderId,
                 coin: coin,
                 side: side,
+                isBuy: isBuy,
                 size: parseFloat(size),
                 price: parseFloat(price),
                 reduceOnly: reduceOnly,
@@ -37,10 +42,23 @@ class PaperTradingWayfinderWrapper {
             this.logger.info(`[PAPER ORDER] Placed ${side} ${size} ${coin} @ $${price} (ID: ${orderId})`);
             
             // Simulate immediate fill for paper trading
-            // In real scenario, we'd check if price hits
             await this._simulateFill(order);
             
-            return { success: true, orderId: orderId, status: 'filled' };
+            // Return response format expected by GridStrategy._extractOrderId
+            return {
+                result: {
+                    response: {
+                        data: {
+                            statuses: [{
+                                resting: {
+                                    oid: orderId,
+                                    status: 'filled'
+                                }
+                            }]
+                        }
+                    }
+                }
+            };
         } catch (error) {
             this.logger.error(`[PAPER ORDER] Failed to place order:`, error.message);
             throw error;
@@ -48,17 +66,20 @@ class PaperTradingWayfinderWrapper {
     }
 
     /**
-     * Simulate order fill
+     * Simulate order fill using order price (no external fetch needed)
      */
     async _simulateFill(order) {
         try {
+            // For grid trading, we simulate immediate fill at the order price
+            // This represents the price hitting the limit order level
+            
             if (order.reduceOnly) {
                 // Close position
                 if (this.engine && typeof this.engine.closePosition === 'function') {
-                    await this.engine.closePosition(order.coin);
+                    await this.engine.closePosition(order.coin, order.price);
                 }
             } else {
-                // Open position
+                // Open position - Grid strategy alternates buy/sell
                 if (this.engine && typeof this.engine.openPosition === 'function') {
                     await this.engine.openPosition({
                         symbol: order.coin,

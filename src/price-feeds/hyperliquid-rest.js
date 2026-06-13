@@ -15,6 +15,48 @@ class HyperliquidRESTPriceFeed {
         this.cacheExpiry = 5000; // 5 seconds
         this.updateInterval = config.updateInterval || 10000; // 10 seconds
         this.intervals = new Map();
+        
+        // Rate limiting
+        this.lastRequestTime = 0;
+        this.minRequestInterval = 100; // 100ms between requests
+        this.requestQueue = [];
+        this.processingQueue = false;
+    }
+    
+    /**
+     * Rate limited request handler
+     */
+    async _rateLimitedRequest(requestFn) {
+        return new Promise((resolve, reject) => {
+            this.requestQueue.push({ fn: requestFn, resolve, reject });
+            this._processQueue();
+        });
+    }
+    
+    async _processQueue() {
+        if (this.processingQueue || this.requestQueue.length === 0) return;
+        this.processingQueue = true;
+        
+        while (this.requestQueue.length > 0) {
+            const now = Date.now();
+            const timeSinceLastRequest = now - this.lastRequestTime;
+            
+            if (timeSinceLastRequest < this.minRequestInterval) {
+                await new Promise(r => setTimeout(r, this.minRequestInterval - timeSinceLastRequest));
+            }
+            
+            const { fn, resolve, reject } = this.requestQueue.shift();
+            this.lastRequestTime = Date.now();
+            
+            try {
+                const result = await fn();
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        }
+        
+        this.processingQueue = false;
     }
 
     /**
@@ -71,7 +113,7 @@ class HyperliquidRESTPriceFeed {
      */
     async getAllMids() {
         const payload = { type: 'allMids' };
-        return await this.makeRequest('/info', payload);
+        return await this._rateLimitedRequest(() => this.makeRequest('/info', payload));
     }
 
     /**
@@ -202,7 +244,7 @@ class HyperliquidRESTPriceFeed {
                 }
             };
 
-            const candles = await this.makeRequest('/info', payload);
+            const candles = await this._rateLimitedRequest(() => this.makeRequest('/info', payload));
             
             if (!Array.isArray(candles)) {
                 throw new Error('Invalid candle data received');
