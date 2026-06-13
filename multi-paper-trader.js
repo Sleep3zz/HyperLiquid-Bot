@@ -1,53 +1,37 @@
 const { spawn } = require('child_process');
 
-const COINS = ['BTC-PERP', 'ETH-PERP', 'SOL-PERP']; // Add/remove coins here
-const CAPITAL_PER_COIN = 1000;
+const COINS = [
+    { symbol: 'BTC-PERP', capital: 2000 },
+    { symbol: 'ETH-PERP', capital: 1500 },
+    { symbol: 'SOL-PERP', capital: 1000 }
+];
 
-const activeProcesses = [];
+const processes = [];
 
-function startHybridTrader(coin) {
-    console.log(`[MultiHybrid] Starting hybrid trader for ${coin}...`);
+function startCoin(coinConfig) {
+    const { symbol, capital } = coinConfig;
 
     const child = spawn('node', [
         'hybrid-paper-trader.js',
-        `--coin=${coin}`,
-        `--capital=${CAPITAL_PER_COIN}`
-    ], {
-        detached: true,
-        stdio: ['ignore', 'pipe', 'pipe']
-    });
+        `--coin=${symbol}`,
+        `--capital=${capital}`
+    ], { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
 
-    child.stdout.on('data', (data) => {
-        process.stdout.write(`[${coin}] ${data}`);
-    });
+    child.stdout.on('data', data => process.stdout.write(`[${symbol}] ${data}`));
+    child.stderr.on('data', data => process.stderr.write(`[${symbol} ERROR] ${data}`));
 
-    child.stderr.on('data', (data) => {
-        process.stderr.write(`[${coin} ERROR] ${data}`);
-    });
-
-    child.on('exit', (code) => {
-        console.log(`[${coin}] Process exited with code ${code}`);
-    });
-
-    activeProcesses.push({ coin, process: child });
+    processes.push({ symbol, process: child });
+    console.log(`[MultiHybrid] Launched hybrid trader for ${symbol}`);
 }
 
-function shutdownAll() {
-    console.log('\n[MultiHybrid] Shutting down all hybrid traders...');
-    activeProcesses.forEach(({ coin, process }) => {
-        if (!process.killed) {
-            process.kill('SIGINT');
-            console.log(`[MultiHybrid] Sent shutdown signal to ${coin}`);
-        }
-    });
+function shutdown() {
+    console.log('\n[MultiHybrid] Shutting down all traders...');
+    processes.forEach(p => p.process.kill('SIGINT'));
     process.exit(0);
 }
 
-process.on('SIGINT', shutdownAll);
-process.on('SIGTERM', shutdownAll);
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
 
-// Start all coins
-COINS.forEach(coin => startHybridTrader(coin));
-
-// Keep the main process alive
-setInterval(() => {}, 1000 * 60 * 60);
+COINS.forEach(startCoin);
+setInterval(() => {}, 1000 * 60 * 60); // keep alive
