@@ -58,25 +58,38 @@ class GridStrategy {
 
     _extractOrderId(res) {
         try {
-            if (!res || res.status !== "ok" || !Array.isArray(res.effects)) return null;
+            if (!res || res.status !== "ok" || !Array.isArray(res.effects)) {
+                return null;
+            }
 
             for (const effect of res.effects) {
-                if (effect?.ok !== true) continue;
+                if (!effect?.ok) continue;
+
                 const statuses = effect?.result?.response?.data?.statuses;
                 if (!Array.isArray(statuses)) continue;
 
-                for (const s of statuses) {
-                    if (s?.error) {
-                        this.logger.warn(`[GRID] Order rejected by HL: ${s.error}`);
+                for (const status of statuses) {
+                    if (status?.error) {
+                        this.logger?.warn?.(`[GRID] Order rejected by Hyperliquid: ${status.error}`);
                         continue;
                     }
-                    if (s?.resting?.oid != null) return { oid: String(s.resting.oid), status: "resting" };
-                    if (s?.filled?.oid != null) return { oid: String(s.filled.oid), status: "filled" };
+
+                    // Prefer resting orders, fall back to filled
+                    const restingOid = status?.resting?.oid;
+                    if (restingOid != null) {
+                        return { oid: String(restingOid), status: "resting" };
+                    }
+
+                    const filledOid = status?.filled?.oid;
+                    if (filledOid != null) {
+                        return { oid: String(filledOid), status: "filled" };
+                    }
                 }
             }
+
             return null;
         } catch (e) {
-            this.logger.error(`[GRID] _extractOrderId failed: ${e.message}`);
+            this.logger?.error?.(`[GRID] Failed to extract order ID: ${e.message}`);
             return null;
         }
     }
@@ -356,9 +369,9 @@ class GridStrategy {
             openOrders = await this._withRetry(() => this.wayfinder.getOpenOrders(this.coin));
             recentFills = await this._withRetry(() => this.wayfinder.getUserFills(this.coin));
 
-            // DEBUG: Log sample fill to confirm field names (remove after testing)
-            if (recentFills?.length > 0) {
-                this.logger.debug("[DEBUG] Sample fill:", JSON.stringify(recentFills[0]));
+            // Debug: Log sample fill to confirm field names (only in debug mode)
+            if (this.debugMode && recentFills?.length > 0) {
+                this._debug(`Sample fill: ${JSON.stringify(recentFills[0])}`);
             }
         } catch (e) {
             this.logger?.warn?.(`[GRID] Reconciliation skipped due to API error: ${e.message}`);
