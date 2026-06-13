@@ -1,5 +1,6 @@
 const HybridStrategy = require('./src/strategy/HybridStrategy');
 const DataProvider = require('./src/data/data-provider');
+const nodemailer = require('nodemailer'); // Optional: npm install nodemailer
 
 class HybridPaperTrader {
     constructor(coin = 'BTC-PERP', options = {}) {
@@ -12,9 +13,16 @@ class HybridPaperTrader {
             maxLeverage: options.maxLeverage || 5,
             riskPerTrade: options.riskPerTrade || 0.02,
             timeframe: options.timeframe || '1m',
-            dailyLossLimit: options.dailyLossLimit || 0.05, // 5%
+            dailyLossLimit: options.dailyLossLimit || 0.05,
             maxDailySwitches: options.maxDailySwitches || 8,
-            autoResumeAfterMinutes: options.autoResumeAfterMinutes || 0, // 0 = disabled
+            autoResumeAfterMinutes: options.autoResumeAfterMinutes || 0,
+            // === Notification Config ===
+            notifications: {
+                enabled: options.notifications?.enabled ?? false,
+                email: options.notifications?.email || null, // recipient email
+                from: options.notifications?.from || 'alerts@yourdomain.com',
+                smtp: options.notifications?.smtp || null, // SMTP config object
+            },
             ...options
         };
 
@@ -28,7 +36,7 @@ class HybridPaperTrader {
             `./state/${coin.toLowerCase().replace(/-/g, '_')}`
         );
 
-        // === Circuit Breaker State ===
+        // Circuit breaker state
         this.dailyStartEquity = this.initialCapital;
         this.dailyPnL = 0;
         this.dailySwitches = 0;
@@ -36,10 +44,68 @@ class HybridPaperTrader {
         this.tradingPaused = false;
         this.pauseReason = null;
         this.pauseTimestamp = null;
-
         this.lastRegime = null;
+
         this.isRunning = false;
         this.intervalId = null;
+
+        // Setup email transporter if configured
+        this.transporter = null;
+        if (this.config.notifications.enabled && this.config.notifications.smtp) {
+            this.transporter = nodemailer.createTransport(this.config.notifications.smtp);
+        }
+    }
+
+    // ==================== NOTIFICATION SYSTEM ====================
+    async _sendNotification(subject, message) {
+        if (!this.config.notifications.enabled || !this.transporter) {
+            this.logger.info(`[Notification] ${subject} - ${message}`);
+            return;
+        }
+
+        try {
+            await this.transporter.sendMail({
+                from: this.config.notifications.from,
+                to: this.config.notifications.email,
+                subject: `[${this.coin}] ${subject}`,
+                text: message,
+                html: `<pre>${message}</pre>`
+            });
+            this.logger.info(`[Notification] Email sent: ${subject}`);
+        } catch (err) {
+            this.logger.error(`Failed to send notification:`, err.message);
+        }
+    }
+
+    _pauseTrading(reason) {
+        this.tradingPaused = true;
+        this.pauseReason = reason;
+        this.pauseTimestamp = Date.now();
+
+        const message = 
+`Circuit Breaker Triggered on ${this.coin}
+
+Reason: ${reason}
+Daily PnL: $${this.dailyPnL.toFixed(2)}
+Daily Switches: ${this.dailySwitches}
+Timestamp: ${new Date().toISOString()}
+
+Trading has been paused.`;
+
+        this.logger.error(`[${this.coin}] CIRCUIT BREAKER: ${reason}`);
+        this._sendNotification("Circuit Breaker Triggered", message);
+    }
+
+    resumeTrading(reason = "Manual resume") {
+        if (!this.tradingPaused) return;
+
+        this.tradingPaused = false;
+        this.pauseReason = null;
+        this.pauseTimestamp = null;
+
+        const message = `Trading resumed on ${this.coin}\nReason: ${reason}`;
+        this.logger.info(`[${this.coin}] Trading RESUMED: ${reason}`);
+        this._sendNotification("Trading Resumed", message);
     }
 
     _resetDailyStatsIfNeeded() {
@@ -76,9 +142,8 @@ class HybridPaperTrader {
         this._resetDailyStatsIfNeeded();
         this._updateDailyPnL();
 
-        // Check auto-resume
         if (this.tradingPaused && this.config.autoResumeAfterMinutes > 0) {
-            const minutesPaused = (Date.now() - (this.pauseTimestamp || 0)) / (1000 * 60);
+            const minutesPaused = (Date.now() - this.pauseTimestamp) / (1000 * 60);
             if (minutesPaused >= this.config.autoResumeAfterMinutes) {
                 this.resumeTrading("Auto-resume after timeout");
             }
@@ -135,22 +200,6 @@ class HybridPaperTrader {
         } catch (err) {
             this.logger.error(`[${this.coin}] Cycle error:`, err.message);
         }
-    }
-
-    _pauseTrading(reason) {
-        this.tradingPaused = true;
-        this.pauseReason = reason;
-        this.pauseTimestamp = Date.now();
-        this.logger.error(`[${this.coin}] CIRCUIT BREAKER TRIGGERED: ${reason}`);
-    }
-
-    resumeTrading(reason = "Manual resume") {
-        if (!this.tradingPaused) return;
-
-        this.tradingPaused = false;
-        this.pauseReason = null;
-        this.pauseTimestamp = null;
-        this.logger.info(`[${this.coin}] Trading RESUMED: ${reason}`);
     }
 
     async executeHybridSignal(result, currentPrice) {
