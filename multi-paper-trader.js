@@ -13,9 +13,11 @@ const DATA_DIR = './data';
 const dataProvider = new DataProvider(DATA_DIR);
 
 const COINS = [
-    { symbol: 'BTC-PERP', capital: 2000 },
-    { symbol: 'ETH-PERP', capital: 1500 },
-    { symbol: 'SOL-PERP', capital: 1000 }
+    { symbol: 'BTC-PERP', capital: 1000 },
+    { symbol: 'ETH-PERP', capital: 1000 },
+    { symbol: 'SOL-PERP', capital: 1000 },
+    { symbol: 'HYPE-PERP', capital: 1000 },
+    { symbol: 'PUMP-PERP', capital: 1000 }
 ];
 
 // === Shared Configuration (applied to all coins) ===
