@@ -12,13 +12,15 @@ class HybridPaperTrader {
             maxLeverage: options.maxLeverage || 5,
             riskPerTrade: options.riskPerTrade || 0.02,
             timeframe: options.timeframe || '1m',
-            dailyLossLimit: options.dailyLossLimit || 0.05, // 5% daily loss limit
-            maxDailySwitches: options.maxDailySwitches || 8, // Max regime switches per day
+            dailyLossLimit: options.dailyLossLimit || 0.05, // 5%
+            maxDailySwitches: options.maxDailySwitches || 8,
+            autoResumeAfterMinutes: options.autoResumeAfterMinutes || 0, // 0 = disabled
             ...options
         };
 
         this.wayfinder = options.wayfinder;
         this.dataProvider = options.dataProvider || new DataProvider('./data', this.wayfinder);
+        this.engine = options.engine;
 
         this.hybrid = new HybridStrategy(
             this.logger,
@@ -26,15 +28,16 @@ class HybridPaperTrader {
             `./state/${coin.toLowerCase().replace(/-/g, '_')}`
         );
 
-        this.engine = options.engine;
-
-        // === Circuit Breakers ===
+        // === Circuit Breaker State ===
+        this.dailyStartEquity = this.initialCapital;
         this.dailyPnL = 0;
         this.dailySwitches = 0;
         this.lastResetDay = new Date().getUTCDate();
         this.tradingPaused = false;
-        this.lastRegime = null;
+        this.pauseReason = null;
+        this.pauseTimestamp = null;
 
+        this.lastRegime = null;
         this.isRunning = false;
         this.intervalId = null;
     }
@@ -42,12 +45,27 @@ class HybridPaperTrader {
     _resetDailyStatsIfNeeded() {
         const currentDay = new Date().getUTCDate();
         if (currentDay !== this.lastResetDay) {
+            this.dailyStartEquity = this._getCurrentEquity();
             this.dailyPnL = 0;
             this.dailySwitches = 0;
             this.tradingPaused = false;
+            this.pauseReason = null;
             this.lastResetDay = currentDay;
-            this.logger.info(`[${this.coin}] Daily stats reset`);
+            this.logger.info(`[${this.coin}] Daily stats reset. Starting equity: $${this.dailyStartEquity.toFixed(2)}`);
         }
+    }
+
+    _getCurrentEquity() {
+        if (this.engine && typeof this.engine.getPortfolio === 'function') {
+            const portfolio = this.engine.getPortfolio();
+            return portfolio?.equity || this.initialCapital;
+        }
+        return this.initialCapital;
+    }
+
+    _updateDailyPnL() {
+        const currentEquity = this._getCurrentEquity();
+        this.dailyPnL = currentEquity - this.dailyStartEquity;
     }
 
     async fetchOHLCV(symbol, limit = 150) {
@@ -56,9 +74,18 @@ class HybridPaperTrader {
 
     async runCycle() {
         this._resetDailyStatsIfNeeded();
+        this._updateDailyPnL();
+
+        // Check auto-resume
+        if (this.tradingPaused && this.config.autoResumeAfterMinutes > 0) {
+            const minutesPaused = (Date.now() - (this.pauseTimestamp || 0)) / (1000 * 60);
+            if (minutesPaused >= this.config.autoResumeAfterMinutes) {
+                this.resumeTrading("Auto-resume after timeout");
+            }
+        }
 
         if (this.tradingPaused) {
-            this.logger.warn(`[${this.coin}] Trading paused due to circuit breaker`);
+            this.logger.warn(`[${this.coin}] Trading PAUSED (${this.pauseReason})`);
             return;
         }
 
@@ -73,33 +100,33 @@ class HybridPaperTrader {
             const status = this.hybrid.getStatus(this.coin);
 
             // Track switches
-            if (result.regime !== this.lastRegime && this.lastRegime !== null) {
+            if (this.lastRegime && this.lastRegime !== result.regime) {
                 this.dailySwitches++;
             }
             this.lastRegime = result.regime;
 
             this.logger.info(
                 `[${this.coin}] ${result.regime} | ${result.strategy || 'N/A'} | ${result.action} | ` +
-                `Switches today: ${this.dailySwitches}/${this.config.maxDailySwitches}`
+                `Daily PnL: $${this.dailyPnL.toFixed(2)} | Switches: ${this.dailySwitches}`
             );
 
             // === Circuit Breaker Checks ===
+            const lossLimit = this.initialCapital * this.config.dailyLossLimit;
+
+            if (this.dailyPnL <= -lossLimit) {
+                this._pauseTrading(`Daily loss limit reached ($${this.dailyPnL.toFixed(2)})`);
+                return;
+            }
+
             if (this.dailySwitches >= this.config.maxDailySwitches) {
-                this.tradingPaused = true;
-                this.logger.error(`[${this.coin}] MAX DAILY SWITCHES REACHED. Trading paused.`);
+                this._pauseTrading(`Max daily switches reached (${this.dailySwitches})`);
                 return;
             }
 
-            // Check daily loss (basic implementation - improve with engine stats later)
-            if (this.dailyPnL <= -this.initialCapital * this.config.dailyLossLimit) {
-                this.tradingPaused = true;
-                this.logger.error(`[${this.coin}] DAILY LOSS LIMIT REACHED. Trading paused.`);
-                return;
-            }
-
+            // Execute trade
             if (result.action && result.action !== 'HOLD' && result.action !== 'NONE') {
                 if (status?.pauseAggressiveRisk && result.strategy === 'GRID') {
-                    this.logger.warn(`[${this.coin}] Skipping - Grid risk paused`);
+                    this.logger.warn(`[${this.coin}] Skipping execution - Grid risk paused`);
                 } else {
                     await this.executeHybridSignal(result, currentPrice);
                 }
@@ -108,6 +135,22 @@ class HybridPaperTrader {
         } catch (err) {
             this.logger.error(`[${this.coin}] Cycle error:`, err.message);
         }
+    }
+
+    _pauseTrading(reason) {
+        this.tradingPaused = true;
+        this.pauseReason = reason;
+        this.pauseTimestamp = Date.now();
+        this.logger.error(`[${this.coin}] CIRCUIT BREAKER TRIGGERED: ${reason}`);
+    }
+
+    resumeTrading(reason = "Manual resume") {
+        if (!this.tradingPaused) return;
+
+        this.tradingPaused = false;
+        this.pauseReason = null;
+        this.pauseTimestamp = null;
+        this.logger.info(`[${this.coin}] Trading RESUMED: ${reason}`);
     }
 
     async executeHybridSignal(result, currentPrice) {
@@ -139,6 +182,10 @@ class HybridPaperTrader {
     start() {
         if (this.isRunning) return;
         this.isRunning = true;
+
+        // Initialize daily equity on start
+        this.dailyStartEquity = this._getCurrentEquity();
+
         this.logger.info(`[HybridPaperTrader] Starting for ${this.coin}`);
         this.runCycle();
         this.intervalId = setInterval(() => this.runCycle(), this.config.checkInterval);
@@ -148,7 +195,7 @@ class HybridPaperTrader {
         this.isRunning = false;
         if (this.intervalId) clearInterval(this.intervalId);
         this.hybrid.shutdown?.();
-        this.logger.info(`[HybridPaperTrader] Stopped. Daily switches: ${this.dailySwitches}`);
+        this.logger.info(`[HybridPaperTrader] Stopped. Final Daily PnL: $${this.dailyPnL.toFixed(2)}`);
     }
 }
 
