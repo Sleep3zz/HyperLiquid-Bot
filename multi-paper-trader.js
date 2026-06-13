@@ -1,3 +1,11 @@
+/**
+ * Multi-Coin Hybrid Paper Trader
+ * 
+ * Each coin runs in its own process for isolation.
+ * This prevents issues with position tracking and allows
+ * independent circuit breaker behavior per coin.
+ */
+
 const { spawn } = require('child_process');
 const DataProvider = require('./src/data/data-provider');
 

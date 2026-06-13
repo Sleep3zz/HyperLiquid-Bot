@@ -220,6 +220,12 @@ const capital = hybrid.getCapitalStatus();
 - Adjust `dailyLossLimit` (default 5%)
 - Review strategy parameters
 
+## Known Limitations
+
+- **Position Netting**: When running multiple coins in a single process, positions are tracked per-coin but capital is shared. Each coin's GridStrategy respects its own `maxCapital` limit.
+- **Exchange Support**: Stop-loss and take-profit orders require `reduceOnly` support from your Wayfinder/exchange adapter.
+- **Data Freshness**: The DataProvider falls back to local files if live data is stale (>10 min). Ensure your data pipeline is running for best results.
+
 ## License
 
 Private - For Sleep3zz use only

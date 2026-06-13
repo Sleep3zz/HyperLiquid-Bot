@@ -36,10 +36,10 @@ function generateTrendingData(length = 80) {
     const data = [];
     let price = 100;
     for (let i = 0; i < length; i++) {
-        price += 1.1;
+        price += 1.2; // deterministic strong trend
         data.push({
             t: Date.now() - (length - i) * 60000,
-            o: price, h: price + 0.8, l: price - 0.8, c: price, v: 1500
+            o: price, h: price + 0.7, l: price - 0.7, c: price, v: 1500
         });
     }
     return data;
@@ -47,12 +47,11 @@ function generateTrendingData(length = 80) {
 
 function generateRangingData(length = 150) {
     const data = [];
-    let price = 100;
     for (let i = 0; i < length; i++) {
-        price = 100 + Math.sin(i / 10) * 3 + (Math.random() - 0.5) * 1.5;
+        const price = 100 + Math.sin(i / 8) * 2.5; // deterministic sine wave
         data.push({
             t: Date.now() - (length - i) * 60000,
-            o: price, h: price + 0.6, l: price - 0.6, c: price, v: 900
+            o: price, h: price + 0.5, l: price - 0.5, c: price, v: 900
         });
     }
     return data;

@@ -69,6 +69,11 @@ class HybridStrategy {
         };
     }
 
+    /**
+     * Gets or creates per-coin state including strategy instances
+     * @param {string} coin - Coin symbol (e.g., 'BTC-PERP')
+     * @returns {Object} Coin state object
+     */
     _getOrCreateCoinState(coin) {
         if (!this.coins.has(coin)) {
             const stateFile = `${this.baseStatePath}/${coin}_hybrid.json`;
@@ -100,6 +105,14 @@ class HybridStrategy {
         return this.coins.get(coin);
     }
 
+    /**
+     * Main update loop - detects regime and manages strategy switching
+     * @param {string} coin - Coin symbol
+     * @param {Array} ohlcv - OHLCV candle data
+     * @param {number} currentPrice - Current market price
+     * @param {Object} currentPosition - Current position info (optional)
+     * @returns {Object} Action result with regime, strategy, and thresholds
+     */
     async update(coin, ohlcv, currentPrice, currentPosition = null) {
         try {
             const state = this._getOrCreateCoinState(coin);
@@ -167,6 +180,13 @@ class HybridStrategy {
         }
     }
 
+    /**
+     * Switches between strategies (GRID ↔ BBRSI) with proper cleanup
+     * @param {Object} state - Coin state object
+     * @param {string} newRegime - Target regime (TRENDING/RANGING)
+     * @param {number} currentPrice - Current market price
+     * @param {Object} currentPosition - Current position info
+     */
     async _switchStrategy(state, newRegime, currentPrice, currentPosition) {
         const desired = this._decideStrategy(newRegime);
 
@@ -321,6 +341,11 @@ class HybridStrategy {
         return { action: 'HOLD', regime: state.currentRegime, strategy: 'BBRSI' };
     }
 
+    /**
+     * Forces a strategy switch (bypasses cooldown and confirmation)
+     * @param {string} coin - Coin symbol
+     * @param {string} strategy - Target strategy ('GRID' or 'BBRSI')
+     */
     async forceStrategy(coin, strategy) {
         const state = this._getOrCreateCoinState(coin);
         state.lastRegimeChange = 0; // bypass cooldown

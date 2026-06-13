@@ -42,13 +42,13 @@ function generateTrendingData(length = 120, startPrice = 100) {
     const data = [];
     let price = startPrice;
     for (let i = 0; i < length; i++) {
-        price += 1.2 + (Math.random() - 0.5) * 0.5;
+        price += 1.2; // deterministic trend
         data.push({
             t: Date.now() - (length - i) * 60000,
             o: Number(price.toFixed(4)),
             h: Number((price + 0.9).toFixed(4)),
             l: Number((price - 0.9).toFixed(4)),
-            c: Number((price + (Math.random() - 0.5) * 0.4).toFixed(4)),
+            c: Number(price.toFixed(4)),
             v: 1500
         });
     }
@@ -57,25 +57,16 @@ function generateTrendingData(length = 120, startPrice = 100) {
 
 function generateRangingData(length = 200, center = 100) {
     const data = [];
-    let price = center;
     for (let i = 0; i < length; i++) {
-        const meanReversion = (center - price) * 0.35;
-        const noise = (Math.random() - 0.5) * 2.8;
-        price += meanReversion + noise;
-        if (Math.random() < 0.15) {
-            price += (Math.random() - 0.5) * 3.5;
-        }
-        const open = price;
-        const high = price + 0.7 + Math.random() * 0.6;
-        const low = price - 0.7 - Math.random() * 0.6;
-        const close = price + (Math.random() - 0.5) * 0.5;
+        // Deterministic sine wave for ranging
+        const price = center + Math.sin(i / 8) * 2.5;
         data.push({
             t: Date.now() - (length - i) * 60000,
-            o: Number(open.toFixed(4)),
-            h: Number(high.toFixed(4)),
-            l: Number(low.toFixed(4)),
-            c: Number(close.toFixed(4)),
-            v: 900 + Math.floor(Math.random() * 300)
+            o: Number(price.toFixed(4)),
+            h: Number((price + 0.7).toFixed(4)),
+            l: Number((price - 0.7).toFixed(4)),
+            c: Number(price.toFixed(4)),
+            v: 900
         });
     }
     return data;

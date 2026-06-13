@@ -112,7 +112,16 @@ class HybridPaperTrader {
      * Get current metrics
      */
     getMetrics() {
-        return { ...this.metrics };
+        return {
+            coin: this.coin,
+            dailyPnL: this.dailyPnL,
+            dailySwitches: this.dailySwitches,
+            totalSwitches: this.metrics.totalSwitches,
+            tradingPaused: this.tradingPaused,
+            pauseReason: this.pauseReason,
+            lastRegime: this.lastRegime,
+            activeStrategy: this.hybrid?.getStatus(this.coin)?.activeStrategy
+        };
     }
 
     // ==================== NOTIFICATION SYSTEM ====================
