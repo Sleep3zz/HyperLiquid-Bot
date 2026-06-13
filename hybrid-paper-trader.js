@@ -299,15 +299,36 @@ Trading has been paused.`;
         }
     }
 
-    start() {
+    async start() {
         if (this.isRunning) return;
         this.isRunning = true;
 
-        // Initialize daily equity on start
+        // === Position Reconciliation on Startup ===
+        try {
+            const existingPosition = await this.wayfinder.getPosition(this.coin);
+
+            if (existingPosition && Math.abs(existingPosition.size || 0) > 0.0001) {
+                this.logger.warn(
+                    `[${this.coin}] Found existing position on startup: ` +
+                    `${existingPosition.side} ${existingPosition.size} @ ${existingPosition.entryPrice}`
+                );
+
+                // Optional: You can decide to close it, keep it, or let the strategy manage it
+                // Example: Force close on startup (uncomment if desired)
+                // await this.engine?.closePosition?.(this.coin);
+            } else {
+                this.logger.info(`[${this.coin}] No existing position found on startup`);
+            }
+        } catch (err) {
+            this.logger.error(`[${this.coin}] Failed to reconcile position on startup:`, err.message);
+        }
+
+        // Initialize daily equity
         this.dailyStartEquity = this._getCurrentEquity();
 
         this.logger.info(`[HybridPaperTrader] Starting for ${this.coin}`);
         this.runCycle();
+
         this.intervalId = setInterval(() => this.runCycle(), this.config.checkInterval);
     }
 
